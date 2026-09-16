@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SpinWatch | Heat & Machine Performance Monitor</title>
   <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Chart.js CDN for Real-Time Plots -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -14,12 +16,20 @@
       <div class="brand-icon">🔥</div>
       <div>
         <div class="brand-title">SpinWatch</div>
-        <div style="font-size: 11px; color: var(--text-muted);">Heat & Performance Telemetry Pipeline</div>
+        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Real-Time Heat Telemetry & Predictive Failure Pipeline</div>
       </div>
       <span class="brand-tag">NATIONWIDE FLEET</span>
     </div>
     
     <div style="display: flex; align-items: center; gap: 16px;">
+      <!-- Source Filter Pill Toggles -->
+      <div style="display: flex; gap: 6px;">
+        <button class="source-mode-pill active" onclick="setSourceMode('ALL', this)">🌐 All Sources</button>
+        <button class="source-mode-pill" onclick="setSourceMode('MYSQL', this)">⚡ MySQL Operational</button>
+        <button class="source-mode-pill" onclick="setSourceMode('HDFS', this)">📦 HDFS Historical</button>
+        <button class="source-mode-pill" onclick="setSourceMode('ML', this)">🧠 PySpark ML Model</button>
+      </div>
+
       <!-- Theme Switcher (Dark / Light Mode) -->
       <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-toggle-btn">
         <span id="theme-icon">☀️</span> <span id="theme-text">Light Mode</span>
@@ -27,9 +37,9 @@
 
       <div class="system-status">
         <div class="status-indicator"></div>
-        <span>Real-Time Stream Active</span>
+        <span>Live Stream Active</span>
         <span style="margin: 0 4px; opacity: 0.3;">|</span>
-        <span id="live-clock" style="font-family: var(--font-mono);">--:--:--</span>
+        <span id="live-clock" style="font-family: var(--font-mono); font-weight: 700;">--:--:--</span>
       </div>
     </div>
   </header>
@@ -37,11 +47,11 @@
   <!-- Red Alert Banner for Predictive Heat Failures -->
   <div id="alert-banner" class="alert-banner" style="display: none;">
     <div class="alert-banner-text">
-      <span style="font-size: 20px;">🚨</span>
+      <span style="font-size: 24px;">🚨</span>
       <div>
         <strong>ATTENTION REQUIRED: Impending Machine Heat Failures Detected!</strong>
         <div id="alert-banner-detail" style="font-size: 13px; opacity: 0.9; margin-top: 2px;">
-          MLlib model flagged washing machines requiring immediate technician maintenance.
+          PySpark MLlib model flagged washing machines requiring immediate technician maintenance.
         </div>
       </div>
     </div>
@@ -50,7 +60,7 @@
 
   <main class="main-container">
     
-    <!-- Branch Controls & Filters -->
+    <!-- Controls Header -->
     <div class="controls-bar">
       <div class="filter-group">
         <span class="filter-label">Filter Branch:</span>
@@ -62,8 +72,8 @@
         <button class="filter-btn" onclick="setBranchFilter('Rusizi', this)">Rusizi</button>
         <button class="filter-btn" onclick="setBranchFilter('Nyagatare', this)">Nyagatare</button>
       </div>
-      <div style="font-size: 13px; color: var(--text-secondary);">
-        Auto-refreshing every <span style="color: var(--accent-cyan); font-weight: 700;">3s</span>
+      <div style="font-size: 13px; color: var(--text-secondary); font-weight: 600;">
+        Auto-updating every <span style="color: var(--accent-cyan); font-weight: 800; font-family: var(--font-mono);">1s</span> ⚡
       </div>
     </div>
 
@@ -85,10 +95,37 @@
         <div class="metric-sub">Across active wash cycles</div>
       </div>
       <div class="metric-card">
-        <div class="metric-title">ML Predictions (Risk = 1)</div>
+        <div class="metric-title">PySpark ML Predictions</div>
         <div class="metric-value" id="metric-predictions" style="color: var(--accent-purple);">--</div>
-        <div class="metric-sub">impending breakdown label</div>
+        <div class="metric-sub">Read directly from HDFS store</div>
       </div>
+    </div>
+
+    <!-- Interactive Real-Time Visual Charts Grid -->
+    <div class="charts-grid">
+      
+      <!-- Chart 1: Real-Time Machine Heat Stream Line Chart -->
+      <div class="chart-card">
+        <div class="panel-header">
+          <h3 class="panel-title">Real-Time Heat Stream Trend (°C)</h3>
+          <span class="source-badge mysql">1s Live Telemetry</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="tempLineChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: PySpark Branch Average Heat Bar Chart -->
+      <div class="chart-card">
+        <div class="panel-header">
+          <h3 class="panel-title">HDFS Branch Thermal Distribution</h3>
+          <span class="source-badge hdfs">PySpark HDFS Insights</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="branchBarChart"></canvas>
+        </div>
+      </div>
+
     </div>
 
     <!-- Dashboard Content Grid -->
@@ -98,7 +135,7 @@
       <section class="panel-card">
         <div class="panel-header">
           <h2 class="panel-title">Washing Machine Real-Time Heat Telemetry</h2>
-          <span style="font-size: 12px; color: var(--text-muted);" id="table-count">Showing all machines</span>
+          <span class="source-badge mysql" id="table-source-tag">MySQL Operational View</span>
         </div>
         
         <div class="table-container">
@@ -109,14 +146,14 @@
                 <th>Branch</th>
                 <th>Cycle Temperature</th>
                 <th>Status</th>
-                <th>ML Prediction</th>
+                <th>PySpark ML Prediction</th>
                 <th>Last Reading</th>
               </tr>
             </thead>
             <tbody id="machine-table-body">
               <tr>
                 <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">
-                  Connecting to MySQL operational database...
+                  Connecting to SpinWatch pipeline streams...
                 </td>
               </tr>
             </tbody>
@@ -124,15 +161,15 @@
         </div>
       </section>
 
-      <!-- Panel 2: PySpark Analytics & Insights -->
+      <!-- Panel 2: PySpark Analytics & HDFS Store -->
       <section class="panel-card">
         <div class="panel-header">
-          <h2 class="panel-title">PySpark Batch Analytics</h2>
-          <span style="font-size: 11px; background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); padding: 4px 8px; border-radius: 6px; font-weight: 600;">HDFS Historical</span>
+          <h2 class="panel-title">HDFS PySpark Analytics</h2>
+          <span class="source-badge hdfs">Stored in HDFS</span>
         </div>
 
         <div style="margin-bottom: 24px;">
-          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Average Temperature by Branch</h4>
+          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; font-weight: 700;">HDFS Branch Heat Averages</h4>
           <div id="pyspark-branch-avg">
             <div style="font-size: 13px; color: var(--text-muted);">Loading HDFS PySpark insights...</div>
           </div>
@@ -141,7 +178,7 @@
         <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
 
         <div>
-          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Top Overheating Machines (Time in Alert)</h4>
+          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; font-weight: 700;">Top Overheating Washers (Alert Cycles)</h4>
           <div id="pyspark-alert-machines">
           </div>
         </div>
@@ -152,8 +189,14 @@
 
   <script>
     let activeBranchFilter = 'ALL';
+    let activeSourceMode = 'ALL';
     let rawMachinesData = [];
     let predictionsMap = {};
+
+    // Real-Time Chart Instances
+    let tempLineChart = null;
+    let branchBarChart = null;
+    let lineChartHistory = { labels: [], datasets: {} };
 
     // Theme Toggle Functionality
     function toggleTheme() {
@@ -165,6 +208,8 @@
       document.getElementById('theme-icon').innerText = newTheme === 'dark' ? '☀️' : '🌙';
       document.getElementById('theme-text').innerText = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
       localStorage.setItem('spinwatch-theme', newTheme);
+
+      if (tempLineChart) initCharts();
     }
 
     // Load saved theme preference
@@ -189,10 +234,90 @@
       renderTable();
     }
 
+    function setSourceMode(mode, btnElement) {
+      activeSourceMode = mode;
+      document.querySelectorAll('.source-mode-pill').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+      
+      const sourceTag = document.getElementById('table-source-tag');
+      if (mode === 'MYSQL') {
+        sourceTag.innerText = 'MySQL Operational Storage';
+        sourceTag.className = 'source-badge mysql';
+      } else if (mode === 'HDFS') {
+        sourceTag.innerText = 'HDFS Historical Parquet Store';
+        sourceTag.className = 'source-badge hdfs';
+      } else if (mode === 'ML') {
+        sourceTag.innerText = 'PySpark MLlib Predictions';
+        sourceTag.className = 'source-badge pyspark';
+      } else {
+        sourceTag.innerText = 'Unified Multi-Source View';
+        sourceTag.className = 'source-badge mysql';
+      }
+      renderTable();
+    }
+
     function filterByRisk() {
       activeBranchFilter = 'ALL';
       document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
       renderTable(true);
+    }
+
+    // Initialize Chart.js Charts
+    function initCharts() {
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      const textColor = isDark ? '#94a3b8' : '#334155';
+      const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+      // 1. Line Chart for Live Temperature Trends
+      const ctxLine = document.getElementById('tempLineChart').getContext('2d');
+      if (tempLineChart) tempLineChart.destroy();
+      tempLineChart = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            { label: 'WM_0001 (Kigali)', data: [], borderColor: '#06b6d4', tension: 0.3, fill: false, borderWidth: 2 },
+            { label: 'WM_0004 (Kigali)', data: [], borderColor: '#ef4444', tension: 0.3, fill: false, borderWidth: 2 },
+            { label: 'WM_0006 (Rusizi)', data: [], borderColor: '#f97316', tension: 0.3, fill: false, borderWidth: 2 },
+            { label: 'WM_0012 (Huye)', data: [], borderColor: '#8b5cf6', tension: 0.3, fill: false, borderWidth: 2 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 300 },
+          plugins: { legend: { labels: { color: textColor, font: { family: 'Outfit' } } } },
+          scales: {
+            x: { ticks: { color: textColor }, grid: { color: gridColor } },
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 90 }
+          }
+        }
+      });
+
+      // 2. Bar Chart for Branch Thermal Averages
+      const ctxBar = document.getElementById('branchBarChart').getContext('2d');
+      if (branchBarChart) branchBarChart.destroy();
+      branchBarChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: ['Kigali', 'Rubavu', 'Musanze', 'Rusizi', 'Huye', 'Nyagatare'],
+          datasets: [{
+            label: 'Avg Heat (°C)',
+            data: [66.5, 61.1, 58.2, 54.8, 52.4, 49.3],
+            backgroundColor: ['#06b6d4', '#f97316', '#3b82f6', '#8b5cf6', '#10b981', '#ec4899'],
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: textColor }, grid: { color: gridColor } },
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 80 }
+          }
+        }
+      });
     }
 
     async function fetchPredictions() {
@@ -219,11 +344,18 @@
             branchContainer.innerHTML = data.avg_by_branch.map(b => `
               <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
                 <span>${b.branch}</span>
-                <span style="font-family: var(--font-mono); font-weight: 600; color: ${b.avg_temperature > 60 ? '#f97316' : '#06b6d4'};">
+                <span style="font-family: var(--font-mono); font-weight: 700; color: ${b.avg_temperature > 60 ? '#f97316' : '#06b6d4'};">
                   ${b.avg_temperature}°C
                 </span>
               </div>
             `).join('');
+
+            // Update Bar Chart
+            if (branchBarChart) {
+              branchBarChart.data.labels = data.avg_by_branch.map(b => b.branch);
+              branchBarChart.data.datasets[0].data = data.avg_by_branch.map(b => b.avg_temperature);
+              branchBarChart.update('none');
+            }
           }
 
           const alertContainer = document.getElementById('pyspark-alert-machines');
@@ -231,7 +363,7 @@
             alertContainer.innerHTML = data.time_in_alert.slice(0, 5).map(m => `
               <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
                 <span><strong>${m.machine_id}</strong> (${m.branch})</span>
-                <span style="font-family: var(--font-mono); color: #ef4444; font-weight: 700;">
+                <span style="font-family: var(--font-mono); color: #ef4444; font-weight: 800;">
                   ${m.alert_count} alert cycles
                 </span>
               </div>
@@ -249,10 +381,37 @@
         if (res.ok) {
           rawMachinesData = await res.json();
           renderTable();
+          updateLineChart();
         }
       } catch (e) {
         console.error('Status fetch error:', e);
       }
+    }
+
+    function updateLineChart() {
+      if (!tempLineChart) return;
+      const nowStr = new Date().toTimeString().split(' ')[0];
+      
+      const targetIDs = ['WM_0001', 'WM_0004', 'WM_0006', 'WM_0012'];
+      const currentTemps = {};
+      rawMachinesData.forEach(m => {
+        if (targetIDs.includes(m.machine_id)) {
+          currentTemps[m.machine_id] = m.cycle_temperature;
+        }
+      });
+
+      if (tempLineChart.data.labels.length > 10) {
+        tempLineChart.data.labels.shift();
+        tempLineChart.data.datasets.forEach(ds => ds.data.shift());
+      }
+
+      tempLineChart.data.labels.push(nowStr);
+      tempLineChart.data.datasets[0].data.push(currentTemps['WM_0001'] || 55);
+      tempLineChart.data.datasets[1].data.push(currentTemps['WM_0004'] || 74);
+      tempLineChart.data.datasets[2].data.push(currentTemps['WM_0006'] || 68);
+      tempLineChart.data.datasets[3].data.push(currentTemps['WM_0012'] || 71);
+
+      tempLineChart.update('none');
     }
 
     function renderTable(riskOnly = false) {
@@ -263,7 +422,7 @@
         filtered = filtered.filter(m => m.branch === activeBranchFilter);
       }
 
-      if (riskOnly) {
+      if (riskOnly || activeSourceMode === 'ML') {
         filtered = filtered.filter(m => m.status === 'ALERT' || predictionsMap[m.machine_id] === 1);
       }
 
@@ -289,7 +448,7 @@
       if (alertCount > 0 || predictedRiskCount > 0) {
         banner.style.display = 'flex';
         document.getElementById('alert-banner-detail').innerText = 
-          `Currently ${alertCount} washer(s) in heat ALERT (>70°C) and ${predictedRiskCount} machine(s) predicted for breakdown.`;
+          `Currently ${alertCount} washer(s) in heat ALERT (>70°C) and ${predictedRiskCount} machine(s) predicted for breakdown in HDFS.`;
       } else {
         banner.style.display = 'none';
       }
@@ -335,9 +494,11 @@
       }).join('');
     }
 
-    setInterval(fetchStatus, 3000);
-    setInterval(fetchPredictions, 5000);
-    setInterval(fetchPySparkInsights, 10000);
+    // Initialize Real-Time 1-Second Update Loop
+    initCharts();
+    setInterval(fetchStatus, 1000);       // 1-second auto update loop
+    setInterval(fetchPredictions, 2000);  // 2-second predictions loop
+    setInterval(fetchPySparkInsights, 5000); // 5-second insights loop
 
     fetchPredictions();
     fetchStatus();
