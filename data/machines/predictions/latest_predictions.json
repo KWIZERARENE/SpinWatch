@@ -1,0 +1,26 @@
+[
+  {
+    "machine_id": "WM_0001",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-16 18:00:00"
+  },
+  {
+    "machine_id": "WM_0004",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-16 18:00:00"
+  },
+  {
+    "machine_id": "WM_0006",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-16 18:00:00"
+  },
+  {
+    "machine_id": "WM_0012",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-16 18:00:00"
+  }
+]

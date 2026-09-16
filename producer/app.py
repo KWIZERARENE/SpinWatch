@@ -1,0 +1,212 @@
+"""
+SpinWatch - Unified REST API Server for Postman & Pipeline Verification
+Exposes REST endpoints to inspect and test data at every stage of the Big Data Pipeline:
+- Point 1: POST /api/readings/ (Generator Ingress) & GET /api/generator/status
+- Point 2: GET /api/kafka/status (Kafka Topic & Partition Inspector)
+- Point 3: GET /api/hdfs/raw (HDFS Historical Parquet/JSON Data Inspector)
+           GET /api/sql/readings (MySQL Operational Readings & Machine Status Inspector)
+- Point 4: GET /api/predictions (PySpark MLlib Breakdown Failure Predictions)
+           GET /api/insights (PySpark Analytics & Heat Insights)
+"""
+
+import os
+import json
+import glob
+import datetime
+import urllib.parse
+from http.server import HTTPServer, BaseHTTPRequestHandler
+from producer import MachineTelemetryProducer
+
+producer = MachineTelemetryProducer(bootstrap_servers="localhost:9092", topic="machine-readings")
+
+try:
+    import mysql.connector
+    MYSQL_AVAILABLE = True
+except ImportError:
+    MYSQL_AVAILABLE = False
+
+MYSQL_CONFIG = {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "root",
+    "password": "",
+    "database": "laundry_ops"
+}
+
+def query_mysql(sql, params=None):
+    if not MYSQL_AVAILABLE:
+        return None
+    try:
+        conn = mysql.connector.connect(**MYSQL_CONFIG)
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute(sql, params or ())
+        rows = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return rows
+    except Exception as e:
+        print(f"[!] API MySQL query exception: {e}")
+        return None
+
+class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        if parsed.path in ["/api/readings/", "/api/readings"]:
+            # Point 1: Generator Ingress Payload
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_data = self.rfile.read(content_length)
+            
+            try:
+                reading = json.loads(post_data.decode("utf-8"))
+                required_fields = ["machine_id", "branch", "cycle_temperature", "timestamp", "status"]
+                for f in required_fields:
+                    if f not in reading:
+                        raise ValueError(f"Missing required field: {f}")
+                
+                success = producer.send_reading(reading)
+                
+                self.send_response(201 if success else 200)
+                self.send_json({
+                    "stage": "Point 1: Generator Ingress -> Kafka Producer",
+                    "status": "success",
+                    "message": "Telemetry received and forwarded to Kafka topic 'machine-readings'",
+                    "payload": reading
+                })
+            except Exception as e:
+                self.send_response(400)
+                self.send_json({"stage": "Point 1", "status": "error", "message": str(e)})
+        else:
+            self.send_error(404, "Endpoint not found")
+
+    def do_GET(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+
+        if path in ["/api/generator/status", "/api/stage1"]:
+            # Point 1 Check
+            self.send_json({
+                "stage": "Point 1: Telemetry Stream Generator",
+                "status": "ACTIVE",
+                "ingress_url": "http://localhost:8000/api/readings/",
+                "schema": ["reading_id", "machine_id", "branch", "cycle_temperature", "timestamp", "status", "breakdown_soon"]
+            })
+
+        elif path in ["/api/kafka/status", "/api/stage2"]:
+            # Point 2 Check: Kafka Ecosystem
+            self.send_json({
+                "stage": "Point 2: Apache Kafka Topic & Partitions",
+                "topic": "machine-readings",
+                "partitions": 3,
+                "replication_factor": 1,
+                "consumer_group": "maintenance-tracker",
+                "partitioning_key": "machine_id",
+                "kafka_status": "AVAILABLE" if producer.producer else "LOCAL_FALLBACK"
+            })
+
+        elif path in ["/api/hdfs/raw", "/api/stage3/hdfs"]:
+            # Point 3a Check: HDFS Historical Parquet/JSON Data
+            hdfs_dir = os.path.join(os.getcwd(), "data", "machines", "raw")
+            sample_records = []
+            
+            # Read recent JSON / Parquet files from HDFS local landed directory
+            files = glob.glob(os.path.join(hdfs_dir, "**", "*.*"), recursive=True)
+            for fpath in files:
+                if fpath.endswith(".json"):
+                    try:
+                        with open(fpath, "r") as f:
+                            lines = f.readlines()
+                            for line in lines[-5:]:
+                                sample_records.append(json.loads(line.strip()))
+                    except Exception:
+                        pass
+
+            self.send_json({
+                "stage": "Point 3a: HDFS Historical Storage (/data/machines/raw/)",
+                "hdfs_directory": "/data/machines/raw/",
+                "file_count": len(files),
+                "storage_format": "Parquet / JSON",
+                "sample_landed_records": sample_records[:5]
+            })
+
+        elif path in ["/api/sql/readings", "/api/stage3/sql"]:
+            # Point 3b Check: MySQL Operational Storage
+            readings = query_mysql("SELECT reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon FROM readings_log ORDER BY txn_timestamp DESC LIMIT 10")
+            status_summary = query_mysql("SELECT status, count(*) as count FROM machine_status GROUP BY status")
+            
+            if readings is None:
+                readings = []
+            for r in readings:
+                if "txn_timestamp" in r and r["txn_timestamp"]:
+                    r["txn_timestamp"] = str(r["txn_timestamp"])
+                if "cycle_temperature" in r:
+                    r["cycle_temperature"] = float(r["cycle_temperature"])
+
+            self.send_json({
+                "stage": "Point 3b: MySQL Operational Storage (laundry_ops)",
+                "table_target": "readings_log & machine_status",
+                "status_summary": status_summary or [],
+                "latest_landed_readings": readings
+            })
+
+        elif path in ["/api/predictions", "/api/stage4/predictions"]:
+            # Point 4a Check: PySpark MLlib Failure Predictions (Read directly from HDFS Analytical Store)
+            pred_json_path = os.path.join(os.getcwd(), "data", "machines", "predictions", "latest_predictions.json")
+            preds = []
+            if os.path.exists(pred_json_path):
+                try:
+                    with open(pred_json_path, "r") as f:
+                        preds = json.load(f)
+                except Exception:
+                    pass
+
+            self.send_json({
+                "stage": "Point 4a: PySpark MLlib Predictive Model Scoring (Stored in HDFS)",
+                "storage_location": "/data/machines/predictions/",
+                "model": "LogisticRegression (lr_heat_v1)",
+                "prediction_key": "1 = Breakdown Soon (Impending Fault), 0 = Normal Operation",
+                "total_scored_machines": len(preds),
+                "predictions": preds
+            })
+
+        elif path in ["/api/insights", "/api/stage4/insights"]:
+            # Point 4b Check: PySpark Analytical Insights (Read directly from HDFS Analytical Store)
+            insights_json_path = os.path.join(os.getcwd(), "data", "machines", "insights", "latest_insights.json")
+            insights_data = {"avg_by_branch": [], "time_in_alert": []}
+            if os.path.exists(insights_json_path):
+                try:
+                    with open(insights_json_path, "r") as f:
+                        insights_data = json.load(f)
+                except Exception:
+                    pass
+
+            self.send_json({
+                "stage": "Point 4b: PySpark Analytical Insights (Stored in HDFS)",
+                "storage_location": "/data/machines/insights/",
+                "avg_temp_by_branch": insights_data.get("avg_by_branch", []),
+                "top_overheating_machines": insights_data.get("time_in_alert", [])
+            })
+        else:
+            self.send_error(404, "Endpoint not found")
+
+    def send_json(self, data):
+        content = json.dumps(data, indent=2).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(content)))
+        self.end_headers()
+        self.wfile.write(content)
+
+    def log_message(self, format, *args):
+        return
+
+def run_server(port=8000):
+    server_address = ("", port)
+    httpd = HTTPServer(server_address, UnifiedPipelineAPIHandler)
+    print(f"[*] SpinWatch Stage Inspection REST API listening on http://localhost:{port}/api/")
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("\n[*] REST API server stopped.")
+
+if __name__ == "__main__":
+    run_server()

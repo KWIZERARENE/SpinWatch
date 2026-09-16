@@ -1,0 +1,16 @@
+{
+  "name": "mysql-sink-laundry",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "tasks.max": "1",
+    "topics": "machine-readings",
+    "connection.url": "jdbc:mysql://127.0.0.1:3306/laundry_ops",
+    "connection.user": "root",
+    "connection.password": "",
+    "table.name.format": "readings_log",
+    "insert.mode": "insert",
+    "auto.create": "false",
+    "pk.mode": "record_value",
+    "pk.fields": "reading_id"
+  }
+}

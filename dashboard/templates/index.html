@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpinWatch | Heat & Machine Performance Monitor</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="top-bar">
+    <div class="brand">
+      <div class="brand-icon">🔥</div>
+      <div>
+        <div class="brand-title">SpinWatch</div>
+        <div style="font-size: 11px; color: var(--text-muted);">Heat & Performance Telemetry Pipeline</div>
+      </div>
+      <span class="brand-tag">NATIONWIDE FLEET</span>
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <!-- Theme Switcher (Dark / Light Mode) -->
+      <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-toggle-btn">
+        <span id="theme-icon">☀️</span> <span id="theme-text">Light Mode</span>
+      </button>
+
+      <div class="system-status">
+        <div class="status-indicator"></div>
+        <span>Real-Time Stream Active</span>
+        <span style="margin: 0 4px; opacity: 0.3;">|</span>
+        <span id="live-clock" style="font-family: var(--font-mono);">--:--:--</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Red Alert Banner for Predictive Heat Failures -->
+  <div id="alert-banner" class="alert-banner" style="display: none;">
+    <div class="alert-banner-text">
+      <span style="font-size: 20px;">🚨</span>
+      <div>
+        <strong>ATTENTION REQUIRED: Impending Machine Heat Failures Detected!</strong>
+        <div id="alert-banner-detail" style="font-size: 13px; opacity: 0.9; margin-top: 2px;">
+          MLlib model flagged washing machines requiring immediate technician maintenance.
+        </div>
+      </div>
+    </div>
+    <button onclick="filterByRisk()" class="filter-btn active" style="background: #ef4444; color: white;">Inspect At-Risk Washers</button>
+  </div>
+
+  <main class="main-container">
+    
+    <!-- Branch Controls & Filters -->
+    <div class="controls-bar">
+      <div class="filter-group">
+        <span class="filter-label">Filter Branch:</span>
+        <button class="filter-btn active" onclick="setBranchFilter('ALL', this)">All Branches</button>
+        <button class="filter-btn" onclick="setBranchFilter('Kigali', this)">Kigali</button>
+        <button class="filter-btn" onclick="setBranchFilter('Musanze', this)">Musanze</button>
+        <button class="filter-btn" onclick="setBranchFilter('Huye', this)">Huye</button>
+        <button class="filter-btn" onclick="setBranchFilter('Rubavu', this)">Rubavu</button>
+        <button class="filter-btn" onclick="setBranchFilter('Rusizi', this)">Rusizi</button>
+        <button class="filter-btn" onclick="setBranchFilter('Nyagatare', this)">Nyagatare</button>
+      </div>
+      <div style="font-size: 13px; color: var(--text-secondary);">
+        Auto-refreshing every <span style="color: var(--accent-cyan); font-weight: 700;">3s</span>
+      </div>
+    </div>
+
+    <!-- Summary Metrics Cards -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-title">Fleet Washers</div>
+        <div class="metric-value" id="metric-total">--</div>
+        <div class="metric-sub">Monitored units nationwide</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-title">Heat Alerts (>70°C)</div>
+        <div class="metric-value" id="metric-alerts" style="color: var(--accent-red);">--</div>
+        <div class="metric-sub">Units exceeding thermal limit</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-title">Average Fleet Temp</div>
+        <div class="metric-value" id="metric-avg-temp" style="color: var(--accent-orange);">--°C</div>
+        <div class="metric-sub">Across active wash cycles</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-title">ML Predictions (Risk = 1)</div>
+        <div class="metric-value" id="metric-predictions" style="color: var(--accent-purple);">--</div>
+        <div class="metric-sub">impending breakdown label</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Content Grid -->
+    <div class="dashboard-grid">
+      
+      <!-- Panel 1: Live Telemetry Machine Status Table -->
+      <section class="panel-card">
+        <div class="panel-header">
+          <h2 class="panel-title">Washing Machine Real-Time Heat Telemetry</h2>
+          <span style="font-size: 12px; color: var(--text-muted);" id="table-count">Showing all machines</span>
+        </div>
+        
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Washer ID</th>
+                <th>Branch</th>
+                <th>Cycle Temperature</th>
+                <th>Status</th>
+                <th>ML Prediction</th>
+                <th>Last Reading</th>
+              </tr>
+            </thead>
+            <tbody id="machine-table-body">
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                  Connecting to MySQL operational database...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Panel 2: PySpark Analytics & Insights -->
+      <section class="panel-card">
+        <div class="panel-header">
+          <h2 class="panel-title">PySpark Batch Analytics</h2>
+          <span style="font-size: 11px; background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); padding: 4px 8px; border-radius: 6px; font-weight: 600;">HDFS Historical</span>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Average Temperature by Branch</h4>
+          <div id="pyspark-branch-avg">
+            <div style="font-size: 13px; color: var(--text-muted);">Loading HDFS PySpark insights...</div>
+          </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+        <div>
+          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Top Overheating Machines (Time in Alert)</h4>
+          <div id="pyspark-alert-machines">
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    let activeBranchFilter = 'ALL';
+    let rawMachinesData = [];
+    let predictionsMap = {};
+
+    // Theme Toggle Functionality
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const currentTheme = htmlEl.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', newTheme);
+      
+      document.getElementById('theme-icon').innerText = newTheme === 'dark' ? '☀️' : '🌙';
+      document.getElementById('theme-text').innerText = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+      localStorage.setItem('spinwatch-theme', newTheme);
+    }
+
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('spinwatch-theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('theme-icon').innerText = savedTheme === 'dark' ? '☀️' : '🌙';
+      document.getElementById('theme-text').innerText = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('live-clock').innerText = now.toTimeString().split(' ')[0];
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function setBranchFilter(branch, btnElement) {
+      activeBranchFilter = branch;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+      renderTable();
+    }
+
+    function filterByRisk() {
+      activeBranchFilter = 'ALL';
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      renderTable(true);
+    }
+
+    async function fetchPredictions() {
+      try {
+        const res = await fetch('/api/predictions');
+        if (res.ok) {
+          const data = await res.json();
+          predictionsMap = {};
+          data.forEach(p => { predictionsMap[p.machine_id] = p.prediction; });
+        }
+      } catch (e) {
+        console.warn('Predictions fetch error:', e);
+      }
+    }
+
+    async function fetchPySparkInsights() {
+      try {
+        const res = await fetch('/api/insights');
+        if (res.ok) {
+          const data = await res.json();
+          
+          const branchContainer = document.getElementById('pyspark-branch-avg');
+          if (data.avg_by_branch && data.avg_by_branch.length > 0) {
+            branchContainer.innerHTML = data.avg_by_branch.map(b => `
+              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                <span>${b.branch}</span>
+                <span style="font-family: var(--font-mono); font-weight: 600; color: ${b.avg_temperature > 60 ? '#f97316' : '#06b6d4'};">
+                  ${b.avg_temperature}°C
+                </span>
+              </div>
+            `).join('');
+          }
+
+          const alertContainer = document.getElementById('pyspark-alert-machines');
+          if (data.time_in_alert && data.time_in_alert.length > 0) {
+            alertContainer.innerHTML = data.time_in_alert.slice(0, 5).map(m => `
+              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                <span><strong>${m.machine_id}</strong> (${m.branch})</span>
+                <span style="font-family: var(--font-mono); color: #ef4444; font-weight: 700;">
+                  ${m.alert_count} alert cycles
+                </span>
+              </div>
+            `).join('');
+          }
+        }
+      } catch (e) {
+        console.warn('Insights fetch error:', e);
+      }
+    }
+
+    async function fetchStatus() {
+      try {
+        const res = await fetch('/api/status');
+        if (res.ok) {
+          rawMachinesData = await res.json();
+          renderTable();
+        }
+      } catch (e) {
+        console.error('Status fetch error:', e);
+      }
+    }
+
+    function renderTable(riskOnly = false) {
+      const tbody = document.getElementById('machine-table-body');
+      let filtered = rawMachinesData;
+
+      if (activeBranchFilter !== 'ALL') {
+        filtered = filtered.filter(m => m.branch === activeBranchFilter);
+      }
+
+      if (riskOnly) {
+        filtered = filtered.filter(m => m.status === 'ALERT' || predictionsMap[m.machine_id] === 1);
+      }
+
+      filtered.sort((a, b) => {
+        if (a.status === 'ALERT' && b.status !== 'ALERT') return -1;
+        if (a.status !== 'ALERT' && b.status === 'ALERT') return 1;
+        return b.cycle_temperature - a.cycle_temperature;
+      });
+
+      document.getElementById('metric-total').innerText = rawMachinesData.length;
+      
+      const alertCount = rawMachinesData.filter(m => m.status === 'ALERT').length;
+      document.getElementById('metric-alerts').innerText = alertCount;
+
+      const sumTemp = rawMachinesData.reduce((acc, m) => acc + parseFloat(m.cycle_temperature), 0);
+      const avgTemp = rawMachinesData.length > 0 ? (sumTemp / rawMachinesData.length).toFixed(1) : '--';
+      document.getElementById('metric-avg-temp').innerText = avgTemp + '°C';
+
+      const predictedRiskCount = Object.values(predictionsMap).filter(p => p === 1).length;
+      document.getElementById('metric-predictions').innerText = predictedRiskCount;
+
+      const banner = document.getElementById('alert-banner');
+      if (alertCount > 0 || predictedRiskCount > 0) {
+        banner.style.display = 'flex';
+        document.getElementById('alert-banner-detail').innerText = 
+          `Currently ${alertCount} washer(s) in heat ALERT (>70°C) and ${predictedRiskCount} machine(s) predicted for breakdown.`;
+      } else {
+        banner.style.display = 'none';
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No telemetry records for this view.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(m => {
+        const isAlert = m.status === 'ALERT';
+        const isRisk = predictionsMap[m.machine_id] === 1;
+        const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 55) * 100));
+        const barColor = m.cycle_temperature > 70 ? '#ef4444' : (m.cycle_temperature > 55 ? '#f97316' : '#06b6d4');
+
+        return `
+          <tr>
+            <td><strong style="font-family: var(--font-mono);">${m.machine_id}</strong></td>
+            <td>${m.branch}</td>
+            <td>
+              <div class="temp-gauge">
+                <span>${m.cycle_temperature}°C</span>
+                <div class="temp-bar-bg">
+                  <div class="temp-bar-fill" style="width: ${tempPct}%; background: ${barColor};"></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="status-badge ${isAlert ? 'alert' : 'normal'}">
+                ${m.status}
+              </span>
+            </td>
+            <td>
+              <span class="prediction-badge ${isRisk ? 'at-risk' : 'safe'}">
+                ${isRisk ? '⚠️ BREAKDOWN SOON' : 'NORMAL'}
+              </span>
+            </td>
+            <td style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">
+              ${m.last_updated ? m.last_updated.replace('T', ' ').substring(0, 19) : '--'}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    setInterval(fetchStatus, 3000);
+    setInterval(fetchPredictions, 5000);
+    setInterval(fetchPySparkInsights, 10000);
+
+    fetchPredictions();
+    fetchStatus();
+    fetchPySparkInsights();
+  </script>
+</body>
+</html>

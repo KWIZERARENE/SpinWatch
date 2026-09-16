@@ -1,0 +1,163 @@
+{
+  "info": {
+    "name": "SpinWatch Big Data Pipeline Verification Collection",
+    "description": "Postman Collection for inspecting telemetry data at every stage of the SpinWatch Pipeline:\n- Point 1: Stream Telemetry Ingress (POST /api/readings/)\n- Point 2: Kafka Ecosystem & Partitions (GET /api/kafka/status)\n- Point 3a: HDFS Landed Raw Telemetry Records (GET /api/hdfs/raw)\n- Point 3b: MySQL Operational Storage (GET /api/sql/readings)\n- Point 4a: PySpark MLlib Predictive Failure Model (GET /api/predictions)\n- Point 4b: PySpark Heat Insights (GET /api/insights)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Point 1: Telemetry Stream Ingress (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reading_id\": \"d7f8a1e2-0000-4000-8000-000000000001\",\n  \"machine_id\": \"WM_0007\",\n  \"branch\": \"Kigali\",\n  \"cycle_temperature\": 74.50,\n  \"timestamp\": \"2026-09-16T18:00:00Z\",\n  \"status\": \"ALERT\",\n  \"breakdown_soon\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/readings/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "readings",
+            ""
+          ]
+        },
+        "description": "Submits a raw washer heat reading to the REST Ingress API for forwarding to Apache Kafka."
+      }
+    },
+    {
+      "name": "Point 1: Generator Ingress Health Check (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/generator/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "generator",
+            "status"
+          ]
+        },
+        "description": "Checks health and schema specification of the generator stream ingress."
+      }
+    },
+    {
+      "name": "Point 2: Kafka Topic & Partition Status Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/kafka/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "kafka",
+            "status"
+          ]
+        },
+        "description": "Inspects Kafka topic 'machine-readings', partition count, consumer group, and partition key strategy."
+      }
+    },
+    {
+      "name": "Point 3a: HDFS Landed Historical Data Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/hdfs/raw",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "hdfs",
+            "raw"
+          ]
+        },
+        "description": "Inspects raw telemetry records landed in HDFS directory (/data/machines/raw/) in Parquet/JSON format."
+      }
+    },
+    {
+      "name": "Point 3b: MySQL Operational Storage Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/sql/readings",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "sql",
+            "readings"
+          ]
+        },
+        "description": "Queries MySQL database 'laundry_ops' for landed readings and washer operational status summaries."
+      }
+    },
+    {
+      "name": "Point 4a: PySpark MLlib Predictive Model Scoring Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/predictions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "predictions"
+          ]
+        },
+        "description": "Fetches PySpark MLlib LogisticRegression predictive failure flags (breakdown_soon = 1 vs 0)."
+      }
+    },
+    {
+      "name": "Point 4b: PySpark Analytical Insights Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/insights",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "insights"
+          ]
+        },
+        "description": "Fetches PySpark calculated branch temperature averages and top overheating machine alert counts."
+      }
+    }
+  ]
+}
