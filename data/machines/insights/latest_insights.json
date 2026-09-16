@@ -1,21 +1,45 @@
 {
   "avg_by_branch": [
-    { "branch": "Kigali", "avg_temperature": 66.5 },
-    { "branch": "Rubavu", "avg_temperature": 61.1 },
-    { "branch": "Musanze", "avg_temperature": 58.2 },
-    { "branch": "Rusizi", "avg_temperature": 54.8 },
-    { "branch": "Huye", "avg_temperature": 52.4 },
-    { "branch": "Nyagatare", "avg_temperature": 49.3 }
+    {
+      "branch": "Kigali",
+      "avg_temperature": 66.5
+    },
+    {
+      "branch": "Rubavu",
+      "avg_temperature": 61.1
+    },
+    {
+      "branch": "Musanze",
+      "avg_temperature": 58.2
+    },
+    {
+      "branch": "Rusizi",
+      "avg_temperature": 54.8
+    },
+    {
+      "branch": "Huye",
+      "avg_temperature": 52.4
+    },
+    {
+      "branch": "Nyagatare",
+      "avg_temperature": 49.3
+    }
   ],
   "time_in_alert": [
-    { "machine_id": "WM_0004", "branch": "Kigali", "alert_count": 18 },
-    { "machine_id": "WM_0001", "branch": "Kigali", "alert_count": 12 },
-    { "machine_id": "WM_0006", "branch": "Rusizi", "alert_count": 9 },
-    { "machine_id": "WM_0012", "branch": "Huye", "alert_count": 7 }
-  ],
-  "busiest_hour": [
-    { "hour": 14, "alert_count": 28 },
-    { "hour": 15, "alert_count": 22 },
-    { "hour": 11, "alert_count": 19 }
+    {
+      "machine_id": "WM_0004",
+      "branch": "Kigali",
+      "alert_count": 18
+    },
+    {
+      "machine_id": "WM_0001",
+      "branch": "Kigali",
+      "alert_count": 12
+    },
+    {
+      "machine_id": "WM_0006",
+      "branch": "Rusizi",
+      "alert_count": 9
+    }
   ]
 }

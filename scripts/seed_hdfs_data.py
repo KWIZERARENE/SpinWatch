@@ -1,7 +1,8 @@
 """
 SpinWatch - HDFS & MySQL Data Seeder
-Populates local HDFS directory (/data/machines/raw/) with Parquet telemetry files
-and inserts initial machine status, readings, predictions, and PySpark insights into MySQL laundry_ops.
+Populates local HDFS directory (/data/machines/raw/) with Parquet telemetry files,
+writes analytical predictions & insights to HDFS storage (/data/machines/predictions/ & insights/),
+and populates MySQL operational tables (machine_status, readings_log).
 """
 
 import os
@@ -62,10 +63,9 @@ def seed_data():
             "breakdown_soon": breakdown_soon
         }
         records.append(rec)
-
         machine_status_rows.append((mid, branch, temp, status, ts))
 
-    # 2. Land Parquet files in HDFS target directory
+    # 2. Land Parquet files in HDFS raw target directory
     raw_dir = os.path.join(os.getcwd(), "data", "machines", "raw", f"dt={today_str}")
     os.makedirs(raw_dir, exist_ok=True)
     parquet_path = os.path.join(raw_dir, "part-0000.parquet")
@@ -82,21 +82,42 @@ def seed_data():
                 f.write(json.dumps(r) + "\n")
         print(f"[+] Written {len(records)} JSON telemetry records to local store: {json_path}")
 
-    # Upload to HDFS cluster if hdfs CLI is present
-    try:
-        cmd = ["hdfs", "dfs", "-mkdir", "-p", f"/data/machines/raw/dt={today_str}"]
-        subprocess.run(cmd, capture_output=True)
-        target = parquet_path if PARQUET_AVAILABLE else json_path
-        cmd_copy = ["hdfs", "dfs", "-put", "-f", target, f"/data/machines/raw/dt={today_str}/"]
-        res = subprocess.run(cmd_copy, capture_output=True)
-        if res.returncode == 0:
-            print(f"[+] Successfully uploaded data into HDFS cluster: /data/machines/raw/dt={today_str}/")
-        else:
-            print("[!] HDFS cluster upload bypassed (running in local disk mode).")
-    except Exception as e:
-        print(f"[!] HDFS CLI not accessible ({e}). Data landed in local filesystem at data/machines/raw.")
+    # 3. Save Analytical Predictions & Insights to HDFS Analytical Storage (NOT MySQL)
+    pred_dir = os.path.join(os.getcwd(), "data", "machines", "predictions")
+    insight_dir = os.path.join(os.getcwd(), "data", "machines", "insights")
+    os.makedirs(pred_dir, exist_ok=True)
+    os.makedirs(insight_dir, exist_ok=True)
 
-    # 3. Populate MySQL Database tables
+    sample_predictions = [
+        {"machine_id": "WM_0001", "branch": "Kigali", "prediction": 1, "scored_at": today_str + " 18:00:00"},
+        {"machine_id": "WM_0004", "branch": "Kigali", "prediction": 1, "scored_at": today_str + " 18:00:00"},
+        {"machine_id": "WM_0006", "branch": "Rusizi", "prediction": 1, "scored_at": today_str + " 18:00:00"},
+        {"machine_id": "WM_0012", "branch": "Huye", "prediction": 1, "scored_at": today_str + " 18:00:00"}
+    ]
+    with open(os.path.join(pred_dir, "latest_predictions.json"), "w") as f:
+        json.dump(sample_predictions, f, indent=2)
+
+    sample_insights = {
+        "avg_by_branch": [
+            {"branch": "Kigali", "avg_temperature": 66.5},
+            {"branch": "Rubavu", "avg_temperature": 61.1},
+            {"branch": "Musanze", "avg_temperature": 58.2},
+            {"branch": "Rusizi", "avg_temperature": 54.8},
+            {"branch": "Huye", "avg_temperature": 52.4},
+            {"branch": "Nyagatare", "avg_temperature": 49.3}
+        ],
+        "time_in_alert": [
+            {"machine_id": "WM_0004", "branch": "Kigali", "alert_count": 18},
+            {"machine_id": "WM_0001", "branch": "Kigali", "alert_count": 12},
+            {"machine_id": "WM_0006", "branch": "Rusizi", "alert_count": 9}
+        ]
+    }
+    with open(os.path.join(insight_dir, "latest_insights.json"), "w") as f:
+        json.dump(sample_insights, f, indent=2)
+
+    print("[+] Saved analytical predictions & insights directly into HDFS Analytical Store")
+
+    # 4. Populate MySQL Operational Tables ONLY (machine_status, readings_log)
     if MYSQL_AVAILABLE:
         try:
             conn = mysql.connector.connect(**MYSQL_CONFIG)
@@ -115,22 +136,10 @@ def seed_data():
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
             """, log_tuples)
 
-            # Seed predictions
-            pred_tuples = [(r["machine_id"], r["branch"], r["breakdown_soon"], r["txn_timestamp"]) for r in records[:15]]
-            cursor.executemany("""
-                REPLACE INTO predictions (machine_id, branch, prediction, scored_at)
-                VALUES (%s, %s, %s, %s)
-            """, pred_tuples)
-
-            # Seed insights
-            cursor.execute("REPLACE INTO insight_avg_temp_by_branch VALUES ('Kigali', 66.50), ('Musanze', 58.20), ('Huye', 52.40), ('Rubavu', 61.10), ('Rusizi', 54.80), ('Nyagatare', 49.30)")
-            cursor.execute("REPLACE INTO insight_time_in_alert VALUES ('WM_0004', 'Kigali', 18), ('WM_0001', 'Kigali', 12), ('WM_0006', 'Rusizi', 9)")
-            cursor.execute("REPLACE INTO insight_busiest_alert_hour VALUES (14, 28), (15, 22), (11, 19), (16, 15)")
-
             conn.commit()
             cursor.close()
             conn.close()
-            print("[+] Successfully populated MySQL `laundry_ops` tables with initial telemetry!")
+            print("[+] Successfully populated MySQL `laundry_ops` operational tables!")
         except Exception as e:
             print(f"[!] MySQL seed issue: {e}")
 
