@@ -109,9 +109,24 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
 
                     # Update MySQL if available
                     if MYSQL_AVAILABLE:
+                        raw_ts = reading.get("timestamp")
+                        if not raw_ts:
+                            clean_ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+                        else:
+                            clean_ts = str(raw_ts).replace("T", " ").split(".")[0].split("+")[0].strip()
+                            if len(clean_ts) == 10:
+                                clean_ts += " 00:00:00"
+
+                        # 1. Update machine_status
                         query_mysql(
                             "REPLACE INTO machine_status (machine_id, branch, cycle_temperature, status, last_updated) VALUES (%s, %s, %s, %s, %s)",
                             (reading["machine_id"], reading["branch"], reading["cycle_temperature"], reading["status"], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                        )
+
+                        # 2. Insert into readings_log
+                        query_mysql(
+                            "INSERT INTO readings_log (reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon) VALUES (%s, %s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE cycle_temperature=VALUES(cycle_temperature), status=VALUES(status)",
+                            (reading.get("reading_id"), reading["machine_id"], reading["branch"], reading["cycle_temperature"], clean_ts, reading["status"], reading.get("breakdown_soon", 0))
                         )
                 except Exception as ex:
                     print(f"[!] Generator automatic flow sync warning: {ex}")

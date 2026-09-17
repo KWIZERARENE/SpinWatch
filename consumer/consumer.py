@@ -81,8 +81,16 @@ def process_messages(bootstrap_servers="localhost:9092", topic="machine-readings
             mid = reading.get("machine_id")
             branch = reading.get("branch")
             temp = float(reading.get("cycle_temperature", 0.0))
-            txn_ts = reading.get("timestamp")
+            raw_ts = reading.get("timestamp")
             
+            # Format timestamp safely for MySQL DATETIME
+            if not raw_ts:
+                txn_ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+            else:
+                txn_ts = str(raw_ts).replace("T", " ").split(".")[0].split("+")[0].strip()
+                if len(txn_ts) == 10:
+                    txn_ts += " 00:00:00"
+
             status = "ALERT" if temp > 70.0 else "NORMAL"
             breakdown_soon = 1 if temp > 68.0 else 0
             reading_id = reading.get("reading_id")
