@@ -8,8 +8,9 @@
     "connection.user": "root",
     "connection.password": "",
     "table.name.format": "readings_log",
-    "insert.mode": "insert",
-    "auto.create": "false",
+    "insert.mode": "upsert",
+    "auto.create": "true",
+    "auto.evolve": "true",
     "pk.mode": "record_value",
     "pk.fields": "reading_id"
   }

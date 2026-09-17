@@ -22,11 +22,14 @@ def upload_to_hdfs():
     for d in dirs:
         subprocess.run([HDFS_CMD, "dfs", "-mkdir", "-p", d], check=False)
 
-    # 2. Upload Raw Telemetry Parquet Files
-    parquet_files = [os.path.abspath(f) for f in glob.glob("data/machines/raw/*/*.parquet")]
-    for pf in parquet_files:
-        print(f"[*] Uploading Parquet file to HDFS: {pf}")
-        subprocess.run([HDFS_CMD, "dfs", "-put", "-f", pf, "hdfs://localhost:9000/data/machines/raw/part-0000.parquet"], check=False)
+    # 2. Upload Raw Telemetry Parquet & JSON Files
+    raw_files = [os.path.abspath(f) for f in glob.glob("data/machines/raw/*/*.*")]
+    for fpath in raw_files:
+        dt_dir = os.path.basename(os.path.dirname(fpath))
+        target_hdfs_dir = f"hdfs://localhost:9000/data/machines/raw/{dt_dir}"
+        subprocess.run([HDFS_CMD, "dfs", "-mkdir", "-p", target_hdfs_dir], check=False)
+        print(f"[*] Uploading file to HDFS: {fpath} -> {target_hdfs_dir}")
+        subprocess.run([HDFS_CMD, "dfs", "-put", "-f", fpath, target_hdfs_dir], check=False)
 
     # 3. Upload ML Predictions JSON
     pred_path = os.path.abspath("data/machines/predictions/latest_predictions.json")
