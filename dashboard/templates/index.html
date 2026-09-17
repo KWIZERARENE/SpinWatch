@@ -91,11 +91,16 @@
     </div>
 
     <!-- Summary Metrics Cards -->
-    <div class="metrics-grid">
+    <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
       <div class="metric-card">
         <div class="metric-title">Nationwide Fleet</div>
         <div class="metric-value" id="metric-total">1,000</div>
         <div class="metric-sub">Active washers across 13 branches</div>
+      </div>
+      <div class="metric-card good-card">
+        <div class="metric-title">Good Condition Fleet</div>
+        <div class="metric-value" id="metric-good-fleet" style="color: var(--accent-green);">--</div>
+        <div class="metric-sub">Normal temp (30°C - 70°C)</div>
       </div>
       <div class="metric-card">
         <div class="metric-title">Heat Alerts (>70°C)</div>
@@ -104,7 +109,7 @@
       </div>
       <div class="metric-card">
         <div class="metric-title">Average Fleet Temp</div>
-        <div class="metric-value" id="metric-avg-temp" style="color: var(--accent-orange);">--°C</div>
+        <div class="metric-value" id="metric-avg-temp" style="color: var(--accent-cyan);">--°C</div>
         <div class="metric-sub">Across active wash cycles</div>
       </div>
       <div class="metric-card">
@@ -456,6 +461,8 @@
 
       if (riskOnly || activeSourceMode === 'ML') {
         filtered = filtered.filter(m => m.status === 'ALERT' || predictionsMap[m.machine_id] === 1);
+      } else if (activeSourceMode === 'GOOD') {
+        filtered = filtered.filter(m => m.status === 'NORMAL' && m.cycle_temperature <= 70.0);
       }
 
       filtered.sort((a, b) => {
@@ -469,6 +476,10 @@
       const alertCount = rawMachinesData.filter(m => m.status === 'ALERT').length;
       document.getElementById('metric-alerts').innerText = alertCount;
 
+      const goodFleetCount = rawMachinesData.filter(m => m.status === 'NORMAL' && m.cycle_temperature <= 70.0).length;
+      const goodFleetElem = document.getElementById('metric-good-fleet');
+      if (goodFleetElem) goodFleetElem.innerText = goodFleetCount;
+
       const sumTemp = rawMachinesData.reduce((acc, m) => acc + parseFloat(m.cycle_temperature), 0);
       const avgTemp = rawMachinesData.length > 0 ? (sumTemp / rawMachinesData.length).toFixed(1) : '--';
       document.getElementById('metric-avg-temp').innerText = avgTemp + '°C';
@@ -480,7 +491,7 @@
       if (alertCount > 0 || predictedRiskCount > 0) {
         banner.style.display = 'flex';
         document.getElementById('alert-banner-detail').innerText = 
-          `Currently ${alertCount} washer(s) in heat ALERT (>70°C) and ${predictedRiskCount} machine(s) predicted for breakdown in HDFS.`;
+          `Currently ${alertCount} washer(s) in heat ALERT (>70°C) and ${goodFleetCount} washer(s) running in GOOD CONDITION (30°C - 70°C).`;
       } else {
         banner.style.display = 'none';
       }
@@ -491,10 +502,10 @@
       }
 
       tbody.innerHTML = filtered.slice(0, 100).map(m => {
-        const isAlert = m.status === 'ALERT';
-        const isRisk = predictionsMap[m.machine_id] === 1;
-        const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 75) * 100));
-        const barColor = m.cycle_temperature > 70 ? '#ef4444' : (m.cycle_temperature > 55 ? '#f97316' : '#06b6d4');
+        const isAlert = m.status === 'ALERT' || m.cycle_temperature > 70.0;
+        const isRisk = predictionsMap[m.machine_id] === 1 || m.cycle_temperature > 70.0;
+        const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 70) * 100));
+        const barColor = m.cycle_temperature > 70.0 ? '#ef4444' : (m.cycle_temperature > 55.0 ? '#f97316' : '#10b981');
 
         return `
           <tr>
@@ -514,8 +525,8 @@
               </span>
             </td>
             <td>
-              <span class="prediction-badge ${isRisk ? 'at-risk' : 'safe'}">
-                ${isRisk ? '⚠️ BREAKDOWN SOON' : 'NORMAL'}
+              <span class="prediction-badge ${isRisk ? 'at-risk' : 'good'}">
+                ${isRisk ? '⚠️ BREAKDOWN RISK' : '✅ GOOD CONDITION'}
               </span>
             </td>
             <td style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">

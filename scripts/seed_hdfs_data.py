@@ -50,9 +50,11 @@ def seed_data():
     
     for i, mid in enumerate(MACHINES):
         branch = random.choice(BRANCHES)
-        temp = round(random.uniform(42.0, 95.0), 2)
+        # Cycle temperature randomly generated between 30.0°C and 100.0°C
+        temp = round(random.uniform(30.0, 100.0), 2)
+
         status = "ALERT" if temp > 70.0 else "NORMAL"
-        breakdown_soon = 1 if temp > 68.0 else 0
+        breakdown_soon = 1 if temp > 70.0 else 0
         reading_id = str(uuid.uuid4())
         ts = (datetime.datetime.now() - datetime.timedelta(minutes=random.randint(1, 300))).strftime("%Y-%m-%d %H:%M:%S")
 
@@ -92,9 +94,10 @@ def seed_data():
     os.makedirs(pred_dir, exist_ok=True)
     os.makedirs(insight_dir, exist_ok=True)
 
+    # Save predictions for all 1,000 machines (0 = Good Condition, 1 = Breakdown Risk)
     sample_predictions = [
         {"machine_id": rec["machine_id"], "branch": rec["branch"], "prediction": rec["breakdown_soon"], "scored_at": today_str + " 18:00:00"}
-        for rec in records if rec["breakdown_soon"] == 1
+        for rec in records
     ]
     with open(os.path.join(pred_dir, "latest_predictions.json"), "w") as f:
         json.dump(sample_predictions, f, indent=2)
@@ -102,10 +105,17 @@ def seed_data():
     # Compute branch averages across 13 branches
     branch_totals = {}
     branch_counts = {}
+    good_condition_count = 0
+    normal_temp_count = 0
+
     for r in records:
         b = r["branch"]
         branch_totals[b] = branch_totals.get(b, 0.0) + r["cycle_temperature"]
         branch_counts[b] = branch_counts.get(b, 0) + 1
+        if 30.0 <= r["cycle_temperature"] <= 70.0:
+            normal_temp_count += 1
+        if r["breakdown_soon"] == 0:
+            good_condition_count += 1
 
     avg_by_branch = [
         {"branch": b, "avg_temperature": round(branch_totals[b] / branch_counts[b], 2)}
@@ -120,12 +130,15 @@ def seed_data():
 
     sample_insights = {
         "avg_by_branch": avg_by_branch,
-        "time_in_alert": time_in_alert
+        "time_in_alert": time_in_alert,
+        "good_condition_count": good_condition_count,
+        "normal_temp_count": normal_temp_count,
+        "total_machines": len(records)
     }
     with open(os.path.join(insight_dir, "latest_insights.json"), "w") as f:
         json.dump(sample_insights, f, indent=2)
 
-    print("[+] Saved HDFS predictions & PySpark insights to analytical store.")
+    print(f"[+] Saved HDFS predictions ({good_condition_count} Good Condition) & PySpark insights to analytical store.")
 
     # 4. Populate MySQL Operational Tables (machine_status, readings_log)
     if MYSQL_AVAILABLE:

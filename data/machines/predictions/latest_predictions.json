@@ -1,163 +1,343 @@
 [
   {
     "machine_id": "WM_0001",
-    "branch": "Nyagatare",
-    "prediction": 1,
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0002",
+    "branch": "Huye",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0003",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0006",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0008",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0013",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0014",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0017",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0020",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0021",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0022",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0023",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0024",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0029",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0032",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0034",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0035",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0037",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0040",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0042",
     "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0045",
-    "branch": "Musanze",
+    "machine_id": "WM_0004",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0005",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0046",
-    "branch": "Kamonyi",
+    "machine_id": "WM_0006",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0007",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0048",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0049",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0051",
+    "machine_id": "WM_0008",
     "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0052",
+    "machine_id": "WM_0009",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0010",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0011",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0012",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0013",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0014",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0015",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0016",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0017",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0018",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0019",
     "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0055",
+    "machine_id": "WM_0020",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0021",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0022",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0023",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0024",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0025",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0026",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0027",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0028",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0029",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0030",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0031",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0032",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0033",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0034",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0035",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0036",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0037",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0038",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0039",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0040",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0041",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0042",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0043",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0044",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0045",
     "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0046",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0047",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0048",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0049",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0050",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0051",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0052",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0053",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0054",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0055",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0056",
-    "branch": "Karongi",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0057",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -169,73 +349,157 @@
   },
   {
     "machine_id": "WM_0059",
-    "branch": "Rubavu",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0060",
+    "branch": "Huye",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0061",
+    "branch": "Bugesera",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0062",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0063",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0068",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0069",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0071",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0073",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0074",
     "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0063",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0064",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0065",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0066",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0067",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0068",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0069",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0070",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0071",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0072",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0073",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0074",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0075",
-    "branch": "Rubavu",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0076",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0077",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0078",
     "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0078",
-    "branch": "Bugesera",
+    "machine_id": "WM_0079",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0080",
-    "branch": "Huye",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0081",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0082",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0083",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0084",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -247,217 +511,409 @@
   },
   {
     "machine_id": "WM_0086",
-    "branch": "Huye",
-    "prediction": 1,
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0087",
+    "branch": "Karongi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0088",
     "branch": "Rusizi",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0089",
-    "branch": "Kamonyi",
+    "branch": "Karongi",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0090",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0091",
+    "branch": "Rubavu",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0092",
-    "branch": "Rwamagana",
-    "prediction": 1,
+    "branch": "Huye",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0093",
-    "branch": "Kamonyi",
+    "branch": "Kamembe",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0094",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0095",
+    "branch": "Kamembe",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0096",
     "branch": "Rusizi",
-    "prediction": 1,
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0097",
+    "branch": "Rwamagana",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0098",
     "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0099",
+    "branch": "Huye",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0100",
-    "branch": "Nyanza",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0101",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0102",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0103",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0105",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0106",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0112",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0113",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0115",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0116",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0117",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0118",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0119",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0120",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0123",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0124",
     "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0125",
-    "branch": "Bugesera",
-    "prediction": 1,
+    "machine_id": "WM_0102",
+    "branch": "Nyagatare",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0126",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0131",
+    "machine_id": "WM_0103",
     "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0133",
-    "branch": "Karongi",
+    "machine_id": "WM_0104",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0136",
+    "machine_id": "WM_0105",
     "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0106",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0107",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0108",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0138",
+    "machine_id": "WM_0109",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0110",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0111",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0112",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0113",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0114",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0115",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0116",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0117",
     "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0118",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0119",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0120",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0121",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0122",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0123",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0124",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0125",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0126",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0127",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0128",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0129",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0130",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0131",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0132",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0133",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0134",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0135",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0136",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0137",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0138",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0139",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0140",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0141",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0142",
     "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0143",
-    "branch": "Nyanza",
+    "branch": "Kamonyi",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0144",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0145",
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0146",
-    "branch": "Musanze",
-    "prediction": 1,
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0147",
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0148",
-    "branch": "Kigali",
-    "prediction": 1,
+    "branch": "Gicumbi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0149",
-    "branch": "Kigali",
-    "prediction": 1,
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0150",
-    "branch": "Kigali",
-    "prediction": 1,
+    "branch": "Kamembe",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0151",
-    "branch": "Huye",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0152",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0153",
+    "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -469,296 +925,548 @@
   },
   {
     "machine_id": "WM_0155",
-    "branch": "Kigali",
-    "prediction": 1,
+    "branch": "Kamembe",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0156",
-    "branch": "Musanze",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0157",
-    "branch": "Kamembe",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0158",
-    "branch": "Musanze",
+    "branch": "Nyanza",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0159",
-    "branch": "Rubavu",
+    "branch": "Nyanza",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0160",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0165",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0167",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0169",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0171",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0173",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0174",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0175",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0177",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0179",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0181",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0183",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0184",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0187",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0188",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0190",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0191",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0192",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0194",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0195",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0196",
     "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0199",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0203",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0209",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0210",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0211",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0212",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0213",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0214",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0219",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0221",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0222",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0224",
+    "machine_id": "WM_0161",
     "branch": "Karongi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0225",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0227",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0228",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0230",
+    "machine_id": "WM_0162",
     "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0236",
+    "machine_id": "WM_0163",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0164",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0165",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0166",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0167",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0168",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0169",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0170",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0171",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0172",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0173",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0174",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0175",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0176",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0177",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0178",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0179",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0180",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0181",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0182",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0183",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0184",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0185",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0186",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0187",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0188",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0189",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0190",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0191",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0192",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0193",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0194",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0195",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0196",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0197",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0198",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0199",
     "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0239",
+    "machine_id": "WM_0200",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0201",
     "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0202",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0203",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0204",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0205",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0206",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0207",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0208",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0209",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0210",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0211",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0212",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0213",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0214",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0215",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0216",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0217",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0218",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0219",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0220",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0221",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0222",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0223",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0224",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0225",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0226",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0227",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0228",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0229",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0230",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0231",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0232",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0233",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0234",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0235",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0236",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0237",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0238",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0239",
+    "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0240",
     "branch": "Karongi",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0241",
     "branch": "Bugesera",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0242",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "branch": "Rwamagana",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0243",
-    "branch": "Huye",
-    "prediction": 1,
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0244",
-    "branch": "Huye",
+    "branch": "Kigali",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0245",
+    "branch": "Rubavu",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
@@ -769,56 +1477,128 @@
   },
   {
     "machine_id": "WM_0247",
-    "branch": "Rwamagana",
+    "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0248",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "branch": "Rwamagana",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0252",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0253",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0259",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0260",
+    "machine_id": "WM_0249",
     "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0262",
-    "branch": "Gicumbi",
+    "machine_id": "WM_0250",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0251",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0252",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0263",
+    "machine_id": "WM_0253",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0254",
     "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0267",
+    "machine_id": "WM_0255",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0256",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0257",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0258",
     "branch": "Rubavu",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0259",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0260",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0261",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0262",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0263",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0264",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0265",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0266",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0267",
+    "branch": "Kigali",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
@@ -829,122 +1609,224 @@
   },
   {
     "machine_id": "WM_0269",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0270",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0275",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0276",
     "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0278",
-    "branch": "Rusizi",
+    "machine_id": "WM_0270",
+    "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0279",
-    "branch": "Karongi",
+    "machine_id": "WM_0271",
+    "branch": "Huye",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0281",
-    "branch": "Gicumbi",
-    "prediction": 1,
+    "machine_id": "WM_0272",
+    "branch": "Kamembe",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0283",
+    "machine_id": "WM_0273",
     "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0274",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0275",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0276",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0277",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0278",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0279",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0280",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0281",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0282",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0283",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0284",
-    "branch": "Kamembe",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0285",
-    "branch": "Musanze",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0286",
-    "branch": "Bugesera",
+    "branch": "Karongi",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0287",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0288",
+    "branch": "Rubavu",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0289",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "branch": "Kamonyi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0290",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0291",
     "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0292",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0293",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0294",
+    "branch": "Karongi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0295",
-    "branch": "Bugesera",
-    "prediction": 1,
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0296",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0297",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0298",
+    "branch": "Rubavu",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0299",
-    "branch": "Rwamagana",
+    "branch": "Karongi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0300",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0301",
-    "branch": "Rubavu",
-    "prediction": 1,
+    "branch": "Rwamagana",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0302",
-    "branch": "Musanze",
-    "prediction": 1,
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0303",
-    "branch": "Gicumbi",
-    "prediction": 1,
+    "branch": "Huye",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0304",
-    "branch": "Nyagatare",
-    "prediction": 1,
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0305",
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
@@ -954,494 +1836,992 @@
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0307",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0308",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0309",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0311",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0312",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0313",
     "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0316",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0317",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0318",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0319",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0320",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0321",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0322",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0325",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0326",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0328",
-    "branch": "Nyagatare",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0330",
+    "machine_id": "WM_0309",
     "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0310",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0311",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0312",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0313",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0314",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0315",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0316",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0317",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0318",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0319",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0320",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0321",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0322",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0323",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0324",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0325",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0326",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0327",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0328",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0329",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0330",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0331",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0332",
     "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0333",
-    "branch": "Kigali",
-    "prediction": 1,
+    "branch": "Karongi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0334",
-    "branch": "Kigali",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0335",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0336",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0337",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0338",
     "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0339",
-    "branch": "Karongi",
+    "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0340",
     "branch": "Nyagatare",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0341",
-    "branch": "Nyanza",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0342",
+    "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0343",
-    "branch": "Kamonyi",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0344",
+    "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0345",
-    "branch": "Nyagatare",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0347",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0348",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0349",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0355",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0357",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0358",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0364",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0366",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0368",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0369",
-    "branch": "Nyagatare",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0370",
     "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0371",
-    "branch": "Bugesera",
+    "machine_id": "WM_0346",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0347",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0372",
-    "branch": "Rubavu",
+    "machine_id": "WM_0348",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0349",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0373",
+    "machine_id": "WM_0350",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0351",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0352",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0353",
     "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0374",
+    "machine_id": "WM_0354",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0355",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0356",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0357",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0358",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0359",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0360",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0361",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0362",
     "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0363",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0364",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0365",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0366",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0367",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0368",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0369",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0370",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0371",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0372",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0373",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0374",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0375",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0376",
     "branch": "Kigali",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0377",
-    "branch": "Kamonyi",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0378",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0379",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0380",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0381",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0382",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0383",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0384",
-    "branch": "Kamembe",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0385",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0386",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0387",
     "branch": "Musanze",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0388",
-    "branch": "Huye",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0389",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0390",
+    "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0391",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0392",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0393",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0394",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0395",
     "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0396",
-    "branch": "Bugesera",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0397",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0398",
+    "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0399",
-    "branch": "Rwamagana",
-    "prediction": 1,
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0400",
+    "branch": "Gicumbi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0401",
-    "branch": "Rusizi",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0402",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0403",
+    "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0404",
-    "branch": "Karongi",
-    "prediction": 1,
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0405",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0406",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0407",
+    "branch": "Rwamagana",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0408",
-    "branch": "Rubavu",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0409",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0410",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0411",
+    "branch": "Huye",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0412",
-    "branch": "Gicumbi",
+    "branch": "Kamembe",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0413",
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0414",
-    "branch": "Kamonyi",
+    "branch": "Kamembe",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0415",
+    "branch": "Nyagatare",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0416",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0417",
     "branch": "Nyagatare",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0418",
-    "branch": "Nyagatare",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0419",
+    "branch": "Huye",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0420",
-    "branch": "Rusizi",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0421",
+    "branch": "Bugesera",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0422",
+    "branch": "Kigali",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0423",
     "branch": "Musanze",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0424",
-    "branch": "Gicumbi",
-    "prediction": 1,
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0425",
+    "branch": "Kamonyi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0426",
-    "branch": "Rwamagana",
-    "prediction": 1,
+    "branch": "Huye",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0427",
-    "branch": "Rwamagana",
-    "prediction": 1,
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0428",
-    "branch": "Gicumbi",
+    "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0429",
     "branch": "Gicumbi",
-    "prediction": 1,
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0430",
+    "branch": "Bugesera",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0431",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0432",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0433",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0434",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0435",
     "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0433",
-    "branch": "Karongi",
-    "prediction": 1,
+    "machine_id": "WM_0436",
+    "branch": "Bugesera",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0435",
+    "machine_id": "WM_0437",
     "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0438",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0439",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0440",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0441",
-    "branch": "Bugesera",
+    "branch": "Nyanza",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0442",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0443",
-    "branch": "Karongi",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0444",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0445",
-    "branch": "Karongi",
-    "prediction": 1,
+    "branch": "Nyagatare",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0446",
-    "branch": "Huye",
-    "prediction": 1,
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0447",
-    "branch": "Musanze",
+    "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0448",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0449",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0450",
     "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0451",
-    "branch": "Rwamagana",
-    "prediction": 1,
+    "branch": "Kigali",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0452",
-    "branch": "Rubavu",
+    "branch": "Huye",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0453",
-    "branch": "Musanze",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0454",
+    "branch": "Kamembe",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0455",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0456",
+    "branch": "Kigali",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0457",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0461",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0462",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0464",
     "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0465",
-    "branch": "Karongi",
+    "machine_id": "WM_0458",
+    "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0459",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0460",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0461",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0462",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0463",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0464",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0465",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0466",
-    "branch": "Rubavu",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0467",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0468",
     "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0469",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0470",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0471",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -1453,73 +2833,145 @@
   },
   {
     "machine_id": "WM_0473",
-    "branch": "Karongi",
+    "branch": "Huye",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0475",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0476",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0477",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0478",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0481",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0484",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0485",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0487",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0490",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0492",
+    "machine_id": "WM_0474",
     "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0496",
+    "machine_id": "WM_0475",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0476",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0477",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0478",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0479",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0480",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0481",
     "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0482",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0483",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0484",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0485",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0486",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0487",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0488",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0489",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0490",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0491",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0492",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0493",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0494",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0495",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0496",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -1531,151 +2983,313 @@
   },
   {
     "machine_id": "WM_0498",
-    "branch": "Rwamagana",
+    "branch": "Kigali",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0499",
+    "branch": "Bugesera",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0500",
-    "branch": "Karongi",
-    "prediction": 1,
+    "branch": "Kamembe",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0501",
-    "branch": "Rubavu",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0502",
-    "branch": "Karongi",
+    "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0503",
-    "branch": "Kigali",
-    "prediction": 1,
+    "branch": "Huye",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0504",
-    "branch": "Kigali",
-    "prediction": 1,
+    "branch": "Karongi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0505",
-    "branch": "Gicumbi",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0506",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0508",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0510",
-    "branch": "Nyagatare",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0511",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0512",
     "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0515",
+    "machine_id": "WM_0507",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0508",
     "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0509",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0510",
+    "branch": "Karongi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0517",
+    "machine_id": "WM_0511",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0512",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0513",
     "branch": "Huye",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0514",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0515",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0516",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0517",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0518",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0519",
-    "branch": "Karongi",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0520",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0521",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0522",
     "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0523",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0524",
+    "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0525",
-    "branch": "Gicumbi",
+    "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0526",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0527",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0528",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0529",
     "branch": "Kamonyi",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0530",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0531",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0532",
+    "branch": "Musanze",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0533",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0537",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0539",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0541",
     "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0542",
-    "branch": "Musanze",
+    "machine_id": "WM_0534",
+    "branch": "Karongi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0544",
+    "machine_id": "WM_0535",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0536",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0537",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0538",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0539",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0540",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0541",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0542",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0543",
     "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0544",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0545",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0546",
-    "branch": "Kamonyi",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0547",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0548",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0549",
+    "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -1687,86 +3301,134 @@
   },
   {
     "machine_id": "WM_0551",
-    "branch": "Musanze",
-    "prediction": 1,
+    "branch": "Karongi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0552",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "branch": "Rubavu",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0553",
-    "branch": "Rwamagana",
-    "prediction": 1,
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0554",
+    "branch": "Gicumbi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0555",
-    "branch": "Kigali",
+    "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0556",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0557",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0558",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0559",
     "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0560",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0561",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0562",
-    "branch": "Nyanza",
-    "prediction": 1,
+    "branch": "Nyagatare",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0563",
-    "branch": "Rubavu",
-    "prediction": 1,
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0564",
-    "branch": "Kamonyi",
-    "prediction": 1,
+    "branch": "Gicumbi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0565",
-    "branch": "Musanze",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0566",
-    "branch": "Nyanza",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0567",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0568",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0569",
-    "branch": "Rusizi",
+    "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0570",
-    "branch": "Rusizi",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0571",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0572",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
@@ -1776,44 +3438,98 @@
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0577",
-    "branch": "Nyagatare",
+    "machine_id": "WM_0574",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0575",
+    "branch": "Rusizi",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0576",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0577",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0578",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0579",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0580",
+    "branch": "Nyagatare",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0581",
-    "branch": "Musanze",
-    "prediction": 1,
+    "branch": "Kamonyi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0582",
-    "branch": "Huye",
+    "branch": "Bugesera",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0583",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0584",
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0585",
-    "branch": "Gicumbi",
+    "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0586",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0587",
-    "branch": "Rubavu",
+    "branch": "Karongi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0588",
-    "branch": "Gicumbi",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0589",
-    "branch": "Musanze",
+    "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -1824,105 +3540,195 @@
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0593",
-    "branch": "Musanze",
-    "prediction": 1,
+    "machine_id": "WM_0591",
+    "branch": "Rusizi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0594",
+    "machine_id": "WM_0592",
     "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0596",
-    "branch": "Nyanza",
+    "machine_id": "WM_0593",
+    "branch": "Bugesera",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0594",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0595",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0596",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0597",
+    "branch": "Huye",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0598",
-    "branch": "Rubavu",
-    "prediction": 1,
+    "branch": "Karongi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0599",
-    "branch": "Rwamagana",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0600",
     "branch": "Rubavu",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0601",
-    "branch": "Kigali",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0602",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0603",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0604",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0605",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0606",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0607",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0608",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0609",
     "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0608",
-    "branch": "Nyagatare",
+    "machine_id": "WM_0610",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0609",
-    "branch": "Karongi",
-    "prediction": 1,
+    "machine_id": "WM_0611",
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0612",
-    "branch": "Nyanza",
-    "prediction": 1,
+    "branch": "Rubavu",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0613",
-    "branch": "Rusizi",
-    "prediction": 1,
+    "branch": "Gicumbi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0614",
-    "branch": "Musanze",
-    "prediction": 1,
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0615",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0616",
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0617",
-    "branch": "Karongi",
-    "prediction": 1,
+    "branch": "Kamembe",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0618",
-    "branch": "Kamembe",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0619",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0620",
-    "branch": "Musanze",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0621",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0622",
-    "branch": "Rwamagana",
-    "prediction": 1,
+    "branch": "Huye",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
@@ -1932,44 +3738,86 @@
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0625",
-    "branch": "Bugesera",
+    "machine_id": "WM_0624",
+    "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0625",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0626",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0627",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0628",
-    "branch": "Gicumbi",
+    "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0629",
-    "branch": "Bugesera",
-    "prediction": 1,
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0630",
+    "branch": "Kamembe",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0631",
     "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0632",
+    "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0633",
-    "branch": "Rubavu",
-    "prediction": 1,
+    "branch": "Bugesera",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0634",
-    "branch": "Kamonyi",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0635",
-    "branch": "Nyagatare",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0636",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0637",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -1981,49 +3829,73 @@
   },
   {
     "machine_id": "WM_0639",
-    "branch": "Kigali",
-    "prediction": 1,
+    "branch": "Rubavu",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0641",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0644",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0646",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0647",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0648",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0649",
+    "machine_id": "WM_0640",
     "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0650",
+    "machine_id": "WM_0641",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0642",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0643",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0644",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0645",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0646",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0647",
     "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0648",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0649",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0650",
+    "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -2035,19 +3907,43 @@
   },
   {
     "machine_id": "WM_0652",
-    "branch": "Bugesera",
-    "prediction": 1,
+    "branch": "Kigali",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0653",
-    "branch": "Kamonyi",
+    "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0654",
-    "branch": "Kamonyi",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0655",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0656",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0657",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0658",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -2058,201 +3954,411 @@
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0661",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0663",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0666",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0668",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0672",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0673",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0674",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0675",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0676",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0677",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0679",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0680",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0681",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0682",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0683",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0684",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0686",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0687",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0690",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0691",
-    "branch": "Nyagatare",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0698",
+    "machine_id": "WM_0660",
     "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0699",
+    "machine_id": "WM_0661",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0662",
     "branch": "Nyagatare",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0701",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0702",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0705",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0707",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0708",
-    "branch": "Nyagatare",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0711",
+    "machine_id": "WM_0663",
     "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0715",
-    "branch": "Karongi",
+    "machine_id": "WM_0664",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0665",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0666",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0667",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0668",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0669",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0670",
+    "branch": "Rubavu",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0671",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0672",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0673",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0674",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0675",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0676",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0677",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0678",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0679",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0680",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0681",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0682",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0683",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0684",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0685",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0686",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0687",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0688",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0689",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0690",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0691",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0692",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0693",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0694",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0695",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0696",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0697",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0698",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0699",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0700",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0701",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0702",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0703",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0704",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0705",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0706",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0707",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0708",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0709",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0710",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0711",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0712",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0713",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0714",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0715",
+    "branch": "Kamembe",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0716",
-    "branch": "Karongi",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0717",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0718",
+    "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0719",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0720",
-    "branch": "Bugesera",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0721",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0722",
+    "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0723",
-    "branch": "Rwamagana",
+    "branch": "Huye",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0726",
-    "branch": "Rwamagana",
+    "machine_id": "WM_0724",
+    "branch": "Rubavu",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0725",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0726",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0727",
+    "branch": "Huye",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
@@ -2263,32 +4369,74 @@
   },
   {
     "machine_id": "WM_0729",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0730",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0731",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0732",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0733",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0734",
     "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0732",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "machine_id": "WM_0735",
+    "branch": "Gicumbi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0736",
-    "branch": "Musanze",
-    "prediction": 1,
+    "branch": "Bugesera",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0737",
-    "branch": "Rwamagana",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0738",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0739",
-    "branch": "Karongi",
+    "branch": "Rubavu",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0740",
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
@@ -2300,433 +4448,787 @@
   {
     "machine_id": "WM_0742",
     "branch": "Rubavu",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0743",
-    "branch": "Nyagatare",
+    "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0744",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0745",
-    "branch": "Kamonyi",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0746",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0747",
+    "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0748",
-    "branch": "Rusizi",
-    "prediction": 1,
+    "branch": "Kamembe",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0749",
-    "branch": "Gicumbi",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0750",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0751",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0752",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0753",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0754",
-    "branch": "Gicumbi",
-    "prediction": 1,
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0755",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0756",
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0757",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0759",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0760",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0762",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0764",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0767",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0768",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0770",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0771",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0773",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0774",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0775",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0777",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0781",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0783",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0786",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0790",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0791",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0792",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0793",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0794",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0796",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0797",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0798",
-    "branch": "Karongi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0799",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0800",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0802",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0803",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0804",
-    "branch": "Bugesera",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0805",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0806",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0810",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0811",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0812",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0815",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0816",
-    "branch": "Kamembe",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0818",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0820",
     "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0821",
+    "machine_id": "WM_0758",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0759",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0760",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0761",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0762",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0763",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0764",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0765",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0766",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0767",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0768",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0769",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0770",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0771",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0772",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0773",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0774",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0775",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0776",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0777",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0778",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0779",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0780",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0781",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0782",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0783",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0784",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0785",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0786",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0787",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0788",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0789",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0790",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0791",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0792",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0793",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0794",
     "branch": "Rwamagana",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0822",
-    "branch": "Kamonyi",
+    "machine_id": "WM_0795",
+    "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0823",
+    "machine_id": "WM_0796",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0797",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0798",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0799",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0800",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0801",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0802",
+    "branch": "Rusizi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0803",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0804",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0805",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0806",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0807",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0808",
     "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0809",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0810",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0811",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0812",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0813",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0814",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0815",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0816",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0817",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0818",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0819",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0820",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0821",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0822",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0823",
+    "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0824",
     "branch": "Nyagatare",
-    "prediction": 1,
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0825",
+    "branch": "Huye",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0826",
-    "branch": "Kamembe",
-    "prediction": 1,
+    "branch": "Musanze",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0827",
-    "branch": "Gicumbi",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0828",
-    "branch": "Kamembe",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0829",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0831",
+    "machine_id": "WM_0830",
     "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0831",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0832",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0833",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0834",
+    "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0835",
-    "branch": "Rubavu",
-    "prediction": 1,
+    "branch": "Musanze",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0836",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0837",
     "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0838",
-    "branch": "Kamonyi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0840",
     "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0839",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0840",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0841",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0842",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0844",
     "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0842",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0843",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0844",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0845",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0846",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0847",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0848",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0849",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0850",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0851",
     "branch": "Huye",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0852",
-    "branch": "Bugesera",
-    "prediction": 1,
+    "branch": "Kamonyi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0853",
-    "branch": "Nyagatare",
+    "branch": "Nyanza",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0854",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0858",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0860",
-    "branch": "Rwamagana",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0861",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0863",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0864",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0865",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0866",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0867",
     "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0868",
-    "branch": "Musanze",
+    "machine_id": "WM_0855",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0856",
+    "branch": "Kamonyi",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0857",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0858",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0859",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0860",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0861",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0862",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0863",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0864",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0865",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0866",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0867",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0868",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0869",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0870",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0871",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0872",
+    "branch": "Karongi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
@@ -2737,13 +5239,25 @@
   },
   {
     "machine_id": "WM_0874",
-    "branch": "Gicumbi",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0875",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0876",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0877",
-    "branch": "Kamonyi",
+    "branch": "Karongi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -2755,14 +5269,20 @@
   },
   {
     "machine_id": "WM_0879",
-    "branch": "Rwamagana",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0880",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0881",
-    "branch": "Nyanza",
-    "prediction": 1,
+    "branch": "Rwamagana",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
@@ -2772,176 +5292,440 @@
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0886",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0887",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0889",
-    "branch": "Rusizi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0891",
+    "machine_id": "WM_0883",
     "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0893",
-    "branch": "Kigali",
+    "machine_id": "WM_0884",
+    "branch": "Nyagatare",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0896",
+    "machine_id": "WM_0885",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0886",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0887",
     "branch": "Rubavu",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0903",
-    "branch": "Rubavu",
-    "prediction": 1,
+    "machine_id": "WM_0888",
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0907",
-    "branch": "Rwamagana",
-    "prediction": 1,
+    "machine_id": "WM_0889",
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0908",
+    "machine_id": "WM_0890",
     "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0911",
-    "branch": "Nyanza",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0912",
+    "machine_id": "WM_0891",
     "branch": "Rwamagana",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0914",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0916",
-    "branch": "Nyagatare",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0919",
+    "machine_id": "WM_0892",
     "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0921",
+    "machine_id": "WM_0893",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0894",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0895",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0896",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0897",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0898",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0899",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0900",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0901",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0902",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0903",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0904",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0905",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0906",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0907",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0908",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0909",
     "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0910",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0911",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0912",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0913",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0914",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0915",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0916",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0917",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0918",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0919",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0920",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0921",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0922",
-    "branch": "Bugesera",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0923",
+    "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0924",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0925",
+    "branch": "Kamonyi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0926",
-    "branch": "Huye",
-    "prediction": 1,
+    "branch": "Nyagatare",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0927",
     "branch": "Rusizi",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0928",
-    "branch": "Bugesera",
+    "branch": "Nyanza",
     "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0929",
+    "branch": "Kamonyi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0930",
+    "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0931",
+    "branch": "Nyanza",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0932",
     "branch": "Nyagatare",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0933",
+    "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0934",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0935",
     "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0936",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0937",
-    "branch": "Rwamagana",
+    "branch": "Kigali",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0938",
+    "branch": "Gicumbi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0939",
+    "branch": "Huye",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0940",
     "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0941",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0943",
     "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0942",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0943",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0944",
+    "branch": "Rusizi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0945",
+    "branch": "Nyagatare",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0946",
-    "branch": "Kamembe",
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0947",
+    "branch": "Nyanza",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0948",
-    "branch": "Kamembe",
+    "branch": "Musanze",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0949",
-    "branch": "Rwamagana",
-    "prediction": 1,
+    "branch": "Kamonyi",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0950",
-    "branch": "Musanze",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0951",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0952",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0953",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0954",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0955",
+    "branch": "Gicumbi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
@@ -2953,6 +5737,12 @@
   },
   {
     "machine_id": "WM_0957",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0958",
     "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
@@ -2964,123 +5754,249 @@
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0960",
+    "branch": "Kigali",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0961",
-    "branch": "Bugesera",
-    "prediction": 1,
+    "branch": "Rubavu",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0962",
+    "branch": "Rubavu",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0963",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0966",
-    "branch": "Nyagatare",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0970",
-    "branch": "Rubavu",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0971",
-    "branch": "Musanze",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0974",
-    "branch": "Kigali",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0976",
     "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0977",
+    "machine_id": "WM_0964",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0965",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0966",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0967",
+    "branch": "Kamonyi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0968",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0969",
+    "branch": "Musanze",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0970",
     "branch": "Bugesera",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0978",
+    "machine_id": "WM_0971",
+    "branch": "Karongi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0972",
     "branch": "Rubavu",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
+    "machine_id": "WM_0973",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0974",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0975",
+    "branch": "Bugesera",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0976",
+    "branch": "Kamembe",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0977",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0978",
+    "branch": "Rwamagana",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
     "machine_id": "WM_0979",
-    "branch": "Karongi",
+    "branch": "Rusizi",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0980",
-    "branch": "Nyagatare",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0981",
-    "branch": "Gicumbi",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0982",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0989",
-    "branch": "Huye",
-    "prediction": 1,
-    "scored_at": "2026-09-17 18:00:00"
-  },
-  {
-    "machine_id": "WM_0992",
     "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
-    "machine_id": "WM_0993",
+    "machine_id": "WM_0981",
+    "branch": "Kamembe",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0982",
+    "branch": "Rwamagana",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0983",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0984",
+    "branch": "Musanze",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0985",
+    "branch": "Rubavu",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0986",
+    "branch": "Gicumbi",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0987",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0988",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0989",
     "branch": "Bugesera",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0990",
+    "branch": "Kigali",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0991",
+    "branch": "Huye",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0992",
+    "branch": "Karongi",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0993",
+    "branch": "Nyanza",
+    "prediction": 1,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0994",
+    "branch": "Kamembe",
     "prediction": 1,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0995",
     "branch": "Kamembe",
-    "prediction": 1,
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0996",
-    "branch": "Karongi",
-    "prediction": 1,
+    "branch": "Nyagatare",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0997",
-    "branch": "Nyagatare",
-    "prediction": 1,
+    "branch": "Musanze",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   },
   {
     "machine_id": "WM_0998",
     "branch": "Gicumbi",
-    "prediction": 1,
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_0999",
+    "branch": "Nyanza",
+    "prediction": 0,
+    "scored_at": "2026-09-17 18:00:00"
+  },
+  {
+    "machine_id": "WM_1000",
+    "branch": "Nyagatare",
+    "prediction": 0,
     "scored_at": "2026-09-17 18:00:00"
   }
 ]

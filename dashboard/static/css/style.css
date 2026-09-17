@@ -509,7 +509,13 @@ tr:hover td {
   color: #ffffff;
 }
 
-.prediction-badge.safe {
-  background: rgba(0, 0, 0, 0.05);
-  color: var(--text-muted);
+.prediction-badge.safe, .prediction-badge.good {
+  background: rgba(16, 185, 129, 0.16);
+  color: var(--accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.4);
 }
+
+.metric-card.good-card {
+  border-left: 4px solid var(--accent-green);
+}
+

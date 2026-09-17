@@ -1,7 +1,7 @@
 """
 SpinWatch - Washing Machine Telemetry Stream Generator
-Continuous telemetry generator producing machine_id, branch, cycle_temperature, timestamp, status, breakdown_soon.
-Monitors cycle_temperature (°C) to track machine performance and heat drift.
+Simulates continuous reading stream for 1,000 washing machines across 13 nationwide branches.
+Monitors cycle_temperature randomly generated between 30.0°C and 100.0°C.
 """
 
 import time
@@ -11,43 +11,39 @@ import argparse
 import datetime
 import requests
 
-BRANCHES = ["Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare"]
+BRANCHES = [
+    "Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare",
+    "Rwamagana", "Gicumbi", "Kamembe", "Karongi", "Nyanza", "Bugesera", "Kamonyi"
+]
 
-# Setup 30 washing machines across 6 nationwide branches
+# Setup 1,000 washing machines nationwide
 MACHINES = [
     {
         "machine_id": f"WM_{i:04d}",
         "branch": random.choice(BRANCHES)
     }
-    for i in range(1, 31)
+    for i in range(1, 1001)
 ]
-
-# Baseline cycle temperature per machine (°C)
-base_temperature = {
-    m["machine_id"]: random.uniform(40.0, 55.0) for m in MACHINES
-}
 
 def generate_telemetry():
     parser = argparse.ArgumentParser(description="SpinWatch Telemetry Stream Generator")
-    parser.add_argument("--tps", type=float, default=3.0, help="Readings per second (default: 3)")
+    parser.add_argument("--tps", type=float, default=5.0, help="Readings per second (default: 5)")
     parser.add_argument("--target-url", type=str, default="http://localhost:8000/api/readings/", help="Target REST API URL")
     args = parser.parse_args()
 
-    print(f"[*] Starting Telemetry Generator at {args.tps} TPS...")
-    print(f"[*] Target Endpoint: {args.target_url}")
+    print(f"[*] Starting Generator for 1,000 Washers (Temp 30°C - 100°C) at {args.tps} TPS...")
+    print(f"[*] Target Ingress Endpoint: {args.target_url}")
     print("[*] Press Ctrl+C to stop.")
 
     while True:
         machine = random.choice(MACHINES)
         mid = machine["machine_id"]
 
-        # Thermal drift simulation
-        drift = random.uniform(-0.5, 0.9)
-        base_temperature[mid] += drift
-        base_temperature[mid] = max(30.0, min(base_temperature[mid], 85.0))
+        # Cycle temperature randomly generated between 30.0°C and 100.0°C
+        current_temp = round(random.uniform(30.0, 100.0), 2)
 
-        current_temp = round(base_temperature[mid], 2)
         status = "ALERT" if current_temp > 70.0 else "NORMAL"
+        breakdown_soon = 1 if current_temp > 70.0 else 0
         now_str = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
         reading = {
@@ -57,7 +53,7 @@ def generate_telemetry():
             "cycle_temperature": current_temp,
             "timestamp": now_str,
             "status": status,
-            "breakdown_soon": 1 if current_temp > 68.0 else 0
+            "breakdown_soon": breakdown_soon
         }
 
         try:
@@ -65,7 +61,7 @@ def generate_telemetry():
             if resp.status_code not in (200, 201, 202):
                 print(f"[!] API HTTP {resp.status_code}: {resp.text}")
         except Exception as e:
-            print(f"[!] Delivery issue: {e}")
+            print(f"[!] Stream delivery issue: {e}")
 
         time.sleep(1.0 / args.tps)
 
