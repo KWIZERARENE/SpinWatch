@@ -1,7 +1,7 @@
 """
-SpinWatch - Washing Machine Telemetry Generator (Heat & Performance Focus)
-Simulates continuous reading stream from 30 washing machines across 6 nationwide branches.
-Monitors cycle_temperature and timestamp to track machine performance and heat drift.
+SpinWatch - Washing Machine Telemetry Stream Generator
+Continuous telemetry generator producing machine_id, branch, cycle_temperature, timestamp, status, breakdown_soon.
+Monitors cycle_temperature (°C) to track machine performance and heat drift.
 """
 
 import time
@@ -11,40 +11,39 @@ import argparse
 import datetime
 import requests
 
-BRANCHES = ["Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare","Rwamagana","Gicumbi","kamembe","karongi","Nyanza","Bugesera","kamonyi"]
+BRANCHES = ["Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare"]
 
-# Setup 30 washing machines across branches
+# Setup 30 washing machines across 6 nationwide branches
 MACHINES = [
     {
         "machine_id": f"WM_{i:04d}",
         "branch": random.choice(BRANCHES)
     }
-    for i in range(1, 1000)
+    for i in range(1, 31)
 ]
 
 # Baseline cycle temperature per machine (°C)
 base_temperature = {
-    m["machine_id"]: random.uniform(40.0, 155.0) for m in MACHINES
+    m["machine_id"]: random.uniform(40.0, 55.0) for m in MACHINES
 }
 
 def generate_telemetry():
-    parser = argparse.ArgumentParser(description="SpinWatch Heat Stream Telemetry Generator")
+    parser = argparse.ArgumentParser(description="SpinWatch Telemetry Stream Generator")
     parser.add_argument("--tps", type=float, default=3.0, help="Readings per second (default: 3)")
     parser.add_argument("--target-url", type=str, default="http://localhost:8000/api/readings/", help="Target REST API URL")
     args = parser.parse_args()
 
-    print(f"[*] Starting SpinWatch Heat Telemetry Generator at {args.tps} TPS...")
+    print(f"[*] Starting Telemetry Generator at {args.tps} TPS...")
     print(f"[*] Target Endpoint: {args.target_url}")
-    print("[*] Press Ctrl+C to terminate.")
+    print("[*] Press Ctrl+C to stop.")
 
     while True:
         machine = random.choice(MACHINES)
         mid = machine["machine_id"]
 
-        # Simulate progressive heat accumulation / thermal drift
+        # Thermal drift simulation
         drift = random.uniform(-0.5, 0.9)
         base_temperature[mid] += drift
-        # Clamp temperature between realistic lower bound (30°C) and overheating bound (85°C)
         base_temperature[mid] = max(30.0, min(base_temperature[mid], 85.0))
 
         current_temp = round(base_temperature[mid], 2)
@@ -66,7 +65,7 @@ def generate_telemetry():
             if resp.status_code not in (200, 201, 202):
                 print(f"[!] API HTTP {resp.status_code}: {resp.text}")
         except Exception as e:
-            print(f"[!] Stream delivery issue (retrying...): {e}")
+            print(f"[!] Delivery issue: {e}")
 
         time.sleep(1.0 / args.tps)
 

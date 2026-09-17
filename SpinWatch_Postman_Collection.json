@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "SpinWatch Big Data Pipeline Verification Collection",
-    "description": "Postman Collection for inspecting telemetry data at every stage of the SpinWatch Pipeline:\n- Point 1: Stream Telemetry Ingress (POST /api/readings/)\n- Point 2: Kafka Ecosystem & Partitions (GET /api/kafka/status)\n- Point 3a: HDFS Landed Raw Telemetry Records (GET /api/hdfs/raw)\n- Point 3b: MySQL Operational Storage (GET /api/sql/readings)\n- Point 4a: PySpark MLlib Predictive Failure Model (GET /api/predictions)\n- Point 4b: PySpark Heat Insights (GET /api/insights)",
+    "description": "Postman Collection for inspecting telemetry data at every stage of the SpinWatch Pipeline:\n- Point 1: Stream Telemetry Ingress (POST & GET /api/readings/)\n- Point 2: Kafka Ecosystem & Partitions (GET /api/kafka/status)\n- Point 3a: Kafka Connect Storage Sinks (GET /api/connect/status)\n- Point 3b: HDFS Landed Raw Telemetry & Long-Period Time-Travel (GET /api/hdfs/raw & /api/hdfs/history?dt=YYYY-MM-DD)\n- Point 3c: MySQL Operational Storage (GET /api/sql/readings)\n- Point 4a: PySpark MLlib Predictive Failure Model (GET /api/predictions)\n- Point 4b: PySpark Heat Insights (GET /api/insights)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -17,7 +17,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"reading_id\": \"d7f8a1e2-0000-4000-8000-000000000001\",\n  \"machine_id\": \"WM_0007\",\n  \"branch\": \"Kigali\",\n  \"cycle_temperature\": 74.50,\n  \"timestamp\": \"2026-09-16T18:00:00Z\",\n  \"status\": \"ALERT\",\n  \"breakdown_soon\": 1\n}"
+          "raw": "{\n  \"reading_id\": \"d7f8a1e2-0000-4000-8000-000000000001\",\n  \"machine_id\": \"WM_0007\",\n  \"branch\": \"Kigali\",\n  \"cycle_temperature\": 74.50,\n  \"timestamp\": \"2026-09-17T10:00:00Z\",\n  \"status\": \"ALERT\",\n  \"breakdown_soon\": 1\n}"
         },
         "url": {
           "raw": "http://localhost:8000/api/readings/",
@@ -36,12 +36,12 @@
       }
     },
     {
-      "name": "Point 1: Generator Ingress Health Check (GET)",
+      "name": "Point 1: Telemetry Ingress Stream Inspector (GET)",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8000/api/generator/status",
+          "raw": "http://localhost:8000/api/readings/",
           "protocol": "http",
           "host": [
             "localhost"
@@ -49,11 +49,11 @@
           "port": "8000",
           "path": [
             "api",
-            "generator",
-            "status"
+            "readings",
+            ""
           ]
         },
-        "description": "Checks health and schema specification of the generator stream ingress."
+        "description": "Inspects recent stream readings received by the ingress server."
       }
     },
     {
@@ -74,11 +74,32 @@
             "status"
           ]
         },
-        "description": "Inspects Kafka topic 'machine-readings', partition count, consumer group, and partition key strategy."
+        "description": "Inspects Kafka topic 'machine-readings', 3 partitions, consumer group, and partition key strategy."
       }
     },
     {
-      "name": "Point 3a: HDFS Landed Historical Data Check",
+      "name": "Point 3a: Kafka Connect Automatic Sinks Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/connect/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "connect",
+            "status"
+          ]
+        },
+        "description": "Inspects status of Kafka Connect sinks: mysql-sink-laundry and hdfs-sink-laundry."
+      }
+    },
+    {
+      "name": "Point 3b: HDFS Landed Historical Data Check",
       "request": {
         "method": "GET",
         "header": [],
@@ -99,7 +120,34 @@
       }
     },
     {
-      "name": "Point 3b: MySQL Operational Storage Check",
+      "name": "Point 3c: HDFS Historical Time-Travel Date Query",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/hdfs/history?dt=2026-09-17",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "hdfs",
+            "history"
+          ],
+          "query": [
+            {
+              "key": "dt",
+              "value": "2026-09-17"
+            }
+          ]
+        },
+        "description": "Queries historical telemetry records stored in a specific HDFS date partition (dt=YYYY-MM-DD)."
+      }
+    },
+    {
+      "name": "Point 3d: MySQL Operational Storage Check",
       "request": {
         "method": "GET",
         "header": [],
@@ -136,7 +184,7 @@
             "predictions"
           ]
         },
-        "description": "Fetches PySpark MLlib LogisticRegression predictive failure flags (breakdown_soon = 1 vs 0)."
+        "description": "Fetches PySpark MLlib LogisticRegression predictive failure flags (breakdown_soon = 1 vs 0) stored in HDFS."
       }
     },
     {
@@ -156,7 +204,7 @@
             "insights"
           ]
         },
-        "description": "Fetches PySpark calculated branch temperature averages and top overheating machine alert counts."
+        "description": "Fetches PySpark calculated branch temperature averages and top overheating machine alert counts stored in HDFS."
       }
     }
   ]

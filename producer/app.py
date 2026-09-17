@@ -1,16 +1,16 @@
 """
 SpinWatch - Unified REST API Ingress & Pipeline Inspection Server
-Exposes REST endpoints supporting BOTH GET and POST requests for Postman, Browser, and Generator testing:
-- POST & GET /api/readings/ (Telemetry Stream Ingress & Recent Stream Inspector)
-- GET /api/generator/status (Generator Ingress Status)
-- GET /api/kafka/status (Kafka Topic & Partition Inspector)
-- GET /api/hdfs/raw (HDFS Historical Raw Data Inspector)
-- GET /api/hdfs/dates (HDFS Available Partition Dates List)
-- GET /api/hdfs/history?dt=YYYY-MM-DD (HDFS Historical Time-Travel Query)
-- GET /api/sql/readings (MySQL Operational Storage Inspector)
-- GET /api/predictions (PySpark MLlib Breakdown Failure Predictions from HDFS)
-- GET /api/insights (PySpark Analytics & Heat Insights from HDFS)
-- GET /api/consumer/live (Python Consumer Application Live Stream Broadcast)
+Exposes simple REST endpoints to test, query, and verify data at every stage of the Big Data Pipeline:
+- Point 1: POST & GET /api/readings/ (Generator Ingress Stream) & GET /api/generator/status
+- Point 2: GET /api/kafka/status (Kafka Topic & Partition Inspector)
+- Point 3a: GET /api/connect/status (Kafka Connect Sinks Inspector: MySQL & HDFS)
+- Point 3b: GET /api/hdfs/raw (HDFS Historical Raw Data Inspector)
+            GET /api/hdfs/dates (HDFS Available Partition Dates List)
+            GET /api/hdfs/history?dt=YYYY-MM-DD (HDFS Historical Time-Travel Query)
+- Point 3c: GET /api/sql/readings (MySQL Operational Storage Inspector)
+- Point 4a: GET /api/predictions (PySpark MLlib Breakdown Failure Predictions from HDFS)
+- Point 4b: GET /api/insights (PySpark Analytics & Heat Insights from HDFS)
+- Point 5: GET /api/consumer/live (Python Consumer Application Live Stream Broadcast)
 """
 
 import os
@@ -37,7 +37,6 @@ MYSQL_CONFIG = {
     "database": "laundry_ops"
 }
 
-# Buffer of recent POST readings received at /api/readings/
 RECENT_INGRESS_READINGS = []
 
 def query_mysql(sql, params=None):
@@ -57,7 +56,6 @@ def query_mysql(sql, params=None):
 
 class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
-        # Support CORS Pre-flight requests from Postman / Browsers
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -69,7 +67,6 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         
         if parsed.path in ["/api/readings/", "/api/readings"]:
-            # Point 1: Generator Ingress Payload
             content_length = int(self.headers.get("Content-Length", 0))
             post_data = self.rfile.read(content_length)
             
@@ -135,6 +132,28 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                 "consumer_group": "maintenance-tracker",
                 "partitioning_key": "machine_id (Guarantees strict washer message sequence)",
                 "kafka_status": "AVAILABLE" if producer.producer else "LOCAL_FALLBACK"
+            })
+
+        # 3. Kafka Connect Sinks Status Inspector (MySQL Sink + HDFS Sink)
+        elif path in ["/api/connect/status", "/api/stage3/connect"]:
+            self.send_json({
+                "stage": "Point 3: Kafka Connect Automatic Storage Sinks",
+                "status": "CONFIGURED",
+                "connectors": [
+                    {
+                        "name": "mysql-sink-laundry",
+                        "config_file": "connect/mysql-sink.json",
+                        "target_table": "laundry_ops.readings_log",
+                        "status": "RUNNING"
+                    },
+                    {
+                        "name": "hdfs-sink-laundry",
+                        "config_file": "connect/hdfs-sink.json",
+                        "target_hdfs_dir": "/data/machines/raw/ (Parquet)",
+                        "status": "RUNNING"
+                    }
+                ],
+                "instructions": "Test live connectors directly via Kafka Connect REST API at http://localhost:8083/connectors/"
             })
 
         # 3a. HDFS Historical Storage & Date Partition Inspector

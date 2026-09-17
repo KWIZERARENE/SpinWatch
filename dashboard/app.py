@@ -8,11 +8,17 @@ Serves heat monitoring dashboard UI & REST APIs reading from:
 """
 
 import os
+import sys
 import json
 import glob
 import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import urllib.parse
+
+# Ensure project root directory is in sys.path
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
 try:
     import mysql.connector
@@ -74,8 +80,9 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.send_error(404, "Endpoint not found")
 
     def serve_template(self, relative_path):
-        if os.path.exists(relative_path):
-            with open(relative_path, "rb") as f:
+        full_path = os.path.join(os.path.dirname(__file__), relative_path)
+        if os.path.exists(full_path):
+            with open(full_path, "rb") as f:
                 content = f.read()
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -86,17 +93,20 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.send_error(404, "Template file missing")
 
     def serve_file(self, file_path):
+        full_path = os.path.join(os.path.dirname(__file__), file_path)
         mime = "text/css" if file_path.endswith(".css") else "application/javascript"
-        with open(file_path, "rb") as f:
-            content = f.read()
-        self.send_response(200)
-        self.send_header("Content-Type", mime)
-        self.send_header("Content-Length", str(len(content)))
-        self.end_headers()
-        self.wfile.write(content)
+        if os.path.exists(full_path):
+            with open(full_path, "rb") as f:
+                content = f.read()
+            self.send_response(200)
+            self.send_header("Content-Type", mime)
+            self.send_header("Content-Length", str(len(content)))
+            self.end_headers()
+            self.wfile.write(content)
+        else:
+            self.send_error(404, "Static file missing")
 
     def handle_api_status(self):
-        # Operational View: Query MySQL machine_status table
         rows = query_mysql("SELECT machine_id, branch, cycle_temperature, status, last_updated FROM machine_status ORDER BY cycle_temperature DESC LIMIT 100")
         if not rows:
             rows = [
@@ -113,11 +123,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         self.send_json(rows)
 
     def handle_api_predictions(self):
-        # Predictive View: Read directly from HDFS Analytical Storage
-        pred_json_path = os.path.join(os.getcwd(), "..", "data", "machines", "predictions", "latest_predictions.json")
-        if not os.path.exists(pred_json_path):
-            pred_json_path = os.path.join(os.getcwd(), "data", "machines", "predictions", "latest_predictions.json")
-
+        pred_json_path = os.path.join(PROJECT_ROOT, "data", "machines", "predictions", "latest_predictions.json")
         if os.path.exists(pred_json_path):
             try:
                 with open(pred_json_path, "r") as f:
@@ -134,11 +140,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         self.send_json(preds)
 
     def handle_api_insights(self):
-        # Analytical Insights View: Read directly from HDFS Analytical Storage
-        insights_json_path = os.path.join(os.getcwd(), "..", "data", "machines", "insights", "latest_insights.json")
-        if not os.path.exists(insights_json_path):
-            insights_json_path = os.path.join(os.getcwd(), "data", "machines", "insights", "latest_insights.json")
-
+        insights_json_path = os.path.join(PROJECT_ROOT, "data", "machines", "insights", "latest_insights.json")
         if os.path.exists(insights_json_path):
             try:
                 with open(insights_json_path, "r") as f:
@@ -154,18 +156,12 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         })
 
     def handle_api_hdfs_dates(self):
-        raw_base = os.path.join(os.getcwd(), "..", "data", "machines", "raw")
-        if not os.path.exists(raw_base):
-            raw_base = os.path.join(os.getcwd(), "data", "machines", "raw")
-
+        raw_base = os.path.join(PROJECT_ROOT, "data", "machines", "raw")
         dates = [os.path.basename(d).replace("dt=", "") for d in glob.glob(os.path.join(raw_base, "dt=*"))]
         self.send_json(sorted(dates, reverse=True))
 
     def handle_api_hdfs_history(self, target_dt):
-        raw_base = os.path.join(os.getcwd(), "..", "data", "machines", "raw", f"dt={target_dt}")
-        if not os.path.exists(raw_base):
-            raw_base = os.path.join(os.getcwd(), "data", "machines", "raw", f"dt={target_dt}")
-
+        raw_base = os.path.join(PROJECT_ROOT, "data", "machines", "raw", f"dt={target_dt}")
         records = []
         if os.path.exists(raw_base):
             parquet_files = glob.glob(os.path.join(raw_base, "*.parquet"))
@@ -193,8 +189,11 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         })
 
     def handle_api_consumer_live(self):
-        from consumer.consumer import LIVE_CONSUMER_BUFFER
-        self.send_json(LIVE_CONSUMER_BUFFER[-10:])
+        try:
+            from consumer.consumer import LIVE_CONSUMER_BUFFER
+            self.send_json(LIVE_CONSUMER_BUFFER[-10:])
+        except Exception:
+            self.send_json([])
 
     def send_json(self, data):
         content = json.dumps(data).encode("utf-8")
@@ -209,7 +208,6 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         return
 
 def run_dashboard(port=8050):
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     server = HTTPServer(("", port), DashboardHandler)
     print(f"[*] SpinWatch Dashboard running at http://localhost:{port}/")
     try:
