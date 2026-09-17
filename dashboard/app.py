@@ -124,6 +124,10 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.handle_api_hdfs_history(dt)
         elif path == "/api/consumer/live":
             self.handle_api_consumer_live()
+        elif path == "/api/sql/readings":
+            self.handle_api_sql_readings()
+        elif path == "/api/hdfs/live":
+            self.handle_api_hdfs_live()
         else:
             self.send_error(404, "Endpoint not found")
 
@@ -307,6 +311,51 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.send_json(LIVE_CONSUMER_BUFFER[-25:])
         except Exception:
             self.send_json([])
+
+    def handle_api_sql_readings(self):
+        rows = query_mysql("SELECT reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon FROM readings_log ORDER BY txn_timestamp DESC LIMIT 25")
+        if rows:
+            for r in rows:
+                if "txn_timestamp" in r and r["txn_timestamp"]:
+                    r["txn_timestamp"] = str(r["txn_timestamp"])
+                if "cycle_temperature" in r:
+                    r["cycle_temperature"] = float(r["cycle_temperature"])
+            self.send_json(rows)
+            return
+
+        # Proxy fallback to API server on 8000
+        try:
+            import urllib.request
+            req = urllib.request.Request("http://localhost:8000/api/sql/readings")
+            with urllib.request.urlopen(req, timeout=1.5) as resp:
+                data = resp.read()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+        except Exception:
+            pass
+
+        self.send_json([])
+
+    def handle_api_hdfs_live(self):
+        today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+        raw_dir = os.path.join(PROJECT_ROOT, "data", "machines", "raw", f"dt={today_str}")
+        json_file = os.path.join(raw_dir, "stream_history.json")
+        records = []
+        if os.path.exists(json_file):
+            try:
+                with open(json_file, "r") as f:
+                    lines = f.readlines()
+                    for line in lines[-25:]:
+                        line_str = line.strip()
+                        if line_str:
+                            records.append(json.loads(line_str))
+            except Exception:
+                pass
+        self.send_json(records)
 
     def send_json(self, data, status_code=200):
         try:

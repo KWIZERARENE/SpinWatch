@@ -152,38 +152,101 @@
       </div>
     </div>
 
-    <!-- Kafka Live Telemetry Stream (Real Coming Data) Feed -->
+    <!-- Real-Time Data Stream & Storage Flow Inspector (Kafka, MySQL, HDFS) -->
     <div class="inspector-card">
       <div class="inspector-header">
         <div style="display: flex; align-items: center; gap: 10px;">
           <span class="live-pulse"></span>
-          <h3 style="font-size: 16px; font-weight: 800;">📡 Kafka Live Telemetry Stream (Real Coming Data)</h3>
+          <h3 style="font-size: 16px; font-weight: 800;">⚡ Real-Time Stream & Storage Flow Inspector</h3>
         </div>
-        <div style="font-size: 12px; color: var(--text-muted); font-weight: 600;">
-          Topic: <span style="font-family: var(--font-mono); color: var(--accent-cyan);">machine-readings</span> (Group: maintenance-tracker)
+        <div style="display: flex; gap: 6px; background: rgba(0,0,0,0.04); padding: 4px; border-radius: 12px; border: 1px solid var(--border-card);">
+          <button id="tab-btn-kafka" class="pill-btn active" onclick="switchStreamTab('KAFKA')">📡 Kafka Topic Stream</button>
+          <button id="tab-btn-mysql" class="pill-btn" onclick="switchStreamTab('MYSQL')">🐬 MySQL Real-Time Log</button>
+          <button id="tab-btn-hdfs" class="pill-btn" onclick="switchStreamTab('HDFS')">📦 HDFS Raw Landed Stream</button>
         </div>
       </div>
-      <div class="inspector-table-wrapper">
-        <table class="inspector-table">
-          <thead>
-            <tr>
-              <th>Washer ID</th>
-              <th>Branch</th>
-              <th>Cycle Temp (°C)</th>
-              <th>Vibration (Hz)</th>
-              <th>Power (kW)</th>
-              <th>Water Pressure (bar)</th>
-              <th>Error Code</th>
-              <th>Timestamp</th>
-              <th>Status</th>
-              <th>Payload</th>
-            </tr>
-          </thead>
-          <tbody id="kafka-live-tbody">
-            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 20px;">Waiting for incoming Kafka stream events...</td></tr>
-          </tbody>
-        </table>
+
+      <!-- KAFKA STREAM VIEW -->
+      <div id="stream-view-kafka">
+        <div style="margin-bottom: 10px; font-size: 11px; color: var(--text-muted); font-weight: 700;">
+          Kafka Ingress Stream | Topic: <span style="font-family: var(--font-mono); color: var(--accent-cyan);">machine-readings</span> (Group: maintenance-tracker)
+        </div>
+        <div class="inspector-table-wrapper">
+          <table class="inspector-table">
+            <thead>
+              <tr>
+                <th>Washer ID</th>
+                <th>Branch</th>
+                <th>Cycle Temp (°C)</th>
+                <th>Vibration (Hz)</th>
+                <th>Power (kW)</th>
+                <th>Water Pressure</th>
+                <th>Error Code</th>
+                <th>Timestamp</th>
+                <th>Status</th>
+                <th>Payload</th>
+              </tr>
+            </thead>
+            <tbody id="kafka-live-tbody">
+              <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 20px;">Waiting for incoming Kafka stream events...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      <!-- MYSQL REAL-TIME LOG VIEW -->
+      <div id="stream-view-mysql" style="display: none;">
+        <div style="margin-bottom: 10px; font-size: 11px; color: var(--text-muted); font-weight: 700;">
+          MySQL Operational DB | Table: <span style="font-family: var(--font-mono); color: var(--accent-cyan);">laundry_ops.readings_log</span> (Real-Time Landed)
+        </div>
+        <div class="inspector-table-wrapper">
+          <table class="inspector-table">
+            <thead>
+              <tr>
+                <th>Reading ID</th>
+                <th>Washer ID</th>
+                <th>Branch</th>
+                <th>Cycle Temp (°C)</th>
+                <th>Txn Timestamp</th>
+                <th>Operational Status</th>
+                <th>Breakdown Label</th>
+                <th>Payload</th>
+              </tr>
+            </thead>
+            <tbody id="mysql-live-tbody">
+              <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading live MySQL landed records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- HDFS REAL-TIME STREAM VIEW -->
+      <div id="stream-view-hdfs" style="display: none;">
+        <div style="margin-bottom: 10px; font-size: 11px; color: var(--text-muted); font-weight: 700;">
+          HDFS Analytical Store | Partition: <span style="font-family: var(--font-mono); color: var(--accent-purple);">/data/machines/raw/dt=TODAY/stream_history.json</span> (Real-Time Appended)
+        </div>
+        <div class="inspector-table-wrapper">
+          <table class="inspector-table">
+            <thead>
+              <tr>
+                <th>Washer ID</th>
+                <th>Branch</th>
+                <th>Cycle Temp (°C)</th>
+                <th>Vibration (Hz)</th>
+                <th>Power (kW)</th>
+                <th>Water Pressure</th>
+                <th>Timestamp</th>
+                <th>Status</th>
+                <th>Payload</th>
+              </tr>
+            </thead>
+            <tbody id="hdfs-live-tbody">
+              <tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading live HDFS appended records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
 
     <!-- HDFS Distributed Storage Raw Data Inspector -->
@@ -474,6 +537,88 @@
       } catch (e) { }
     }
 
+    let activeStreamTab = 'KAFKA';
+
+    function switchStreamTab(tab) {
+      activeStreamTab = tab;
+      document.getElementById('tab-btn-kafka').classList.toggle('active', tab === 'KAFKA');
+      document.getElementById('tab-btn-mysql').classList.toggle('active', tab === 'MYSQL');
+      document.getElementById('tab-btn-hdfs').classList.toggle('active', tab === 'HDFS');
+
+      document.getElementById('stream-view-kafka').style.display = tab === 'KAFKA' ? 'block' : 'none';
+      document.getElementById('stream-view-mysql').style.display = tab === 'MYSQL' ? 'block' : 'none';
+      document.getElementById('stream-view-hdfs').style.display = tab === 'HDFS' ? 'block' : 'none';
+
+      if (tab === 'MYSQL') fetchMySQLLiveLog();
+      if (tab === 'HDFS') fetchHDFSLiveLog();
+    }
+
+    async function fetchMySQLLiveLog() {
+      try {
+        const res = await fetch('/api/sql/readings');
+        if (res.ok) {
+          const rows = await res.json();
+          renderMySQLLiveTable(rows);
+        }
+      } catch (e) { }
+    }
+
+    function renderMySQLLiveTable(rows) {
+      const tbody = document.getElementById('mysql-live-tbody');
+      if (!rows || rows.length === 0) return;
+      tbody.innerHTML = rows.slice(0, 15).map(r => {
+        const temp = parseFloat(r.cycle_temperature || 0).toFixed(1);
+        const isAlert = r.status === 'ALERT' || temp > 70;
+        const color = temp > 70 ? '#dc2626' : (temp > 55 ? '#ea580c' : '#059669');
+        const shortId = r.reading_id ? r.reading_id.substring(0, 8) + '...' : '--';
+        return `
+          <tr>
+            <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${shortId}</td>
+            <td style="font-family: var(--font-mono); font-weight: 800; color: var(--accent-cyan);">🧺 ${r.machine_id}</td>
+            <td>${r.branch}</td>
+            <td style="font-family: var(--font-mono); font-weight: 800; color: ${color};">${temp}°C</td>
+            <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${r.txn_timestamp || '--'}</td>
+            <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${r.status}</span></td>
+            <td style="font-family: var(--font-mono); font-weight: 700; color: ${r.breakdown_soon === 1 ? '#dc2626' : 'var(--text-muted)'};">${r.breakdown_soon === 1 ? '⚠️ 1 (Risk)' : '0 (Normal)'}</td>
+            <td><button class="pill-btn" style="padding: 2px 7px; font-size: 10px;" onclick='inspectRawPayload(${JSON.stringify(r).replace(/'/g, "&apos;")}, "MySQL Record: ${r.machine_id}")'>Payload</button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function fetchHDFSLiveLog() {
+      try {
+        const res = await fetch('/api/hdfs/live');
+        if (res.ok) {
+          const rows = await res.json();
+          renderHDFSLiveTable(rows);
+        }
+      } catch (e) { }
+    }
+
+    function renderHDFSLiveTable(rows) {
+      const tbody = document.getElementById('hdfs-live-tbody');
+      if (!rows || rows.length === 0) return;
+      tbody.innerHTML = [...rows].reverse().slice(0, 15).map(r => {
+        const temp = parseFloat(r.cycle_temperature || 0).toFixed(1);
+        const isAlert = r.status === 'ALERT' || temp > 70;
+        const color = temp > 70 ? '#dc2626' : (temp > 55 ? '#ea580c' : '#059669');
+        return `
+          <tr>
+            <td style="font-family: var(--font-mono); font-weight: 800; color: var(--accent-purple);">🧺 ${r.machine_id || '--'}</td>
+            <td>${r.branch || '--'}</td>
+            <td style="font-family: var(--font-mono); font-weight: 800; color: ${color};">${temp}°C</td>
+            <td style="font-family: var(--font-mono);">${r.vibration_hz ? r.vibration_hz + ' Hz' : '--'}</td>
+            <td style="font-family: var(--font-mono);">${r.power_kw ? r.power_kw + ' kW' : '--'}</td>
+            <td style="font-family: var(--font-mono);">${r.water_pressure_bar ? r.water_pressure_bar + ' bar' : '--'}</td>
+            <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${r.timestamp || '--'}</td>
+            <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${r.status || 'NORMAL'}</span></td>
+            <td><button class="pill-btn" style="padding: 2px 7px; font-size: 10px;" onclick='inspectRawPayload(${JSON.stringify(r).replace(/'/g, "&apos;")}, "HDFS Live Record: ${r.machine_id}")'>Payload</button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
     async function fetchLiveStream() {
       try {
         const res = await fetch('/api/consumer/live');
@@ -623,10 +768,14 @@
     loadHDFSDates();
     setInterval(fetchStatus, 1000);
     setInterval(fetchLiveStream, 1000);
+    setInterval(fetchMySQLLiveLog, 1500);
+    setInterval(fetchHDFSLiveLog, 1500);
     setInterval(fetchPredictions, 3000);
 
     fetchPredictions();
     fetchStatus();
+    fetchMySQLLiveLog();
+    fetchHDFSLiveLog();
   </script>
 </body>
 
