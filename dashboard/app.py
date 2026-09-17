@@ -107,7 +107,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.send_error(404, "Static file missing")
 
     def handle_api_status(self):
-        rows = query_mysql("SELECT machine_id, branch, cycle_temperature, status, last_updated FROM machine_status ORDER BY cycle_temperature DESC LIMIT 100")
+        rows = query_mysql("SELECT machine_id, branch, cycle_temperature, status, last_updated FROM machine_status ORDER BY machine_id ASC LIMIT 1000")
         if not rows:
             rows = [
                 {"machine_id": "WM_0001", "branch": "Kigali", "cycle_temperature": 74.5, "status": "ALERT", "last_updated": "2026-09-17 07:00:00"},

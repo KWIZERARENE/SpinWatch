@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SpinWatch | HDFS & Real-Time Machine Performance Monitor</title>
+  <title>SpinWatch | Real-Time Fleet & HDFS Machine Monitor</title>
   <link rel="stylesheet" href="/static/css/style.css">
   <!-- Chart.js CDN for Visual Data Plots -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -13,28 +13,27 @@
   <!-- Top Navigation Bar -->
   <header class="top-bar">
     <div class="brand">
-      <div class="brand-icon">📦</div>
+      <div class="brand-icon">⚡</div>
       <div>
         <div class="brand-title">SpinWatch</div>
-        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">1,000 Washers | HDFS & Streaming Analytics</div>
+        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">1,000 Washers | Real-Time MySQL & HDFS Pipeline</div>
       </div>
-      <span class="brand-tag">HDFS BIG DATA PIPELINE</span>
+      <span class="brand-tag">NATIONWIDE FLEET (1,000 UNITS)</span>
     </div>
     
     <div style="display: flex; align-items: center; gap: 14px;">
       <!-- Source Filter Pill Toggles -->
       <div style="display: flex; gap: 6px;">
-        <button class="filter-btn active" onclick="setSourceMode('ALL', this)">🌐 All Sources</button>
+        <button class="filter-btn active" onclick="setSourceMode('ALL', this)">🌐 All 1,000 Washers</button>
         <button class="filter-btn" onclick="setSourceMode('GOOD', this)">✅ Good Condition</button>
-        <button class="filter-btn" onclick="setSourceMode('HDFS', this)">📦 HDFS Ingested</button>
-        <button class="filter-btn" onclick="setSourceMode('MYSQL', this)">⚡ MySQL Ops</button>
-        <button class="filter-btn" onclick="setSourceMode('CONSUMER', this)">📡 Python Consumer</button>
-        <button class="filter-btn" onclick="setSourceMode('ML', this)">🧠 PySpark ML</button>
+        <button class="filter-btn" onclick="setSourceMode('ALERT', this)">⚠️ Heat Alerts</button>
+        <button class="filter-btn" onclick="setSourceMode('ML', this)">🧠 PySpark ML Predictions</button>
+        <button class="filter-btn" onclick="setSourceMode('HDFS', this)">📦 HDFS Parquet Archive</button>
       </div>
 
       <div class="system-status">
         <div class="status-indicator"></div>
-        <span>Pipeline Active</span>
+        <span>Pipeline Real-Time Stream</span>
         <span style="margin: 0 4px; opacity: 0.3;">|</span>
         <span id="live-clock" style="font-family: var(--font-mono); font-weight: 700;">--:--:--</span>
       </div>
@@ -52,12 +51,12 @@
         </div>
       </div>
     </div>
-    <button onclick="filterByRisk()" class="filter-btn" style="background: var(--accent-red); color: white; border: none;">Inspect At-Risk Washers</button>
+    <button onclick="setSourceMode('ML', document.querySelectorAll('.filter-btn')[4])" class="filter-btn" style="background: var(--accent-red); color: white; border: none;">Inspect At-Risk Washers</button>
   </div>
 
   <main class="main-container">
     
-    <!-- Controls Header across 13 Branches & HDFS Time Travel -->
+    <!-- Controls Header across 13 Branches & Search Input -->
     <div class="controls-bar">
       <div class="filter-group">
         <span class="filter-label">Filter Branch (13 Cities):</span>
@@ -77,16 +76,21 @@
         <button class="filter-btn" onclick="setBranchFilter('Kamonyi', this)">Kamonyi</button>
       </div>
       
-      <!-- HDFS Time-Travel Historical Date Selector -->
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <span class="filter-label">📦 HDFS Time Travel:</span>
-        <select id="hdfs-date-select" class="filter-btn" style="padding: 6px 12px;" onchange="loadHDFSHistoricalDate(this.value)">
-          <option value="">Loading HDFS Dates...</option>
-        </select>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <!-- Machine Search Input -->
+        <input type="text" id="machine-search-input" class="search-input" placeholder="🔍 Search Washer ID or Branch..." oninput="renderTable()">
+
+        <!-- HDFS Time-Travel Historical Date Selector -->
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span class="filter-label">📦 HDFS Date:</span>
+          <select id="hdfs-date-select" class="filter-btn" style="padding: 6px 12px;" onchange="loadHDFSHistoricalDate(this.value)">
+            <option value="">Loading HDFS Dates...</option>
+          </select>
+        </div>
       </div>
     </div>
 
-    <!-- Summary Metrics Cards -->
+    <!-- Summary Metrics Cards Grid -->
     <div class="metrics-grid">
       <div class="metric-card">
         <div class="metric-title">Nationwide Fleet</div>
@@ -98,20 +102,20 @@
         <div class="metric-value" id="metric-good-fleet" style="color: var(--accent-green);">--</div>
         <div class="metric-sub">Normal temp (30°C - 70°C)</div>
       </div>
-      <div class="metric-card hdfs-card">
-        <div class="metric-title">HDFS Ingested Records</div>
-        <div class="metric-value" id="metric-hdfs-count" style="color: var(--accent-purple);">1,000</div>
-        <div class="metric-sub">Stored in Parquet partitions</div>
-      </div>
       <div class="metric-card alert-card">
         <div class="metric-title">Heat Alerts (>70°C)</div>
         <div class="metric-value" id="metric-alerts" style="color: var(--accent-red);">--</div>
         <div class="metric-sub">Units exceeding thermal limit</div>
       </div>
+      <div class="metric-card hdfs-card">
+        <div class="metric-title">HDFS Storage Records</div>
+        <div class="metric-value" id="metric-hdfs-count" style="color: var(--accent-purple);">1,000</div>
+        <div class="metric-sub">Parquet historical partitions</div>
+      </div>
       <div class="metric-card">
         <div class="metric-title">PySpark ML Predictions</div>
         <div class="metric-value" id="metric-predictions" style="color: var(--accent-blue);">--</div>
-        <div class="metric-sub">Stored in HDFS Analytical Store</div>
+        <div class="metric-sub">Analytical Model Scores in HDFS</div>
       </div>
     </div>
 
@@ -142,14 +146,17 @@
 
     </div>
 
-    <!-- HDFS Historical Archive & Dashboard Grid -->
+    <!-- Dashboard Main View Grid -->
     <div class="dashboard-grid">
       
-      <!-- Panel 1: Live Telemetry Machine Status Table -->
+      <!-- Panel 1: Real-Time Telemetry Data Table for All 1,000 Machines -->
       <section class="panel-card">
         <div class="panel-header">
-          <h2 class="panel-title">Washing Machine Live Telemetry Stream</h2>
-          <span class="source-badge mysql" id="table-source-tag">MySQL & HDFS Data View</span>
+          <div>
+            <h2 class="panel-title">⚡ Real-Time Fleet Telemetry Stream (All 1,000 Washers)</h2>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;" id="table-record-count">Showing 1,000 active washing machines</div>
+          </div>
+          <span class="source-badge mysql" id="table-source-tag">MySQL & Kafka Stream</span>
         </div>
         
         <div class="table-container">
@@ -167,7 +174,7 @@
             <tbody id="machine-table-body">
               <tr>
                 <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">
-                  Loading HDFS and operational telemetry...
+                  Loading real-time telemetry stream for 1,000 washing machines...
                 </td>
               </tr>
             </tbody>
@@ -178,7 +185,7 @@
       <!-- Panel 2: HDFS Historical Archive & PySpark Insights -->
       <section class="panel-card">
         <div class="panel-header">
-          <h2 class="panel-title">📦 HDFS Historical Time-Travel</h2>
+          <h2 class="panel-title">📦 HDFS Partition Archive</h2>
           <span class="source-badge hdfs">Stored in HDFS</span>
         </div>
 
@@ -240,9 +247,9 @@
       } else if (mode === 'MYSQL') {
         sourceTag.innerText = 'MySQL Operational Storage';
         sourceTag.className = 'source-badge mysql';
-      } else if (mode === 'CONSUMER') {
-        sourceTag.innerText = 'Python Consumer Stream';
-        sourceTag.className = 'source-badge mysql';
+      } else if (mode === 'ALERT') {
+        sourceTag.innerText = 'Heat Alerts (>70°C)';
+        sourceTag.className = 'source-badge alert';
       } else if (mode === 'ML') {
         sourceTag.innerText = 'PySpark MLlib Predictions';
         sourceTag.className = 'source-badge pyspark';
@@ -250,15 +257,9 @@
         sourceTag.innerText = 'Good Condition Washers (30°C - 70°C)';
         sourceTag.className = 'source-badge mysql';
       } else {
-        sourceTag.innerText = 'Unified Multi-Source View';
+        sourceTag.innerText = 'Unified Multi-Source Real-Time Stream';
         sourceTag.className = 'source-badge mysql';
       }
-      renderTable();
-    }
-
-    function filterByRisk() {
-      activeBranchFilter = 'ALL';
-      activeSourceMode = 'ML';
       renderTable();
     }
 
@@ -355,7 +356,7 @@
               </div>
             `).join('');
 
-            // Dynamically Plot HDFS Telemetry Records on the Line Chart!
+            // Dynamically Plot HDFS Telemetry Records on the Line Chart
             if (hdfsStreamChart) {
               const hdfsSample = data.records.slice(0, 20);
               hdfsStreamChart.data.labels = hdfsSample.map(r => r.machine_id);
@@ -427,27 +428,35 @@
 
     function renderTable() {
       const tbody = document.getElementById('machine-table-body');
+      const searchVal = (document.getElementById('machine-search-input')?.value || '').toLowerCase().trim();
       let filtered = rawMachinesData;
 
+      // 1. Branch Filter
       if (activeBranchFilter !== 'ALL') {
         filtered = filtered.filter(m => m.branch === activeBranchFilter);
       }
 
+      // 2. View Mode Filter
       if (activeSourceMode === 'ML') {
         filtered = filtered.filter(m => m.status === 'ALERT' || predictionsMap[m.machine_id] === 1);
       } else if (activeSourceMode === 'GOOD') {
         filtered = filtered.filter(m => m.status === 'NORMAL' && m.cycle_temperature <= 70.0);
+      } else if (activeSourceMode === 'ALERT') {
+        filtered = filtered.filter(m => m.status === 'ALERT' || m.cycle_temperature > 70.0);
       }
 
-      filtered.sort((a, b) => {
-        if (a.status === 'ALERT' && b.status !== 'ALERT') return -1;
-        if (a.status !== 'ALERT' && b.status === 'ALERT') return 1;
-        return b.cycle_temperature - a.cycle_temperature;
-      });
+      // 3. Search Query Filter (Machine ID or Branch)
+      if (searchVal) {
+        filtered = filtered.filter(m => 
+          m.machine_id.toLowerCase().includes(searchVal) || 
+          m.branch.toLowerCase().includes(searchVal)
+        );
+      }
 
+      // Default Display: Show ALL 1,000 machines ordered by machine_id
       document.getElementById('metric-total').innerText = rawMachinesData.length || '1,000';
       
-      const alertCount = rawMachinesData.filter(m => m.status === 'ALERT').length;
+      const alertCount = rawMachinesData.filter(m => m.status === 'ALERT' || m.cycle_temperature > 70.0).length;
       document.getElementById('metric-alerts').innerText = alertCount;
 
       const goodFleetCount = rawMachinesData.filter(m => m.status === 'NORMAL' && m.cycle_temperature <= 70.0).length;
@@ -466,12 +475,17 @@
         banner.style.display = 'none';
       }
 
+      const recCountElem = document.getElementById('table-record-count');
+      if (recCountElem) {
+        recCountElem.innerText = `Showing ${filtered.length} of ${rawMachinesData.length || 1000} washing machines in real-time view`;
+      }
+
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No telemetry records for this view.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No telemetry records matching search/filter options.</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = filtered.slice(0, 100).map(m => {
+      tbody.innerHTML = filtered.map(m => {
         const isAlert = m.status === 'ALERT' || m.cycle_temperature > 70.0;
         const isRisk = predictionsMap[m.machine_id] === 1 || m.cycle_temperature > 70.0;
         const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 70) * 100));
@@ -491,7 +505,7 @@
             </td>
             <td>
               <span class="status-badge ${isAlert ? 'alert' : 'normal'}">
-                ${m.status}
+                ${isAlert ? 'ALERT' : 'NORMAL'}
               </span>
             </td>
             <td>

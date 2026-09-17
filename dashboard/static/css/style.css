@@ -131,7 +131,7 @@ body {
 /* Main Container */
 .main-container {
   padding: 24px 32px;
-  max-width: 1600px;
+  max-width: 1650px;
   margin: 0 auto;
 }
 
@@ -185,10 +185,30 @@ body {
   box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
 }
 
+/* Search Bar Input */
+.search-input {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  outline: none;
+  width: 260px;
+  transition: all 0.2s ease;
+  font-family: var(--font-main);
+}
+
+.search-input:focus {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
 /* Summary Metrics Cards Grid */
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -272,6 +292,8 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .panel-title {
@@ -320,9 +342,11 @@ body {
   gap: 20px;
 }
 
-/* Telemetry Data Table */
+/* Telemetry Data Table Scroll Container */
 .table-container {
   overflow-x: auto;
+  max-height: 520px;
+  overflow-y: auto;
 }
 
 table {
@@ -332,13 +356,17 @@ table {
 }
 
 th {
-  padding: 10px 14px;
+  padding: 12px 14px;
   font-size: 12px;
   text-transform: uppercase;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border-color);
   font-weight: 700;
   letter-spacing: 0.5px;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 10;
 }
 
 td {
