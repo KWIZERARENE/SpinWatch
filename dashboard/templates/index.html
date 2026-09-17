@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SpinWatch | Interactive Fleet & Machine Monitor</title>
+  <title>SpinWatch | Heat & Machine Performance Monitor</title>
   <link rel="stylesheet" href="/static/css/style.css">
-  <!-- Chart.js CDN for Visual Data Plots -->
+  <!-- Chart.js CDN for Multi-Source Visualizations -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -13,27 +13,28 @@
   <!-- Top Navigation Bar -->
   <header class="top-bar">
     <div class="brand">
-      <div class="brand-icon">🎴</div>
+      <div class="brand-icon">🔥</div>
       <div>
         <div class="brand-title">SpinWatch</div>
-        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">1,000 Washers | Interactive Real-Time Pipeline</div>
+        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">1,000 Washers | 13 Branches Telemetry Pipeline</div>
       </div>
-      <span class="brand-tag">NATIONWIDE FLEET (1,000 UNITS)</span>
+      <span class="brand-tag">NATIONWIDE FLEET</span>
     </div>
     
     <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
       <!-- Source Filter Pill Toggles -->
       <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-        <button class="filter-btn active" onclick="setSourceMode('ALL', this)">🌐 All 1,000 Washers</button>
-        <button class="filter-btn" onclick="setSourceMode('GOOD', this)">✅ Good Condition</button>
-        <button class="filter-btn" onclick="setSourceMode('ALERT', this)">⚠️ Heat Alerts</button>
-        <button class="filter-btn" onclick="setSourceMode('ML', this)">🧠 PySpark ML Predictions</button>
-        <button class="filter-btn" onclick="setSourceMode('HDFS', this)">📦 HDFS Parquet Archive</button>
+        <button class="source-mode-pill active" onclick="setSourceMode('ALL', this)">🌐 All Sources</button>
+        <button class="source-mode-pill" onclick="setSourceMode('GOOD', this)">✅ Good Condition</button>
+        <button class="source-mode-pill" onclick="setSourceMode('CONSUMER', this)">📡 Python Consumer</button>
+        <button class="source-mode-pill" onclick="setSourceMode('MYSQL', this)">⚡ MySQL Operational</button>
+        <button class="source-mode-pill" onclick="setSourceMode('HDFS', this)">📦 HDFS Historical</button>
+        <button class="source-mode-pill" onclick="setSourceMode('ML', this)">🧠 PySpark ML Model</button>
       </div>
 
       <div class="system-status">
         <div class="status-indicator"></div>
-        <span>Pipeline Real-Time Stream</span>
+        <span>Consumer Stream Active</span>
         <span style="margin: 0 4px; opacity: 0.3;">|</span>
         <span id="live-clock" style="font-family: var(--font-mono); font-weight: 700;">--:--:--</span>
       </div>
@@ -43,26 +44,24 @@
   <!-- Red Alert Banner for Impending Breakdown Risk -->
   <div id="alert-banner" class="alert-banner" style="display: none;">
     <div class="alert-banner-text">
-      <span style="font-size: 22px;">🚨</span>
+      <span style="font-size: 24px;">🚨</span>
       <div>
         <strong>CRITICAL THERMAL ALERT: Impending Washer Heat Failures Detected!</strong>
         <div id="alert-banner-detail" style="font-size: 13px; opacity: 0.9; margin-top: 2px;">
-          HDFS Analytics & PySpark ML model flagged washers requiring immediate technician dispatch.
+          Python Consumer stream & PySpark ML model flagged washers requiring immediate technician dispatch.
         </div>
       </div>
     </div>
-    <button onclick="setSourceMode('ML', document.querySelectorAll('.filter-btn')[3])" class="filter-btn" style="background: var(--accent-red); color: white; border: none;">Inspect At-Risk Washers</button>
+    <button onclick="filterByRisk()" class="filter-btn active" style="background: var(--accent-red); color: white; border: none;">Inspect At-Risk Washers</button>
   </div>
 
   <main class="main-container">
     
-    <!-- Interactive Controls Bar: Branch Filter, Machine Select Dropdown, Search Input & View Switcher -->
+    <!-- Controls Header across 13 Branches & Search Input -->
     <div class="controls-bar">
-      
-      <!-- Branch Selector Buttons -->
       <div class="filter-group">
         <span class="filter-label">Filter Branch (13 Cities):</span>
-        <button class="filter-btn active" onclick="setBranchFilter('ALL', this)">All Branches</button>
+        <button class="filter-btn active" onclick="setBranchFilter('ALL', this)">All (1,000 Units)</button>
         <button class="filter-btn" onclick="setBranchFilter('Kigali', this)">Kigali</button>
         <button class="filter-btn" onclick="setBranchFilter('Musanze', this)">Musanze</button>
         <button class="filter-btn" onclick="setBranchFilter('Huye', this)">Huye</button>
@@ -77,31 +76,17 @@
         <button class="filter-btn" onclick="setBranchFilter('Bugesera', this)">Bugesera</button>
         <button class="filter-btn" onclick="setBranchFilter('Kamonyi', this)">Kamonyi</button>
       </div>
-
-      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <!-- Machine Dropdown Selector -->
-        <div style="display: flex; align-items: center; gap: 4px;">
-          <span class="filter-label">Target Washer:</span>
-          <select id="machine-dropdown-select" class="select-btn" onchange="onMachineSelect(this.value)">
-            <option value="ALL">All 1,000 Machines...</option>
-          </select>
-        </div>
-
+      
+      <div style="display: flex; align-items: center; gap: 12px;">
         <!-- Search Input -->
-        <input type="text" id="machine-search-input" class="search-input" placeholder="🔍 Search Washer ID or Branch..." oninput="renderViews()">
+        <input type="text" id="machine-search-input" class="search-input" placeholder="🔍 Search Washer ID or Branch..." oninput="renderTable()">
 
-        <!-- HDFS Date Selector -->
-        <div style="display: flex; align-items: center; gap: 4px;">
-          <span class="filter-label">📦 HDFS Date:</span>
-          <select id="hdfs-date-select" class="select-btn" onchange="loadHDFSHistoricalDate(this.value)">
+        <!-- HDFS Time-Travel Historical Date Selector -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="filter-label">📦 HDFS Time Travel:</span>
+          <select id="hdfs-date-select" class="filter-btn" style="padding: 6px 12px;" onchange="loadHDFSHistoricalDate(this.value)">
             <option value="">Loading HDFS Dates...</option>
           </select>
-        </div>
-
-        <!-- View Mode Switcher Pills -->
-        <div style="display: flex; gap: 4px;">
-          <button id="btn-view-cards" class="view-mode-pill active" onclick="setViewDisplayMode('CARDS')">🎴 Cards Grid</button>
-          <button id="btn-view-table" class="view-mode-pill" onclick="setViewDisplayMode('TABLE')">📋 Data Table</button>
         </div>
       </div>
     </div>
@@ -118,72 +103,64 @@
         <div class="metric-value" id="metric-good-fleet" style="color: var(--accent-green);">--</div>
         <div class="metric-sub">Normal temp (30°C - 70°C)</div>
       </div>
-      <div class="metric-card alert-card">
+      <div class="metric-card">
         <div class="metric-title">Heat Alerts (>70°C)</div>
         <div class="metric-value" id="metric-alerts" style="color: var(--accent-red);">--</div>
         <div class="metric-sub">Units exceeding thermal limit</div>
       </div>
-      <div class="metric-card hdfs-card">
-        <div class="metric-title">HDFS Storage Records</div>
-        <div class="metric-value" id="metric-hdfs-count" style="color: var(--accent-purple);">1,000</div>
-        <div class="metric-sub">Parquet historical partitions</div>
+      <div class="metric-card">
+        <div class="metric-title">Average Fleet Temp</div>
+        <div class="metric-value" id="metric-avg-temp" style="color: var(--accent-cyan);">--°C</div>
+        <div class="metric-sub">Across active wash cycles</div>
       </div>
       <div class="metric-card">
         <div class="metric-title">PySpark ML Predictions</div>
-        <div class="metric-value" id="metric-predictions" style="color: var(--accent-blue);">--</div>
-        <div class="metric-sub">Analytical Model Scores in HDFS</div>
+        <div class="metric-value" id="metric-predictions" style="color: var(--accent-purple);">--</div>
+        <div class="metric-sub">Stored in HDFS Analytical Store</div>
       </div>
     </div>
 
-    <!-- Interactive Live Data Charts Grid -->
+    <!-- Multi-Source Visual Charts Grid -->
     <div class="charts-grid">
       
-      <!-- Chart 1: Live Interactive Telemetry Line Plot (Filtered by User Choice) -->
+      <!-- Chart 1: Python Consumer Kafka Stream Live Event Line Plot -->
       <div class="chart-card">
         <div class="panel-header">
-          <h3 class="panel-title" id="live-chart-title">📡 Live Machine Heat Telemetry Plot</h3>
-          <span class="source-badge mysql" id="live-chart-badge">Live Filter View</span>
+          <h3 class="panel-title">📡 Python Consumer Kafka Event Stream</h3>
+          <span class="source-badge mysql" id="chart1-badge">1s Kafka Stream</span>
         </div>
         <div class="chart-container">
-          <canvas id="liveStreamChart"></canvas>
+          <canvas id="consumerStreamChart"></canvas>
         </div>
       </div>
 
-      <!-- Chart 2: Branch Heat Distribution Bar Plot -->
+      <!-- Chart 2: MySQL Operational Thermal Distribution -->
       <div class="chart-card">
         <div class="panel-header">
-          <h3 class="panel-title">⚡ Operational Thermal Distribution by Branch</h3>
-          <span class="source-badge mysql">MySQL & PySpark Store</span>
+          <h3 class="panel-title">⚡ MySQL Operational Heat by Branch</h3>
+          <span class="source-badge mysql">MySQL Storage</span>
         </div>
         <div class="chart-container">
-          <canvas id="branchDistributionChart"></canvas>
+          <canvas id="mysqlBranchChart"></canvas>
         </div>
       </div>
 
     </div>
 
-    <!-- Dashboard Main View Grid -->
+    <!-- HDFS Historical Archive & Dashboard Grid -->
     <div class="dashboard-grid">
       
-      <!-- Panel 1: Interactive Machine Display (Cards Grid or Table View) -->
+      <!-- Panel 1: Live Telemetry Machine Status Table -->
       <section class="panel-card">
         <div class="panel-header">
           <div>
-            <h2 class="panel-title" id="display-title">🎴 Washing Machine Fleet Cards</h2>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;" id="display-record-count">Showing 1,000 active washing machines</div>
+            <h2 class="panel-title">Washing Machine Live Telemetry Stream</h2>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;" id="table-record-count">Showing 1,000 active washing machines</div>
           </div>
-          <span class="source-badge mysql" id="display-source-tag">Interactive Real-Time Stream</span>
+          <span class="source-badge mysql" id="table-source-tag">MySQL & Consumer Stream</span>
         </div>
         
-        <!-- View 1: Cards Grid Display -->
-        <div id="view-cards-container" class="machine-cards-grid">
-          <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px;">
-            Loading machine fleet cards...
-          </div>
-        </div>
-
-        <!-- View 2: Data Table Display -->
-        <div id="view-table-container" class="table-container" style="display: none;">
+        <div class="table-container">
           <table>
             <thead>
               <tr>
@@ -198,7 +175,7 @@
             <tbody id="machine-table-body">
               <tr>
                 <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">
-                  Loading data stream...
+                  Connecting to SpinWatch pipeline streams...
                 </td>
               </tr>
             </tbody>
@@ -209,13 +186,13 @@
       <!-- Panel 2: HDFS Historical Archive & PySpark Insights -->
       <section class="panel-card">
         <div class="panel-header">
-          <h2 class="panel-title">📦 HDFS Partition Archive</h2>
+          <h2 class="panel-title">📦 HDFS Historical Time-Travel</h2>
           <span class="source-badge hdfs">Stored in HDFS</span>
         </div>
 
         <div style="margin-bottom: 20px;">
           <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 700;">
-            Viewing HDFS Partition: <span id="current-hdfs-date" style="color: var(--accent-purple);">dt=2026-09-17</span>
+            Viewing HDFS Historical Partition: <span id="current-hdfs-date" style="color: var(--accent-purple);">dt=2026-09-17</span>
           </h4>
           <div id="hdfs-history-sample" style="font-size: 12px; font-family: var(--font-mono); color: var(--text-muted); max-height: 180px; overflow-y: auto;">
             Loading HDFS historical records...
@@ -238,16 +215,12 @@
   <script>
     let activeBranchFilter = 'ALL';
     let activeSourceMode = 'ALL';
-    let selectedMachineId = 'ALL';
-    let currentDisplayMode = 'CARDS'; // 'CARDS' or 'TABLE'
-    
     let rawMachinesData = [];
     let predictionsMap = {};
 
-    let liveStreamChart = null;
-    let branchDistributionChart = null;
+    let consumerStreamChart = null;
+    let mysqlBranchChart = null;
 
-    // Live Clock Update
     function updateClock() {
       const now = new Date();
       document.getElementById('live-clock').innerText = now.toTimeString().split(' ')[0];
@@ -255,74 +228,62 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Populate Machine Dropdown Select Options (WM_0001 to WM_1000)
-    function populateMachineDropdown() {
-      const select = document.getElementById('machine-dropdown-select');
-      if (!select || select.children.length > 5) return;
-      
-      let options = `<option value="ALL">All 1,000 Machines...</option>`;
-      for (let i = 1; i <= 1000; i++) {
-        const mid = `WM_${String(i).padStart(4, '0')}`;
-        options += `<option value="${mid}">${mid}</option>`;
-      }
-      select.innerHTML = options;
-    }
-
     function setBranchFilter(branch, btnElement) {
       activeBranchFilter = branch;
-      btnElement.parentElement.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
       btnElement.classList.add('active');
-      renderViews();
-      updateLineChart();
+      renderTable();
     }
 
     function setSourceMode(mode, btnElement) {
       activeSourceMode = mode;
-      btnElement.parentElement.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.source-mode-pill').forEach(btn => btn.classList.remove('active'));
       btnElement.classList.add('active');
-      renderViews();
-      updateLineChart();
-    }
-
-    function onMachineSelect(mid) {
-      selectedMachineId = mid;
-      renderViews();
-      updateLineChart();
-    }
-
-    function setViewDisplayMode(mode) {
-      currentDisplayMode = mode;
-      document.getElementById('btn-view-cards').classList.toggle('active', mode === 'CARDS');
-      document.getElementById('btn-view-table').classList.toggle('active', mode === 'TABLE');
       
-      document.getElementById('view-cards-container').style.display = mode === 'CARDS' ? 'grid' : 'none';
-      document.getElementById('view-table-container').style.display = mode === 'TABLE' ? 'block' : 'none';
-      
-      document.getElementById('display-title').innerText = mode === 'CARDS' ? '🎴 Washing Machine Fleet Cards' : '📋 Live Telemetry Stream Table';
-      renderViews();
+      const sourceTag = document.getElementById('table-source-tag');
+      if (mode === 'CONSUMER') {
+        sourceTag.innerText = 'Python Consumer Kafka Stream';
+        sourceTag.className = 'source-badge mysql';
+      } else if (mode === 'MYSQL') {
+        sourceTag.innerText = 'MySQL Operational Storage';
+        sourceTag.className = 'source-badge mysql';
+      } else if (mode === 'HDFS') {
+        sourceTag.innerText = 'HDFS Historical Parquet Archive';
+        sourceTag.className = 'source-badge hdfs';
+      } else if (mode === 'ML') {
+        sourceTag.innerText = 'PySpark MLlib Predictions';
+        sourceTag.className = 'source-badge pyspark';
+      } else if (mode === 'GOOD') {
+        sourceTag.innerText = 'Good Condition Washers (30°C - 70°C)';
+        sourceTag.className = 'source-badge mysql';
+      } else {
+        sourceTag.innerText = 'Unified Multi-Source View';
+        sourceTag.className = 'source-badge mysql';
+      }
+      renderTable();
     }
 
-    // Initialize Chart.js Plots
+    function filterByRisk() {
+      activeBranchFilter = 'ALL';
+      activeSourceMode = 'ML';
+      renderTable();
+    }
+
+    // Initialize Multi-Source Charts
     function initCharts() {
       const textColor = '#334155';
       const gridColor = 'rgba(0,0,0,0.06)';
 
-      // Chart 1: Interactive Live Telemetry Line Chart
-      const ctx1 = document.getElementById('liveStreamChart').getContext('2d');
-      if (liveStreamChart) liveStreamChart.destroy();
-      liveStreamChart = new Chart(ctx1, {
+      // Chart 1: Consumer Stream Line Chart
+      const ctx1 = document.getElementById('consumerStreamChart').getContext('2d');
+      if (consumerStreamChart) consumerStreamChart.destroy();
+      consumerStreamChart = new Chart(ctx1, {
         type: 'line',
         data: {
           labels: [],
-          datasets: [{
-            label: 'Heat (°C)',
-            data: [],
-            borderColor: '#7c3aed',
-            backgroundColor: 'rgba(124, 58, 237, 0.08)',
-            tension: 0.3,
-            fill: true,
-            borderWidth: 2
-          }]
+          datasets: [
+            { label: 'Live Heat Stream (°C)', data: [], borderColor: '#0284c7', backgroundColor: 'rgba(2, 132, 199, 0.08)', tension: 0.3, fill: true, borderWidth: 2 }
+          ]
         },
         options: {
           responsive: true,
@@ -331,15 +292,15 @@
           plugins: { legend: { labels: { color: textColor, font: { family: 'Outfit' } } } },
           scales: {
             x: { ticks: { color: textColor }, grid: { color: gridColor } },
-            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 20, max: 110 }
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 110 }
           }
         }
       });
 
-      // Chart 2: Branch Heat Distribution Bar Plot
-      const ctx2 = document.getElementById('branchDistributionChart').getContext('2d');
-      if (branchDistributionChart) branchDistributionChart.destroy();
-      branchDistributionChart = new Chart(ctx2, {
+      // Chart 2: MySQL Branch Temperature Bar Chart
+      const ctx2 = document.getElementById('mysqlBranchChart').getContext('2d');
+      if (mysqlBranchChart) mysqlBranchChart.destroy();
+      mysqlBranchChart = new Chart(ctx2, {
         type: 'bar',
         data: {
           labels: ['Kigali', 'Musanze', 'Huye', 'Rubavu', 'Rusizi', 'Nyagatare', 'Rwamagana', 'Gicumbi'],
@@ -347,7 +308,7 @@
             label: 'Avg Heat (°C)',
             data: [68.5, 62.1, 58.4, 65.2, 59.8, 51.3, 64.0, 56.5],
             backgroundColor: ['#0284c7', '#ea580c', '#2563eb', '#7c3aed', '#059669', '#db2777', '#ca8a04', '#0284c7'],
-            borderRadius: 6
+            borderRadius: 8
           }]
         },
         options: {
@@ -356,49 +317,10 @@
           plugins: { legend: { display: false } },
           scales: {
             x: { ticks: { color: textColor }, grid: { color: gridColor } },
-            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 100 }
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 90 }
           }
         }
       });
-    }
-
-    function updateLineChart() {
-      if (!liveStreamChart) return;
-
-      const filtered = getFilteredData();
-      const titleElem = document.getElementById('live-chart-title');
-      const badgeElem = document.getElementById('live-chart-badge');
-
-      if (selectedMachineId !== 'ALL') {
-        titleElem.innerText = `📡 Live Stream for ${selectedMachineId}`;
-        badgeElem.innerText = `Selected Machine: ${selectedMachineId}`;
-        badgeElem.className = 'source-badge mysql';
-
-        const machineReadings = filtered.slice(0, 15);
-        liveStreamChart.data.labels = machineReadings.map((r, idx) => r.last_updated ? r.last_updated.substring(11, 19) : `T-${idx}`);
-        liveStreamChart.data.datasets[0].data = machineReadings.map(r => r.cycle_temperature);
-        liveStreamChart.data.datasets[0].borderColor = '#0284c7';
-      } else if (activeBranchFilter !== 'ALL') {
-        titleElem.innerText = `📡 Thermal Telemetry for ${activeBranchFilter} Branch`;
-        badgeElem.innerText = `Branch: ${activeBranchFilter}`;
-        badgeElem.className = 'source-badge hdfs';
-
-        const branchReadings = filtered.slice(0, 20);
-        liveStreamChart.data.labels = branchReadings.map(r => r.machine_id);
-        liveStreamChart.data.datasets[0].data = branchReadings.map(r => r.cycle_temperature);
-        liveStreamChart.data.datasets[0].borderColor = '#7c3aed';
-      } else {
-        titleElem.innerText = `📡 Nationwide Heat Telemetry Stream (1,000 Washers)`;
-        badgeElem.innerText = `All 1,000 Washers`;
-        badgeElem.className = 'source-badge hdfs';
-
-        const sample = filtered.slice(0, 20);
-        liveStreamChart.data.labels = sample.map(r => r.machine_id);
-        liveStreamChart.data.datasets[0].data = sample.map(r => r.cycle_temperature);
-        liveStreamChart.data.datasets[0].borderColor = '#7c3aed';
-      }
-
-      liveStreamChart.update('none');
     }
 
     async function loadHDFSDates() {
@@ -422,13 +344,10 @@
         if (res.ok) {
           const data = await res.json();
           const sampleDiv = document.getElementById('hdfs-history-sample');
-          
           if (data.records && data.records.length > 0) {
-            document.getElementById('metric-hdfs-count').innerText = data.records.length * 20 || '1,000';
-            
             sampleDiv.innerHTML = data.records.slice(0, 5).map(r => `
               <div style="margin-bottom: 6px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">
-                <strong>${r.machine_id}</strong> (${r.branch}) | Heat: <span style="color: ${r.cycle_temperature > 70 ? '#dc2626' : '#7c3aed'}">${r.cycle_temperature}°C</span> | ${r.status}
+                <strong>${r.machine_id}</strong> (${r.branch}) | Heat: <span style="color: ${r.cycle_temperature > 70 ? '#dc2626' : '#0284c7'}">${r.cycle_temperature}°C</span> | ${r.status}
               </div>
             `).join('');
           } else {
@@ -464,16 +383,16 @@
             branchContainer.innerHTML = data.avg_by_branch.map(b => `
               <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
                 <span>${b.branch}</span>
-                <span style="font-family: var(--font-mono); font-weight: 700; color: ${b.avg_temperature > 65 ? '#ea580c' : '#7c3aed'};">
+                <span style="font-family: var(--font-mono); font-weight: 700; color: ${b.avg_temperature > 60 ? '#ea580c' : '#0284c7'};">
                   ${b.avg_temperature}°C
                 </span>
               </div>
             `).join('');
 
-            if (branchDistributionChart) {
-              branchDistributionChart.data.labels = data.avg_by_branch.map(b => b.branch);
-              branchDistributionChart.data.datasets[0].data = data.avg_by_branch.map(b => b.avg_temperature);
-              branchDistributionChart.update('none');
+            if (mysqlBranchChart) {
+              mysqlBranchChart.data.labels = data.avg_by_branch.map(b => b.branch);
+              mysqlBranchChart.data.datasets[0].data = data.avg_by_branch.map(b => b.avg_temperature);
+              mysqlBranchChart.update('none');
             }
           }
         }
@@ -482,26 +401,45 @@
       }
     }
 
+    async function fetchConsumerLiveStream() {
+      try {
+        const res = await fetch('/api/consumer/live');
+        if (res.ok) {
+          const events = await res.json();
+          if (events && events.length > 0 && consumerStreamChart) {
+            const nowStr = new Date().toTimeString().split(' ')[0];
+            const latestTemp = events[events.length - 1].cycle_temperature;
+            
+            if (consumerStreamChart.data.labels.length > 15) {
+              consumerStreamChart.data.labels.shift();
+              consumerStreamChart.data.datasets[0].data.shift();
+            }
+            consumerStreamChart.data.labels.push(nowStr);
+            consumerStreamChart.data.datasets[0].data.push(latestTemp);
+            consumerStreamChart.update('none');
+          }
+        }
+      } catch (e) {
+        console.warn('Consumer live stream fetch error:', e);
+      }
+    }
+
     async function fetchStatus() {
       try {
         const res = await fetch('/api/status');
         if (res.ok) {
           rawMachinesData = await res.json();
-          renderViews();
-          updateLineChart();
+          renderTable();
         }
       } catch (e) {
         console.error('Status fetch error:', e);
       }
     }
 
-    function getFilteredData() {
+    function renderTable() {
+      const tbody = document.getElementById('machine-table-body');
       const searchVal = (document.getElementById('machine-search-input')?.value || '').toLowerCase().trim();
       let filtered = rawMachinesData;
-
-      if (selectedMachineId !== 'ALL') {
-        filtered = filtered.filter(m => m.machine_id === selectedMachineId);
-      }
 
       if (activeBranchFilter !== 'ALL') {
         filtered = filtered.filter(m => m.branch === activeBranchFilter);
@@ -511,8 +449,6 @@
         filtered = filtered.filter(m => m.status === 'ALERT' || predictionsMap[m.machine_id] === 1);
       } else if (activeSourceMode === 'GOOD') {
         filtered = filtered.filter(m => m.status === 'NORMAL' && m.cycle_temperature <= 70.0);
-      } else if (activeSourceMode === 'ALERT') {
-        filtered = filtered.filter(m => m.status === 'ALERT' || m.cycle_temperature > 70.0);
       }
 
       if (searchVal) {
@@ -522,20 +458,18 @@
         );
       }
 
-      return filtered;
-    }
-
-    function renderViews() {
-      const filtered = getFilteredData();
-
-      // Metric Counter Updates
       document.getElementById('metric-total').innerText = rawMachinesData.length || '1,000';
+      
       const alertCount = rawMachinesData.filter(m => m.status === 'ALERT' || m.cycle_temperature > 70.0).length;
       document.getElementById('metric-alerts').innerText = alertCount;
 
       const goodFleetCount = rawMachinesData.filter(m => m.status === 'NORMAL' && m.cycle_temperature <= 70.0).length;
       const goodFleetElem = document.getElementById('metric-good-fleet');
       if (goodFleetElem) goodFleetElem.innerText = goodFleetCount;
+
+      const sumTemp = rawMachinesData.reduce((acc, m) => acc + parseFloat(m.cycle_temperature), 0);
+      const avgTemp = rawMachinesData.length > 0 ? (sumTemp / rawMachinesData.length).toFixed(1) : '--';
+      document.getElementById('metric-avg-temp').innerText = avgTemp + '°C';
 
       const predictedRiskCount = Object.values(predictionsMap).filter(p => p === 1).length;
       document.getElementById('metric-predictions').innerText = predictedRiskCount;
@@ -549,86 +483,57 @@
         banner.style.display = 'none';
       }
 
-      const recCountElem = document.getElementById('display-record-count');
+      const recCountElem = document.getElementById('table-record-count');
       if (recCountElem) {
         recCountElem.innerText = `Showing ${filtered.length} of ${rawMachinesData.length || 1000} washing machines`;
       }
 
-      // Render View 1: Machine Cards Grid
-      const cardsGrid = document.getElementById('view-cards-container');
-      if (cardsGrid && currentDisplayMode === 'CARDS') {
-        if (filtered.length === 0) {
-          cardsGrid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px;">No washing machines match the selected filter.</div>`;
-        } else {
-          cardsGrid.innerHTML = filtered.map(m => {
-            const isAlert = m.status === 'ALERT' || m.cycle_temperature > 70.0;
-            const isRisk = predictionsMap[m.machine_id] === 1 || m.cycle_temperature > 70.0;
-            const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 70) * 100));
-            const tempColor = m.cycle_temperature > 70.0 ? '#dc2626' : (m.cycle_temperature > 55.0 ? '#ea580c' : '#059669');
-            const isSelected = selectedMachineId === m.machine_id;
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No telemetry records matching search/filter options.</td></tr>`;
+        return;
+      }
 
-            return `
-              <div class="machine-card-item ${isSelected ? 'selected' : ''}" onclick="onMachineSelect('${m.machine_id}')">
-                <div class="machine-card-header">
-                  <span class="machine-card-id">${m.machine_id}</span>
-                  <span class="branch-pill">${m.branch}</span>
-                </div>
-                <div class="machine-card-temp">
-                  <span style="color: ${tempColor};">${m.cycle_temperature}°C</span>
-                  <span style="font-size: 14px;">${isAlert ? '🔥' : '💧'}</span>
-                </div>
-                <div class="temp-bar-bg" style="width: 100%; height: 6px;">
-                  <div class="temp-bar-fill" style="width: ${tempPct}%; background: ${tempColor};"></div>
-                </div>
-                <div class="machine-card-footer">
-                  <span class="status-badge ${isAlert ? 'alert' : 'normal'}">${isAlert ? 'ALERT' : 'NORMAL'}</span>
-                  <span class="prediction-badge ${isRisk ? 'at-risk' : 'good'}">${isRisk ? '⚠️ AT-RISK' : '✅ HEALTHY'}</span>
+      tbody.innerHTML = filtered.map(m => {
+        const isAlert = m.status === 'ALERT' || m.cycle_temperature > 70.0;
+        const isRisk = predictionsMap[m.machine_id] === 1 || m.cycle_temperature > 70.0;
+        const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 70) * 100));
+        const barColor = m.cycle_temperature > 70.0 ? '#dc2626' : (m.cycle_temperature > 55.0 ? '#ea580c' : '#059669');
+
+        return `
+          <tr>
+            <td><strong style="font-family: var(--font-mono);">${m.machine_id}</strong></td>
+            <td>${m.branch}</td>
+            <td>
+              <div class="temp-gauge">
+                <span>${m.cycle_temperature}°C</span>
+                <div class="temp-bar-bg">
+                  <div class="temp-bar-fill" style="width: ${tempPct}%; background: ${barColor};"></div>
                 </div>
               </div>
-            `;
-          }).join('');
-        }
-      }
-
-      // Render View 2: Data Table View
-      const tbody = document.getElementById('machine-table-body');
-      if (tbody && currentDisplayMode === 'TABLE') {
-        if (filtered.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No telemetry records matching filter.</td></tr>`;
-        } else {
-          tbody.innerHTML = filtered.map(m => {
-            const isAlert = m.status === 'ALERT' || m.cycle_temperature > 70.0;
-            const isRisk = predictionsMap[m.machine_id] === 1 || m.cycle_temperature > 70.0;
-            const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 70) * 100));
-            const barColor = m.cycle_temperature > 70.0 ? '#dc2626' : (m.cycle_temperature > 55.0 ? '#ea580c' : '#059669');
-
-            return `
-              <tr onclick="onMachineSelect('${m.machine_id}')" style="cursor: pointer;">
-                <td><strong style="font-family: var(--font-mono);">${m.machine_id}</strong></td>
-                <td>${m.branch}</td>
-                <td>
-                  <div class="temp-gauge">
-                    <span>${m.cycle_temperature}°C</span>
-                    <div class="temp-bar-bg">
-                      <div class="temp-bar-fill" style="width: ${tempPct}%; background: ${barColor};"></div>
-                    </div>
-                  </div>
-                </td>
-                <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${isAlert ? 'ALERT' : 'NORMAL'}</span></td>
-                <td><span class="prediction-badge ${isRisk ? 'at-risk' : 'good'}">${isRisk ? '⚠️ BREAKDOWN RISK' : '✅ GOOD CONDITION'}</span></td>
-                <td style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">${m.last_updated ? m.last_updated.replace('T', ' ').substring(0, 19) : '--'}</td>
-              </tr>
-            `;
-          }).join('');
-        }
-      }
+            </td>
+            <td>
+              <span class="status-badge ${isAlert ? 'alert' : 'normal'}">
+                ${isAlert ? 'ALERT' : 'NORMAL'}
+              </span>
+            </td>
+            <td>
+              <span class="prediction-badge ${isRisk ? 'at-risk' : 'good'}">
+                ${isRisk ? '⚠️ BREAKDOWN RISK' : '✅ GOOD CONDITION'}
+              </span>
+            </td>
+            <td style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">
+              ${m.last_updated ? m.last_updated.replace('T', ' ').substring(0, 19) : '--'}
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
-    // Initialize Auto-Update Loops & Dropdown
-    populateMachineDropdown();
+    // Initialize 1-Second Auto-Update Loops
     initCharts();
     loadHDFSDates();
     setInterval(fetchStatus, 1000);
+    setInterval(fetchConsumerLiveStream, 1000);
     setInterval(fetchPredictions, 2000);
     setInterval(fetchPySparkInsights, 5000);
 
