@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,17 +24,13 @@
     <div style="display: flex; align-items: center; gap: 14px;">
       <!-- Source Filter Pill Toggles -->
       <div style="display: flex; gap: 6px;">
-        <button class="source-mode-pill active" onclick="setSourceMode('ALL', this)">🌐 All Sources</button>
-        <button class="source-mode-pill" onclick="setSourceMode('CONSUMER', this)">📡 Python Consumer</button>
-        <button class="source-mode-pill" onclick="setSourceMode('MYSQL', this)">⚡ MySQL Operational</button>
-        <button class="source-mode-pill" onclick="setSourceMode('HDFS', this)">📦 HDFS Historical</button>
-        <button class="source-mode-pill" onclick="setSourceMode('ML', this)">🧠 PySpark ML Model</button>
+        <button class="filter-btn active" onclick="setSourceMode('ALL', this)">🌐 All Sources</button>
+        <button class="filter-btn" onclick="setSourceMode('GOOD', this)">✅ Good Condition</button>
+        <button class="filter-btn" onclick="setSourceMode('CONSUMER', this)">📡 Python Consumer</button>
+        <button class="filter-btn" onclick="setSourceMode('MYSQL', this)">⚡ MySQL Operational</button>
+        <button class="filter-btn" onclick="setSourceMode('HDFS', this)">📦 HDFS Historical</button>
+        <button class="filter-btn" onclick="setSourceMode('ML', this)">🧠 PySpark ML Model</button>
       </div>
-
-      <!-- Theme Switcher (Dark / Light Mode) -->
-      <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-toggle-btn">
-        <span id="theme-icon">☀️</span> <span id="theme-text">Light Mode</span>
-      </button>
 
       <div class="system-status">
         <div class="status-indicator"></div>
@@ -48,7 +44,7 @@
   <!-- Red Alert Banner for Impending Breakdown Risk -->
   <div id="alert-banner" class="alert-banner" style="display: none;">
     <div class="alert-banner-text">
-      <span style="font-size: 24px;">🚨</span>
+      <span style="font-size: 22px;">🚨</span>
       <div>
         <strong>CRITICAL THERMAL ALERT: Impending Washer Heat Failures Detected!</strong>
         <div id="alert-banner-detail" style="font-size: 13px; opacity: 0.9; margin-top: 2px;">
@@ -56,7 +52,7 @@
         </div>
       </div>
     </div>
-    <button onclick="filterByRisk()" class="filter-btn active" style="background: #ef4444; color: white;">Inspect At-Risk Washers</button>
+    <button onclick="filterByRisk()" class="filter-btn" style="background: var(--accent-red); color: white; border: none;">Inspect At-Risk Washers</button>
   </div>
 
   <main class="main-container">
@@ -91,7 +87,7 @@
     </div>
 
     <!-- Summary Metrics Cards -->
-    <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+    <div class="metrics-grid">
       <div class="metric-card">
         <div class="metric-title">Nationwide Fleet</div>
         <div class="metric-value" id="metric-total">1,000</div>
@@ -109,7 +105,7 @@
       </div>
       <div class="metric-card">
         <div class="metric-title">Average Fleet Temp</div>
-        <div class="metric-value" id="metric-avg-temp" style="color: var(--accent-cyan);">--°C</div>
+        <div class="metric-value" id="metric-avg-temp" style="color: var(--accent-blue);">--°C</div>
         <div class="metric-sub">Across active wash cycles</div>
       </div>
       <div class="metric-card">
@@ -120,7 +116,7 @@
     </div>
 
     <!-- Multi-Source Visual Charts Grid -->
-    <div class="charts-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 24px;">
+    <div class="charts-grid">
       
       <!-- Chart 1: Python Consumer Kafka Stream Live Event Line Plot -->
       <div class="chart-card">
@@ -217,27 +213,7 @@
     let consumerStreamChart = null;
     let mysqlBranchChart = null;
 
-    // Theme Toggle Functionality
-    function toggleTheme() {
-      const htmlEl = document.documentElement;
-      const currentTheme = htmlEl.getAttribute('data-theme') || 'dark';
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      htmlEl.setAttribute('data-theme', newTheme);
-      
-      document.getElementById('theme-icon').innerText = newTheme === 'dark' ? '☀️' : '🌙';
-      document.getElementById('theme-text').innerText = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
-      localStorage.setItem('spinwatch-theme', newTheme);
-
-      if (consumerStreamChart) initCharts();
-    }
-
-    const savedTheme = localStorage.getItem('spinwatch-theme');
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      document.getElementById('theme-icon').innerText = savedTheme === 'dark' ? '☀️' : '🌙';
-      document.getElementById('theme-text').innerText = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
-    }
-
+    // Live Clock Update
     function updateClock() {
       const now = new Date();
       document.getElementById('live-clock').innerText = now.toTimeString().split(' ')[0];
@@ -247,14 +223,14 @@
 
     function setBranchFilter(branch, btnElement) {
       activeBranchFilter = branch;
-      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.parentElement.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
       btnElement.classList.add('active');
       renderTable();
     }
 
     function setSourceMode(mode, btnElement) {
       activeSourceMode = mode;
-      document.querySelectorAll('.source-mode-pill').forEach(btn => btn.classList.remove('active'));
+      btnElement.parentElement.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
       btnElement.classList.add('active');
       
       const sourceTag = document.getElementById('table-source-tag');
@@ -270,6 +246,9 @@
       } else if (mode === 'ML') {
         sourceTag.innerText = 'PySpark MLlib Predictions';
         sourceTag.className = 'source-badge pyspark';
+      } else if (mode === 'GOOD') {
+        sourceTag.innerText = 'Good Condition Washers (30°C - 70°C)';
+        sourceTag.className = 'source-badge mysql';
       } else {
         sourceTag.innerText = 'Unified Multi-Source View';
         sourceTag.className = 'source-badge mysql';
@@ -279,15 +258,14 @@
 
     function filterByRisk() {
       activeBranchFilter = 'ALL';
-      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-      renderTable(true);
+      activeSourceMode = 'ML';
+      renderTable();
     }
 
-    // Initialize Multi-Source Charts
+    // Initialize Chart.js Plots
     function initCharts() {
-      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-      const textColor = isDark ? '#94a3b8' : '#334155';
-      const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+      const textColor = '#334155';
+      const gridColor = 'rgba(0,0,0,0.06)';
 
       // Chart 1: Consumer Stream Line Chart
       const ctx1 = document.getElementById('consumerStreamChart').getContext('2d');
@@ -297,7 +275,7 @@
         data: {
           labels: [],
           datasets: [
-            { label: 'Live Heat Stream (°C)', data: [], borderColor: '#06b6d4', backgroundColor: 'rgba(6, 182, 212, 0.1)', tension: 0.3, fill: true, borderWidth: 2 }
+            { label: 'Live Heat Stream (°C)', data: [], borderColor: '#0284c7', backgroundColor: 'rgba(2, 132, 199, 0.08)', tension: 0.3, fill: true, borderWidth: 2 }
           ]
         },
         options: {
@@ -322,8 +300,8 @@
           datasets: [{
             label: 'Avg Heat (°C)',
             data: [68.5, 62.1, 58.4, 65.2, 59.8, 51.3, 64.0, 56.5],
-            backgroundColor: ['#06b6d4', '#f97316', '#3b82f6', '#8b5cf6', '#10b981', '#ec4899', '#eab308', '#06b6d4'],
-            borderRadius: 8
+            backgroundColor: ['#0284c7', '#ea580c', '#2563eb', '#7c3aed', '#059669', '#db2777', '#ca8a04', '#0284c7'],
+            borderRadius: 6
           }]
         },
         options: {
@@ -332,7 +310,7 @@
           plugins: { legend: { display: false } },
           scales: {
             x: { ticks: { color: textColor }, grid: { color: gridColor } },
-            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 90 }
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 100 }
           }
         }
       });
@@ -362,7 +340,7 @@
           if (data.records && data.records.length > 0) {
             sampleDiv.innerHTML = data.records.slice(0, 5).map(r => `
               <div style="margin-bottom: 6px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">
-                <strong>${r.machine_id}</strong> (${r.branch}) | Heat: <span style="color: ${r.cycle_temperature > 70 ? '#ef4444' : '#06b6d4'}">${r.cycle_temperature}°C</span> | ${r.status}
+                <strong>${r.machine_id}</strong> (${r.branch}) | Heat: <span style="color: ${r.cycle_temperature > 70 ? '#dc2626' : '#0284c7'}">${r.cycle_temperature}°C</span> | ${r.status}
               </div>
             `).join('');
           } else {
@@ -398,7 +376,7 @@
             branchContainer.innerHTML = data.avg_by_branch.map(b => `
               <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
                 <span>${b.branch}</span>
-                <span style="font-family: var(--font-mono); font-weight: 700; color: ${b.avg_temperature > 60 ? '#f97316' : '#06b6d4'};">
+                <span style="font-family: var(--font-mono); font-weight: 700; color: ${b.avg_temperature > 65 ? '#ea580c' : '#0284c7'};">
                   ${b.avg_temperature}°C
                 </span>
               </div>
@@ -451,7 +429,7 @@
       }
     }
 
-    function renderTable(riskOnly = false) {
+    function renderTable() {
       const tbody = document.getElementById('machine-table-body');
       let filtered = rawMachinesData;
 
@@ -459,7 +437,7 @@
         filtered = filtered.filter(m => m.branch === activeBranchFilter);
       }
 
-      if (riskOnly || activeSourceMode === 'ML') {
+      if (activeSourceMode === 'ML') {
         filtered = filtered.filter(m => m.status === 'ALERT' || predictionsMap[m.machine_id] === 1);
       } else if (activeSourceMode === 'GOOD') {
         filtered = filtered.filter(m => m.status === 'NORMAL' && m.cycle_temperature <= 70.0);
@@ -505,7 +483,7 @@
         const isAlert = m.status === 'ALERT' || m.cycle_temperature > 70.0;
         const isRisk = predictionsMap[m.machine_id] === 1 || m.cycle_temperature > 70.0;
         const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 70) * 100));
-        const barColor = m.cycle_temperature > 70.0 ? '#ef4444' : (m.cycle_temperature > 55.0 ? '#f97316' : '#10b981');
+        const barColor = m.cycle_temperature > 70.0 ? '#dc2626' : (m.cycle_temperature > 55.0 ? '#ea580c' : '#059669');
 
         return `
           <tr>
