@@ -8,10 +8,15 @@ Reads from Kafka topic 'machine-readings' (Consumer Group: 'maintenance-tracker'
 """
 
 import os
+import sys
 import json
 import logging
 import datetime
 import urllib.request
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
 try:
     from kafka import KafkaConsumer
@@ -43,19 +48,24 @@ def process_messages(bootstrap_servers="localhost:9092", topic="machine-readings
     global LIVE_CONSUMER_BUFFER
 
     if not KAFKA_AVAILABLE:
-        logger.error("kafka-python not installed. Running consumer in standalone stream mode.")
+        logger.info("[Standalone Mode] Kafka-python not available. Using local pipeline buffer.")
         return
 
     logger.info(f"Connecting Consumer Application to Kafka topic '{topic}' (group: '{group_id}')...")
 
-    consumer = KafkaConsumer(
-        topic,
-        bootstrap_servers=bootstrap_servers.split(","),
-        group_id=group_id,
-        enable_auto_commit=False, # Manual offset commit -> explicit at-least-once guarantee
-        value_deserializer=lambda v: json.loads(v.decode("utf-8")),
-        auto_offset_reset="earliest"
-    )
+    try:
+        consumer = KafkaConsumer(
+            topic,
+            bootstrap_servers=bootstrap_servers.split(","),
+            group_id=group_id,
+            enable_auto_commit=False,
+            value_deserializer=lambda v: json.loads(v.decode("utf-8")),
+            auto_offset_reset="earliest",
+            request_timeout_ms=5000
+        )
+    except Exception as e:
+        logger.warning(f"Could not connect Kafka consumer to {bootstrap_servers}: {e}. Running stream in local buffer mode.")
+        return
 
     db_conn = None
     if MYSQL_AVAILABLE:
@@ -82,7 +92,7 @@ def process_messages(bootstrap_servers="localhost:9092", topic="machine-readings
             # 1. Append reading to HDFS Historical Storage (/data/machines/raw/dt=YYYY-MM-DD/)
             try:
                 today_str = datetime.datetime.now().strftime("%Y-%m-%d")
-                raw_dir = os.path.join(os.getcwd(), "data", "machines", "raw", f"dt={today_str}")
+                raw_dir = os.path.join(PROJECT_ROOT, "data", "machines", "raw", f"dt={today_str}")
                 os.makedirs(raw_dir, exist_ok=True)
                 json_append_path = os.path.join(raw_dir, "stream_history.json")
                 with open(json_append_path, "a") as f:
@@ -129,7 +139,10 @@ def process_messages(bootstrap_servers="localhost:9092", topic="machine-readings
     finally:
         if db_conn and db_conn.is_connected():
             db_conn.close()
-        consumer.close()
+        try:
+            consumer.close()
+        except Exception:
+            pass
 
 if __name__ == "__main__":
     process_messages()

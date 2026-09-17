@@ -7,9 +7,9 @@
 
 ## 1. Executive Summary & Case Framing
 
-**SpinWatch** is built for a laundry-machine operator running coin- and app-operated washing machines inside branches across multiple Rwandan cities (**Kigali, Musanze, Huye, Rubavu, Rusizi, Nyagatare**).
+**SpinWatch** is built for a laundry-machine operator running coin- and app-operated washing machines inside branches across Rwandan cities (**Kigali, Musanze, Huye, Rubavu, Rusizi, Nyagatare, Rwamagana, Gicumbi**, etc.).
 
-Each machine continuously streams heat telemetry (`cycle_temperature`) while in operation. The core operational problem is simple: machines that suffer motor or heating element failure often overheat mid-cycle, disrupting customer operations and incurring repair expenses.
+Each machine continuously streams heat telemetry (`cycle_temperature`, `vibration_hz`, `power_kw`, `water_pressure_bar`) while in operation. The core operational problem is simple: machines that suffer motor or heating element failure often overheat mid-cycle, disrupting customer operations and incurring repair expenses.
 
 This system:
 1. **Streams Heat Telemetry**: Captures continuous water and motor temperatures per machine in real-time.
@@ -17,7 +17,7 @@ This system:
 3. **Predicts Impending Breakdown**: Uses a PySpark MLlib `LogisticRegression` classification model to predict machine failure risk (`breakdown_soon = 1`).
 4. **Strict Separation of Operational vs Analytical Storage**:
    - **Local MySQL (`laundry_ops`)**: Operational storage ONLY (`machine_status`, `readings_log`).
-   - **Local HDFS (`/data/machines/raw`)**: Historical analytical storage holding raw stream history.
+   - **Local HDFS (`/data/machines/raw/dt=YYYY-MM-DD/`)**: Historical analytical storage holding raw stream history.
    - **PySpark HDFS Storage (`/data/machines/insights/` & `/data/machines/predictions/`)**: PySpark analytics insights and MLlib predictions are saved **DIRECTLY in HDFS Analytical Storage** and **NOT stored in MySQL**.
 
 ---
@@ -32,6 +32,9 @@ Every telemetry reading flowing through Kafka, HDFS, and MySQL follows this exac
 | `machine_id` | `VARCHAR(20)` | Washer unit ID (e.g., `WM_0007`) |
 | `branch` | `VARCHAR(50)` | City / branch location (e.g., `Kigali`, `Musanze`, `Huye`) |
 | `cycle_temperature` | `DECIMAL(5,2)` | Water / motor temperature during cycle (°C) |
+| `vibration_hz` | `FLOAT` | Motor vibration frequency (Hz) |
+| `power_kw` | `FLOAT` | Electrical power consumption (kW) |
+| `water_pressure_bar` | `FLOAT` | Water intake pressure (bar) |
 | `timestamp` | `DATETIME` | Timestamp when reading was recorded |
 | `status` | `VARCHAR(10)` | `NORMAL` or `ALERT` (`ALERT` if `cycle_temperature > 70.0°C`) |
 | `breakdown_soon` | `TINYINT` (0/1) | Label — `1` if machine trips heat fault threshold |
@@ -53,7 +56,7 @@ Every telemetry reading flowing through Kafka, HDFS, and MySQL follows this exac
                     ┌─────────────────────────┴─────────────────────────┐
                     ▼                                                   ▼
        [ Kafka Python Consumer ]                              [ Kafka HDFS Sink ]
-       (Group: "maintenance-tracker")                      (/data/machines/raw Parquet)
+       (Group: "maintenance-tracker")                      (/data/machines/raw Parquet/JSON)
                     │                                                   │
                     ▼                                                   ▼
           [ Local MySQL Database ] ◄────────────────────── [ PySpark Batch Engine ]
@@ -64,7 +67,7 @@ Every telemetry reading flowing through Kafka, HDFS, and MySQL follows this exac
                     │                                      (/data/machines/insights/
                     │ (Queries MySQL for Live Status)       /data/machines/predictions/)
                     └─────────────────┬─────────────────────────────────┘
-                                      │ (Queries HDFS Analytics & Predictions)
+                                      │ (Queries HDFS Analytics & Live Kafka Feed)
                             [ Django / Web Dashboard ]
                               (Port 8050, Light & Dark Theme)
 ```
@@ -86,32 +89,45 @@ hdfs dfs -mkdir -p /data/machines/raw
 python scripts/seed_hdfs_data.py
 ```
 
-### Step 3: Launch System Services
+### Step 3: Launch Master Pipeline (Single Command)
+To launch all core pipeline processes simultaneously (REST Ingress API, Kafka Consumer, Telemetry Generator, and Web Dashboard):
+```bash
+python run_project.py
+```
 
+Or run services individually across separate terminals:
 1. **Terminal 1 - Ingress & Stage Inspection REST API**:
    ```bash
    python producer/app.py
    ```
-
 2. **Terminal 2 - Kafka Telemetry Consumer**:
    ```bash
    python consumer/consumer.py
    ```
-
 3. **Terminal 3 - Telemetry Stream Generator**:
    ```bash
    python generator/generator.py --tps 3
    ```
-
 4. **Terminal 4 - Web Dashboard**:
    ```bash
    python dashboard/app.py
    ```
-   *Access dashboard at:* **`http://localhost:8050/`** (Includes Theme Toggle switch for Light/Dark mode).
+
+*Access dashboard at:* **`http://localhost:8050/`** (Includes Light/Dark mode, MySQL Operational Table, Kafka Live Telemetry Stream, and HDFS Raw Data Detailed Inspector).
 
 ---
 
-## 5. PySpark Analytics & Machine Learning
+## 5. Web Dashboard Features
+
+1. **MySQL Operational Storage View**: Displays live operational states (`machine_status`) from `laundry_ops` (Washer ID, Branch, Temperature, Operational Status, Last Updated, Actions).
+2. **PySpark ML Failure Prediction Overview**: Visualizes breakdown risk predictions (`breakdown_soon`) computed by PySpark MLlib (`LogisticRegression`) and stored in HDFS.
+3. **📡 Kafka Live Telemetry Stream (Real Coming Data)**: Dedicated real-time table displaying incoming telemetry packets as they travel through Kafka topic `machine-readings`.
+4. **📦 HDFS Raw Data Detailed Inspector (`/data/machines/raw/`)**: Record-by-record inspector allowing users to browse landed raw HDFS records by date partition (`dt=YYYY-MM-DD`) and inspect full JSON payloads.
+
+---
+
+## 6. PySpark Analytics & Machine Learning
 
 - **PySpark Batch Insights (`spark/insights.py`)**: Computes branch temperature averages and overheating frequency, writing results directly to HDFS (`/data/machines/insights/`).
 - **PySpark MLlib Model (`spark/train_model.py` & `score_batch.py`)**: Trains `LogisticRegression` on `cycle_temperature` trends and saves predicted breakdown flags (`breakdown_soon`) directly to HDFS (`/data/machines/predictions/`).
+

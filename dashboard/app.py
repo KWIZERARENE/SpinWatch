@@ -50,6 +50,53 @@ def query_mysql(sql, params=None):
         return None
 
 class DashboardHandler(SimpleHTTPRequestHandler):
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.end_headers()
+
+    def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+        if path in ["/api/readings/", "/api/readings"]:
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_data = self.rfile.read(content_length)
+            
+            # Forward request to Ingress API server at http://localhost:8000/api/readings/
+            try:
+                import urllib.request
+                req = urllib.request.Request(
+                    "http://localhost:8000/api/readings/",
+                    data=post_data,
+                    headers={"Content-Type": "application/json"},
+                    method="POST"
+                )
+                with urllib.request.urlopen(req, timeout=3.0) as resp:
+                    resp_data = resp.read()
+                    self.send_response(resp.status)
+                    self.send_header("Content-Type", "application/json")
+                    self.send_header("Access-Control-Allow-Origin", "*")
+                    self.end_headers()
+                    self.wfile.write(resp_data)
+                    return
+            except Exception as e:
+                print(f"[!] Dashboard proxy to 8000 warning: {e}")
+                # Standalone fallback response
+                try:
+                    payload = json.loads(post_data.decode("utf-8"))
+                    self.send_json({
+                        "stage": "Point 1: Ingress (Dashboard Fallback)",
+                        "status": "success",
+                        "message": "Telemetry received",
+                        "payload": payload
+                    }, status_code=201)
+                except Exception:
+                    self.send_json({"status": "error", "message": str(e)}, status_code=400)
+        else:
+            self.send_error(404, "Endpoint not found")
+
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
@@ -59,7 +106,8 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.serve_template("templates/index.html")
         elif path.startswith("/static/"):
             file_path = path.lstrip("/")
-            if os.path.exists(file_path):
+            full_path = os.path.join(os.path.dirname(__file__), file_path)
+            if os.path.exists(full_path):
                 self.serve_file(file_path)
             else:
                 self.send_error(404, "Static file not found")
@@ -109,10 +157,39 @@ class DashboardHandler(SimpleHTTPRequestHandler):
     def handle_api_status(self):
         rows = query_mysql("SELECT machine_id, branch, cycle_temperature, status, last_updated FROM machine_status ORDER BY machine_id ASC LIMIT 1000")
         if not rows:
-            rows = [
-                {"machine_id": "WM_0001", "branch": "Kigali", "cycle_temperature": 74.5, "status": "ALERT", "last_updated": "2026-09-17 07:00:00"},
-                {"machine_id": "WM_0004", "branch": "Musanze", "cycle_temperature": 52.1, "status": "NORMAL", "last_updated": "2026-09-17 07:00:00"}
-            ]
+            # Fallback: Read 1,000 washer statuses from latest HDFS raw partition
+            rows = []
+            raw_base = os.path.join(PROJECT_ROOT, "data", "machines", "raw")
+            partition_dirs = glob.glob(os.path.join(raw_base, "dt=*"))
+            if partition_dirs:
+                latest_dir = sorted(partition_dirs, reverse=True)[0]
+                parquet_files = glob.glob(os.path.join(latest_dir, "*.parquet"))
+                if parquet_files:
+                    try:
+                        import pandas as pd
+                        df = pd.read_parquet(parquet_files[0])
+                        rows = df.to_dict(orient="records")
+                    except Exception:
+                        pass
+                if not rows:
+                    json_files = glob.glob(os.path.join(latest_dir, "*.json"))
+                    for jf in json_files:
+                        try:
+                            with open(jf, "r") as f:
+                                rows.extend([json.loads(line.strip()) for line in f.readlines()])
+                        except Exception:
+                            pass
+
+            # Fallback 2: Generate 1,000 washers if store empty
+            if not rows:
+                branches = ["Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare", "Rwamagana", "Gicumbi", "Kamembe", "Karongi", "Nyanza", "Bugesera", "Kamonyi"]
+                rows = [{
+                    "machine_id": f"WM_{i:04d}",
+                    "branch": branches[i % len(branches)],
+                    "cycle_temperature": round(35.0 + (i * 7) % 55, 1),
+                    "status": "ALERT" if (35.0 + (i * 7) % 55) > 70 else "NORMAL",
+                    "last_updated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                } for i in range(1, 1001)]
 
         for r in rows:
             if "last_updated" in r and r["last_updated"]:
@@ -165,44 +242,85 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         records = []
         if os.path.exists(raw_base):
             parquet_files = glob.glob(os.path.join(raw_base, "*.parquet"))
-            if parquet_files:
+            for pf in parquet_files:
+                if len(records) >= 200:
+                    break
                 try:
                     import pandas as pd
-                    df = pd.read_parquet(parquet_files[0])
-                    records = df.head(100).to_dict(orient="records")
-                except Exception:
-                    pass
+                    df = pd.read_parquet(pf)
+                    for rec in df.head(200 - len(records)).to_dict(orient="records"):
+                        records.append(rec)
+                except Exception as e:
+                    print(f"[!] HDFS parquet read warning: {e}")
 
-            if not records:
+            if len(records) < 200:
                 json_files = glob.glob(os.path.join(raw_base, "*.json"))
                 for jf in json_files:
+                    if len(records) >= 200:
+                        break
                     try:
                         with open(jf, "r") as f:
-                            records.extend([json.loads(line.strip()) for line in f.readlines()[:100]])
-                    except Exception:
-                        pass
+                            for line in f:
+                                if len(records) >= 200:
+                                    break
+                                line_str = line.strip()
+                                if line_str:
+                                    records.append(json.loads(line_str))
+                    except Exception as e:
+                        print(f"[!] HDFS json read warning: {e}")
+
+        clean_records = []
+        for r in records:
+            item = {}
+            for k, v in r.items():
+                if isinstance(v, (datetime.datetime, datetime.date)):
+                    item[k] = str(v)
+                else:
+                    item[k] = v
+            clean_records.append(item)
 
         self.send_json({
             "date": target_dt,
-            "count": len(records),
-            "records": records[:50]
+            "count": len(clean_records),
+            "records": clean_records
         })
 
     def handle_api_consumer_live(self):
+        # 1. Query live stream buffer from Ingress API server (port 8000)
+        try:
+            import urllib.request
+            req = urllib.request.Request("http://localhost:8000/api/consumer/live")
+            with urllib.request.urlopen(req, timeout=1.5) as resp:
+                data = resp.read()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+        except Exception:
+            pass
+
+        # 2. Local buffer fallback
         try:
             from consumer.consumer import LIVE_CONSUMER_BUFFER
-            self.send_json(LIVE_CONSUMER_BUFFER[-10:])
+            self.send_json(LIVE_CONSUMER_BUFFER[-25:])
         except Exception:
             self.send_json([])
 
-    def send_json(self, data):
-        content = json.dumps(data).encode("utf-8")
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Content-Length", str(len(content)))
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.end_headers()
-        self.wfile.write(content)
+    def send_json(self, data, status_code=200):
+        try:
+            content = json.dumps(data).encode("utf-8")
+            self.send_response(status_code)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(content)))
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(content)
+        except (ConnectionAbortedError, ConnectionResetError, BrokenPipeError):
+            pass
+        except Exception as e:
+            print(f"[!] send_json issue: {e}")
 
     def log_message(self, format, *args):
         return

@@ -1,7 +1,8 @@
 """
-SpinWatch - Washing Machine Telemetry Stream Generator
-Simulates continuous reading stream for 1,000 washing machines across 13 nationwide branches.
-Monitors cycle_temperature randomly generated between 30.0°C and 100.0°C.
+SpinWatch - Washing Machine Telemetry Stream Generator (High Velocity & Variety)
+Simulates continuous multi-sensor telemetry stream for 1,000 washing machines across 13 branches.
+Demonstrates Big Data Velocity & Variety (Temperature, Vibration, Water Pressure, Power, Error Codes).
+Pushes telemetry to REST Framework Ingress API -> Apache Kafka topic 'machine-readings'.
 """
 
 import time
@@ -16,7 +17,8 @@ BRANCHES = [
     "Rwamagana", "Gicumbi", "Kamembe", "Karongi", "Nyanza", "Bugesera", "Kamonyi"
 ]
 
-# Setup 1,000 washing machines nationwide
+ERROR_CODES = ["NONE", "NONE", "NONE", "NONE", "E01_OVERHEAT", "E02_VIBRATION", "E03_PRESSURE_DROP", "E04_POWER_SURGE"]
+
 MACHINES = [
     {
         "machine_id": f"WM_{i:04d}",
@@ -31,19 +33,23 @@ def generate_telemetry():
     parser.add_argument("--target-url", type=str, default="http://localhost:8000/api/readings/", help="Target REST API URL")
     args = parser.parse_args()
 
-    print(f"[*] Starting Generator for 1,000 Washers (Temp 30°C - 100°C) at {args.tps} TPS...")
-    print(f"[*] Target Ingress Endpoint: {args.target_url}")
+    print(f"[*] Starting Multi-Sensor Generator for 1,000 Washers across 13 Branches at {args.tps} TPS...")
+    print(f"[*] Data Ingress Target (Django/REST): {args.target_url}")
     print("[*] Press Ctrl+C to stop.")
 
     while True:
         machine = random.choice(MACHINES)
         mid = machine["machine_id"]
 
-        # Cycle temperature randomly generated between 30.0°C and 100.0°C
-        current_temp = round(random.uniform(30.0, 100.0), 2)
+        # Varied sensor metrics demonstrating Big Data Variety
+        current_temp = round(random.uniform(30.0, 102.0), 2)
+        vibration_hz = round(random.uniform(12.0, 115.0), 1)
+        power_kw = round(random.uniform(1.2, 7.8), 2)
+        water_pressure_bar = round(random.uniform(1.0, 4.8), 2)
+        error_code = random.choice(ERROR_CODES) if current_temp > 70.0 else "NONE"
 
-        status = "ALERT" if current_temp > 70.0 else "NORMAL"
-        breakdown_soon = 1 if current_temp > 70.0 else 0
+        status = "ALERT" if (current_temp > 70.0 or vibration_hz > 90.0) else "NORMAL"
+        breakdown_soon = 1 if (current_temp > 70.0 or vibration_hz > 90.0) else 0
         now_str = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
         reading = {
@@ -51,6 +57,10 @@ def generate_telemetry():
             "machine_id": mid,
             "branch": machine["branch"],
             "cycle_temperature": current_temp,
+            "vibration_hz": vibration_hz,
+            "power_kw": power_kw,
+            "water_pressure_bar": water_pressure_bar,
+            "error_code": error_code,
             "timestamp": now_str,
             "status": status,
             "breakdown_soon": breakdown_soon
@@ -59,9 +69,9 @@ def generate_telemetry():
         try:
             resp = requests.post(args.target_url, json=reading, timeout=2.0)
             if resp.status_code not in (200, 201, 202):
-                print(f"[!] API HTTP {resp.status_code}: {resp.text}")
+                print(f"[!] REST Ingress API HTTP {resp.status_code}: {resp.text}")
         except Exception as e:
-            print(f"[!] Stream delivery issue: {e}")
+            print(f"[!] Telemetry delivery warning: {e}")
 
         time.sleep(1.0 / args.tps)
 

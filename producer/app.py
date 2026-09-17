@@ -14,12 +14,22 @@ Exposes simple REST endpoints to test, query, and verify data at every stage of 
 """
 
 import os
+import sys
 import json
 import glob
 import datetime
 import urllib.parse
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from producer import MachineTelemetryProducer
+
+# Ensure project root is in sys.path
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+try:
+    from producer.producer import MachineTelemetryProducer
+except ImportError:
+    from producer import MachineTelemetryProducer
 
 producer = MachineTelemetryProducer(bootstrap_servers="localhost:9092", topic="machine-readings")
 
@@ -82,6 +92,29 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                 RECENT_INGRESS_READINGS.append(reading)
                 if len(RECENT_INGRESS_READINGS) > 50:
                     RECENT_INGRESS_READINGS = RECENT_INGRESS_READINGS[-50:]
+
+                # Automatically process generator stream into Consumer Live Buffer & HDFS Raw Store
+                try:
+                    import consumer.consumer as cons
+                    cons.LIVE_CONSUMER_BUFFER.append(reading)
+                    if len(cons.LIVE_CONSUMER_BUFFER) > 50:
+                        cons.LIVE_CONSUMER_BUFFER = cons.LIVE_CONSUMER_BUFFER[-50:]
+
+                    # Append to HDFS raw date partition
+                    today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+                    raw_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "machines", "raw", f"dt={today_str}")
+                    os.makedirs(raw_dir, exist_ok=True)
+                    with open(os.path.join(raw_dir, "stream_history.json"), "a") as f:
+                        f.write(json.dumps(reading) + "\n")
+
+                    # Update MySQL if available
+                    if MYSQL_AVAILABLE:
+                        query_mysql(
+                            "REPLACE INTO machine_status (machine_id, branch, cycle_temperature, status, last_updated) VALUES (%s, %s, %s, %s, %s)",
+                            (reading["machine_id"], reading["branch"], reading["cycle_temperature"], reading["status"], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                        )
+                except Exception as ex:
+                    print(f"[!] Generator automatic flow sync warning: {ex}")
 
                 self.send_json({
                     "stage": "Point 1: Generator Ingress -> Kafka Producer",
@@ -281,25 +314,29 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
 
         # 5. Python Consumer Live Broadcast Endpoint
         elif path == "/api/consumer/live":
-            from consumer.consumer import LIVE_CONSUMER_BUFFER
-            self.send_json({
-                "stage": "Python Consumer Live Stream Broadcast",
-                "buffer_size": len(LIVE_CONSUMER_BUFFER),
-                "recent_consumer_events": LIVE_CONSUMER_BUFFER[-10:]
-            })
+            try:
+                from consumer.consumer import LIVE_CONSUMER_BUFFER
+                self.send_json(LIVE_CONSUMER_BUFFER[-25:])
+            except Exception:
+                self.send_json([])
         else:
             self.send_error(404, "Endpoint not found")
 
     def send_json(self, data, status_code=200):
-        content = json.dumps(data, indent=2).encode("utf-8")
-        self.send_response(status_code)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Content-Length", str(len(content)))
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
-        self.end_headers()
-        self.wfile.write(content)
+        try:
+            content = json.dumps(data, indent=2).encode("utf-8")
+            self.send_response(status_code)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(content)))
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+            self.end_headers()
+            self.wfile.write(content)
+        except (ConnectionAbortedError, ConnectionResetError, BrokenPipeError):
+            pass
+        except Exception as e:
+            print(f"[!] API send_json issue: {e}")
 
     def log_message(self, format, *args):
         return
