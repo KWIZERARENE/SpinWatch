@@ -1,8 +1,7 @@
 """
-SpinWatch - HDFS & MySQL Data Seeder
-Populates local HDFS directory (/data/machines/raw/) with Parquet telemetry files,
-writes analytical predictions & insights to HDFS storage (/data/machines/predictions/ & insights/),
-and populates MySQL operational tables (machine_status, readings_log).
+SpinWatch - HDFS & MySQL Data Seeder (1,000 Washers / 13 Branches)
+Populates local HDFS directory (/data/machines/raw/dt=YYYY-MM-DD/) with Parquet telemetry files
+and inserts initial machine status, readings, predictions, and PySpark insights.
 """
 
 import os
@@ -26,8 +25,11 @@ try:
 except ImportError:
     PARQUET_AVAILABLE = False
 
-BRANCHES = ["Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare"]
-MACHINES = [f"WM_{i:04d}" for i in range(1, 31)]
+BRANCHES = [
+    "Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare",
+    "Rwamagana", "Gicumbi", "Kamembe", "Karongi", "Nyanza", "Bugesera", "Kamonyi"
+]
+MACHINES = [f"WM_{i:04d}" for i in range(1, 1001)]
 
 MYSQL_CONFIG = {
     "host": "127.0.0.1",
@@ -38,20 +40,21 @@ MYSQL_CONFIG = {
 }
 
 def seed_data():
-    print("[*] Starting SpinWatch HDFS & MySQL Data Seeder...")
+    print("[*] Starting SpinWatch HDFS & MySQL Data Seeder (1,000 Washers / 13 Branches)...")
     today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+    yesterday_str = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
     
-    # 1. Generate 200 telemetry records across 30 machines
+    # 1. Generate 1,000 telemetry records across 13 branches
     records = []
     machine_status_rows = []
     
     for i, mid in enumerate(MACHINES):
         branch = random.choice(BRANCHES)
-        temp = round(random.uniform(42.0, 78.0), 2)
+        temp = round(random.uniform(42.0, 95.0), 2)
         status = "ALERT" if temp > 70.0 else "NORMAL"
         breakdown_soon = 1 if temp > 68.0 else 0
         reading_id = str(uuid.uuid4())
-        ts = (datetime.datetime.now() - datetime.timedelta(minutes=random.randint(1, 120))).strftime("%Y-%m-%d %H:%M:%S")
+        ts = (datetime.datetime.now() - datetime.timedelta(minutes=random.randint(1, 300))).strftime("%Y-%m-%d %H:%M:%S")
 
         rec = {
             "reading_id": reading_id,
@@ -65,59 +68,66 @@ def seed_data():
         records.append(rec)
         machine_status_rows.append((mid, branch, temp, status, ts))
 
-    # 2. Land Parquet files in HDFS raw target directory
-    raw_dir = os.path.join(os.getcwd(), "data", "machines", "raw", f"dt={today_str}")
-    os.makedirs(raw_dir, exist_ok=True)
-    parquet_path = os.path.join(raw_dir, "part-0000.parquet")
-    json_path = os.path.join(raw_dir, "part-0000.json")
+    # 2. Land Parquet files in HDFS raw target directory (Today & Historical Yesterday)
+    for date_tag in [today_str, yesterday_str]:
+        raw_dir = os.path.join(os.getcwd(), "data", "machines", "raw", f"dt={date_tag}")
+        os.makedirs(raw_dir, exist_ok=True)
+        parquet_path = os.path.join(raw_dir, "part-0000.parquet")
+        json_path = os.path.join(raw_dir, "part-0000.json")
 
-    if PARQUET_AVAILABLE:
-        df = pd.DataFrame(records)
-        table = pa.Table.from_pandas(df)
-        pq.write_table(table, parquet_path)
-        print(f"[+] Written {len(records)} Parquet records to local store: {parquet_path}")
-    else:
-        with open(json_path, "w") as f:
-            for r in records:
-                f.write(json.dumps(r) + "\n")
-        print(f"[+] Written {len(records)} JSON telemetry records to local store: {json_path}")
+        if PARQUET_AVAILABLE:
+            df = pd.DataFrame(records)
+            table = pa.Table.from_pandas(df)
+            pq.write_table(table, parquet_path)
+            print(f"[+] Written {len(records)} Parquet records to HDFS store: {parquet_path}")
+        else:
+            with open(json_path, "w") as f:
+                for r in records:
+                    f.write(json.dumps(r) + "\n")
+            print(f"[+] Written {len(records)} JSON telemetry records to HDFS store: {json_path}")
 
-    # 3. Save Analytical Predictions & Insights to HDFS Analytical Storage (NOT MySQL)
+    # 3. Save Analytical Predictions & Insights to HDFS Analytical Storage
     pred_dir = os.path.join(os.getcwd(), "data", "machines", "predictions")
     insight_dir = os.path.join(os.getcwd(), "data", "machines", "insights")
     os.makedirs(pred_dir, exist_ok=True)
     os.makedirs(insight_dir, exist_ok=True)
 
     sample_predictions = [
-        {"machine_id": "WM_0001", "branch": "Kigali", "prediction": 1, "scored_at": today_str + " 18:00:00"},
-        {"machine_id": "WM_0004", "branch": "Kigali", "prediction": 1, "scored_at": today_str + " 18:00:00"},
-        {"machine_id": "WM_0006", "branch": "Rusizi", "prediction": 1, "scored_at": today_str + " 18:00:00"},
-        {"machine_id": "WM_0012", "branch": "Huye", "prediction": 1, "scored_at": today_str + " 18:00:00"}
+        {"machine_id": rec["machine_id"], "branch": rec["branch"], "prediction": rec["breakdown_soon"], "scored_at": today_str + " 18:00:00"}
+        for rec in records if rec["breakdown_soon"] == 1
     ]
     with open(os.path.join(pred_dir, "latest_predictions.json"), "w") as f:
         json.dump(sample_predictions, f, indent=2)
 
+    # Compute branch averages across 13 branches
+    branch_totals = {}
+    branch_counts = {}
+    for r in records:
+        b = r["branch"]
+        branch_totals[b] = branch_totals.get(b, 0.0) + r["cycle_temperature"]
+        branch_counts[b] = branch_counts.get(b, 0) + 1
+
+    avg_by_branch = [
+        {"branch": b, "avg_temperature": round(branch_totals[b] / branch_counts[b], 2)}
+        for b in branch_totals
+    ]
+    avg_by_branch.sort(key=lambda x: x["avg_temperature"], reverse=True)
+
+    time_in_alert = [
+        {"machine_id": r["machine_id"], "branch": r["branch"], "alert_count": random.randint(5, 25)}
+        for r in records if r["status"] == "ALERT"
+    ][:15]
+
     sample_insights = {
-        "avg_by_branch": [
-            {"branch": "Kigali", "avg_temperature": 66.5},
-            {"branch": "Rubavu", "avg_temperature": 61.1},
-            {"branch": "Musanze", "avg_temperature": 58.2},
-            {"branch": "Rusizi", "avg_temperature": 54.8},
-            {"branch": "Huye", "avg_temperature": 52.4},
-            {"branch": "Nyagatare", "avg_temperature": 49.3}
-        ],
-        "time_in_alert": [
-            {"machine_id": "WM_0004", "branch": "Kigali", "alert_count": 18},
-            {"machine_id": "WM_0001", "branch": "Kigali", "alert_count": 12},
-            {"machine_id": "WM_0006", "branch": "Rusizi", "alert_count": 9}
-        ]
+        "avg_by_branch": avg_by_branch,
+        "time_in_alert": time_in_alert
     }
     with open(os.path.join(insight_dir, "latest_insights.json"), "w") as f:
         json.dump(sample_insights, f, indent=2)
 
-    print("[+] Saved analytical predictions & insights directly into HDFS Analytical Store")
+    print("[+] Saved HDFS predictions & PySpark insights to analytical store.")
 
-    # 4. Populate MySQL Operational Tables ONLY (machine_status, readings_log)
+    # 4. Populate MySQL Operational Tables (machine_status, readings_log)
     if MYSQL_AVAILABLE:
         try:
             conn = mysql.connector.connect(**MYSQL_CONFIG)
@@ -139,7 +149,7 @@ def seed_data():
             conn.commit()
             cursor.close()
             conn.close()
-            print("[+] Successfully populated MySQL `laundry_ops` operational tables!")
+            print(f"[+] Successfully populated MySQL `laundry_ops` with {len(machine_status_rows)} washers!")
         except Exception as e:
             print(f"[!] MySQL seed issue: {e}")
 

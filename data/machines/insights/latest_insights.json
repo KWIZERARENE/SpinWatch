@@ -1,45 +1,133 @@
 {
   "avg_by_branch": [
     {
-      "branch": "Kigali",
-      "avg_temperature": 66.5
+      "branch": "Rubavu",
+      "avg_temperature": 71.87
     },
     {
-      "branch": "Rubavu",
-      "avg_temperature": 61.1
+      "branch": "Kamembe",
+      "avg_temperature": 70.65
     },
     {
       "branch": "Musanze",
-      "avg_temperature": 58.2
+      "avg_temperature": 70.02
     },
     {
-      "branch": "Rusizi",
-      "avg_temperature": 54.8
+      "branch": "Rwamagana",
+      "avg_temperature": 69.88
     },
     {
       "branch": "Huye",
-      "avg_temperature": 52.4
+      "avg_temperature": 69.68
+    },
+    {
+      "branch": "Rusizi",
+      "avg_temperature": 68.5
+    },
+    {
+      "branch": "Bugesera",
+      "avg_temperature": 68.42
+    },
+    {
+      "branch": "Gicumbi",
+      "avg_temperature": 68.22
+    },
+    {
+      "branch": "Karongi",
+      "avg_temperature": 67.3
+    },
+    {
+      "branch": "Kamonyi",
+      "avg_temperature": 67.1
+    },
+    {
+      "branch": "Nyanza",
+      "avg_temperature": 66.81
+    },
+    {
+      "branch": "Kigali",
+      "avg_temperature": 66.33
     },
     {
       "branch": "Nyagatare",
-      "avg_temperature": 49.3
+      "avg_temperature": 65.36
     }
   ],
   "time_in_alert": [
     {
-      "machine_id": "WM_0004",
-      "branch": "Kigali",
-      "alert_count": 18
+      "machine_id": "WM_0001",
+      "branch": "Nyagatare",
+      "alert_count": 6
     },
     {
-      "machine_id": "WM_0001",
-      "branch": "Kigali",
-      "alert_count": 12
+      "machine_id": "WM_0003",
+      "branch": "Kamembe",
+      "alert_count": 9
     },
     {
       "machine_id": "WM_0006",
+      "branch": "Kamembe",
+      "alert_count": 24
+    },
+    {
+      "machine_id": "WM_0008",
       "branch": "Rusizi",
-      "alert_count": 9
+      "alert_count": 18
+    },
+    {
+      "machine_id": "WM_0013",
+      "branch": "Kamonyi",
+      "alert_count": 24
+    },
+    {
+      "machine_id": "WM_0014",
+      "branch": "Karongi",
+      "alert_count": 15
+    },
+    {
+      "machine_id": "WM_0017",
+      "branch": "Gicumbi",
+      "alert_count": 7
+    },
+    {
+      "machine_id": "WM_0020",
+      "branch": "Kigali",
+      "alert_count": 14
+    },
+    {
+      "machine_id": "WM_0021",
+      "branch": "Bugesera",
+      "alert_count": 19
+    },
+    {
+      "machine_id": "WM_0022",
+      "branch": "Kamembe",
+      "alert_count": 15
+    },
+    {
+      "machine_id": "WM_0023",
+      "branch": "Kamonyi",
+      "alert_count": 6
+    },
+    {
+      "machine_id": "WM_0024",
+      "branch": "Kigali",
+      "alert_count": 11
+    },
+    {
+      "machine_id": "WM_0029",
+      "branch": "Rubavu",
+      "alert_count": 13
+    },
+    {
+      "machine_id": "WM_0032",
+      "branch": "Rusizi",
+      "alert_count": 12
+    },
+    {
+      "machine_id": "WM_0034",
+      "branch": "Kamonyi",
+      "alert_count": 6
     }
   ]
 }

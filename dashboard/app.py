@@ -1,13 +1,16 @@
 """
 SpinWatch Web Dashboard Server
-Serves heat monitoring dashboard UI & REST API reading:
+Serves heat monitoring dashboard UI & REST APIs reading from:
 1. MySQL (laundry_ops) for Live Operational Views (machine_status, readings_log).
 2. HDFS Analytical Storage (data/machines/insights/ & predictions/) for PySpark Analytics & ML Predictions.
-DOES NOT query MySQL for predictions or insights.
+3. HDFS Historical Time-Travel Archive (/data/machines/raw/dt=YYYY-MM-DD/).
+4. Python Consumer Application Live Event Buffer.
 """
 
 import os
 import json
+import glob
+import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import urllib.parse
 
@@ -44,6 +47,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
+        query_params = urllib.parse.parse_qs(parsed.query)
 
         if path == "/" or path == "/index.html":
             self.serve_template("templates/index.html")
@@ -59,6 +63,13 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.handle_api_predictions()
         elif path == "/api/insights":
             self.handle_api_insights()
+        elif path == "/api/hdfs/dates":
+            self.handle_api_hdfs_dates()
+        elif path == "/api/hdfs/history":
+            dt = query_params.get("dt", [datetime.datetime.now().strftime("%Y-%m-%d")])[0]
+            self.handle_api_hdfs_history(dt)
+        elif path == "/api/consumer/live":
+            self.handle_api_consumer_live()
         else:
             self.send_error(404, "Endpoint not found")
 
@@ -85,12 +96,12 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         self.wfile.write(content)
 
     def handle_api_status(self):
-        # Operational View: Read strictly from MySQL machine_status
-        rows = query_mysql("SELECT machine_id, branch, cycle_temperature, status, last_updated FROM machine_status ORDER BY cycle_temperature DESC")
+        # Operational View: Query MySQL machine_status table
+        rows = query_mysql("SELECT machine_id, branch, cycle_temperature, status, last_updated FROM machine_status ORDER BY cycle_temperature DESC LIMIT 100")
         if not rows:
             rows = [
-                {"machine_id": "WM_0001", "branch": "Kigali", "cycle_temperature": 74.5, "status": "ALERT", "last_updated": "2026-09-16 17:40:00"},
-                {"machine_id": "WM_0002", "branch": "Musanze", "cycle_temperature": 52.1, "status": "NORMAL", "last_updated": "2026-09-16 17:40:00"}
+                {"machine_id": "WM_0001", "branch": "Kigali", "cycle_temperature": 74.5, "status": "ALERT", "last_updated": "2026-09-17 07:00:00"},
+                {"machine_id": "WM_0004", "branch": "Musanze", "cycle_temperature": 52.1, "status": "NORMAL", "last_updated": "2026-09-17 07:00:00"}
             ]
 
         for r in rows:
@@ -102,7 +113,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         self.send_json(rows)
 
     def handle_api_predictions(self):
-        # Analytical / Predictive View: Read DIRECTLY from HDFS Analytical Storage (NOT MySQL)
+        # Predictive View: Read directly from HDFS Analytical Storage
         pred_json_path = os.path.join(os.getcwd(), "..", "data", "machines", "predictions", "latest_predictions.json")
         if not os.path.exists(pred_json_path):
             pred_json_path = os.path.join(os.getcwd(), "data", "machines", "predictions", "latest_predictions.json")
@@ -114,9 +125,8 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 self.send_json(preds)
                 return
             except Exception as e:
-                print(f"[!] HDFS predictions file read issue: {e}")
+                print(f"[!] HDFS predictions read issue: {e}")
 
-        # Fallback PySpark MLlib analytical prediction list
         preds = [
             {"machine_id": "WM_0001", "branch": "Kigali", "prediction": 1},
             {"machine_id": "WM_0004", "branch": "Kigali", "prediction": 1}
@@ -124,7 +134,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         self.send_json(preds)
 
     def handle_api_insights(self):
-        # Analytical Insights View: Read DIRECTLY from HDFS Analytical Storage (NOT MySQL)
+        # Analytical Insights View: Read directly from HDFS Analytical Storage
         insights_json_path = os.path.join(os.getcwd(), "..", "data", "machines", "insights", "latest_insights.json")
         if not os.path.exists(insights_json_path):
             insights_json_path = os.path.join(os.getcwd(), "data", "machines", "insights", "latest_insights.json")
@@ -136,19 +146,62 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 self.send_json(insights_data)
                 return
             except Exception as e:
-                print(f"[!] HDFS insights file read issue: {e}")
+                print(f"[!] HDFS insights read issue: {e}")
 
-        # Fallback PySpark insights structure
         self.send_json({
             "avg_by_branch": [{"branch": "Kigali", "avg_temperature": 66.50}, {"branch": "Musanze", "avg_temperature": 58.20}],
             "time_in_alert": [{"machine_id": "WM_0004", "branch": "Kigali", "alert_count": 18}]
         })
+
+    def handle_api_hdfs_dates(self):
+        raw_base = os.path.join(os.getcwd(), "..", "data", "machines", "raw")
+        if not os.path.exists(raw_base):
+            raw_base = os.path.join(os.getcwd(), "data", "machines", "raw")
+
+        dates = [os.path.basename(d).replace("dt=", "") for d in glob.glob(os.path.join(raw_base, "dt=*"))]
+        self.send_json(sorted(dates, reverse=True))
+
+    def handle_api_hdfs_history(self, target_dt):
+        raw_base = os.path.join(os.getcwd(), "..", "data", "machines", "raw", f"dt={target_dt}")
+        if not os.path.exists(raw_base):
+            raw_base = os.path.join(os.getcwd(), "data", "machines", "raw", f"dt={target_dt}")
+
+        records = []
+        if os.path.exists(raw_base):
+            parquet_files = glob.glob(os.path.join(raw_base, "*.parquet"))
+            if parquet_files:
+                try:
+                    import pandas as pd
+                    df = pd.read_parquet(parquet_files[0])
+                    records = df.head(100).to_dict(orient="records")
+                except Exception:
+                    pass
+
+            if not records:
+                json_files = glob.glob(os.path.join(raw_base, "*.json"))
+                for jf in json_files:
+                    try:
+                        with open(jf, "r") as f:
+                            records.extend([json.loads(line.strip()) for line in f.readlines()[:100]])
+                    except Exception:
+                        pass
+
+        self.send_json({
+            "date": target_dt,
+            "count": len(records),
+            "records": records[:50]
+        })
+
+    def handle_api_consumer_live(self):
+        from consumer.consumer import LIVE_CONSUMER_BUFFER
+        self.send_json(LIVE_CONSUMER_BUFFER[-10:])
 
     def send_json(self, data):
         content = json.dumps(data).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(content)))
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         self.wfile.write(content)
 

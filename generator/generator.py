@@ -11,7 +11,7 @@ import argparse
 import datetime
 import requests
 
-BRANCHES = ["Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare"]
+BRANCHES = ["Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare","Rwamagana","Gicumbi","kamembe","karongi","Nyanza","Bugesera","kamonyi"]
 
 # Setup 30 washing machines across branches
 MACHINES = [
@@ -19,12 +19,12 @@ MACHINES = [
         "machine_id": f"WM_{i:04d}",
         "branch": random.choice(BRANCHES)
     }
-    for i in range(1, 31)
+    for i in range(1, 1000)
 ]
 
 # Baseline cycle temperature per machine (°C)
 base_temperature = {
-    m["machine_id"]: random.uniform(40.0, 55.0) for m in MACHINES
+    m["machine_id"]: random.uniform(40.0, 155.0) for m in MACHINES
 }
 
 def generate_telemetry():

@@ -5,26 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SpinWatch | Heat & Machine Performance Monitor</title>
   <link rel="stylesheet" href="/static/css/style.css">
-  <!-- Chart.js CDN for Real-Time Plots -->
+  <!-- Chart.js CDN for Multi-Source Visualizations -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-  <!-- Top Sticky Navigation Bar -->
+  <!-- Top Navigation Bar -->
   <header class="top-bar">
     <div class="brand">
       <div class="brand-icon">🔥</div>
       <div>
         <div class="brand-title">SpinWatch</div>
-        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Real-Time Heat Telemetry & Predictive Failure Pipeline</div>
+        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">1,000 Washers | 13 Branches Telemetry Pipeline</div>
       </div>
       <span class="brand-tag">NATIONWIDE FLEET</span>
     </div>
     
-    <div style="display: flex; align-items: center; gap: 16px;">
+    <div style="display: flex; align-items: center; gap: 14px;">
       <!-- Source Filter Pill Toggles -->
       <div style="display: flex; gap: 6px;">
         <button class="source-mode-pill active" onclick="setSourceMode('ALL', this)">🌐 All Sources</button>
+        <button class="source-mode-pill" onclick="setSourceMode('CONSUMER', this)">📡 Python Consumer</button>
         <button class="source-mode-pill" onclick="setSourceMode('MYSQL', this)">⚡ MySQL Operational</button>
         <button class="source-mode-pill" onclick="setSourceMode('HDFS', this)">📦 HDFS Historical</button>
         <button class="source-mode-pill" onclick="setSourceMode('ML', this)">🧠 PySpark ML Model</button>
@@ -37,21 +38,21 @@
 
       <div class="system-status">
         <div class="status-indicator"></div>
-        <span>Live Stream Active</span>
+        <span>Consumer Stream Active</span>
         <span style="margin: 0 4px; opacity: 0.3;">|</span>
         <span id="live-clock" style="font-family: var(--font-mono); font-weight: 700;">--:--:--</span>
       </div>
     </div>
   </header>
 
-  <!-- Red Alert Banner for Predictive Heat Failures -->
+  <!-- Red Alert Banner for Impending Breakdown Risk -->
   <div id="alert-banner" class="alert-banner" style="display: none;">
     <div class="alert-banner-text">
       <span style="font-size: 24px;">🚨</span>
       <div>
-        <strong>ATTENTION REQUIRED: Impending Machine Heat Failures Detected!</strong>
+        <strong>CRITICAL THERMAL ALERT: Impending Washer Heat Failures Detected!</strong>
         <div id="alert-banner-detail" style="font-size: 13px; opacity: 0.9; margin-top: 2px;">
-          PySpark MLlib model flagged washing machines requiring immediate technician maintenance.
+          Python Consumer stream & PySpark ML model flagged washers requiring immediate technician dispatch.
         </div>
       </div>
     </div>
@@ -60,29 +61,41 @@
 
   <main class="main-container">
     
-    <!-- Controls Header -->
+    <!-- Controls Header across 13 Branches -->
     <div class="controls-bar">
       <div class="filter-group">
-        <span class="filter-label">Filter Branch:</span>
-        <button class="filter-btn active" onclick="setBranchFilter('ALL', this)">All Branches</button>
+        <span class="filter-label">Filter Branch (13 Cities):</span>
+        <button class="filter-btn active" onclick="setBranchFilter('ALL', this)">All (1,000 Units)</button>
         <button class="filter-btn" onclick="setBranchFilter('Kigali', this)">Kigali</button>
         <button class="filter-btn" onclick="setBranchFilter('Musanze', this)">Musanze</button>
         <button class="filter-btn" onclick="setBranchFilter('Huye', this)">Huye</button>
         <button class="filter-btn" onclick="setBranchFilter('Rubavu', this)">Rubavu</button>
         <button class="filter-btn" onclick="setBranchFilter('Rusizi', this)">Rusizi</button>
         <button class="filter-btn" onclick="setBranchFilter('Nyagatare', this)">Nyagatare</button>
+        <button class="filter-btn" onclick="setBranchFilter('Rwamagana', this)">Rwamagana</button>
+        <button class="filter-btn" onclick="setBranchFilter('Gicumbi', this)">Gicumbi</button>
+        <button class="filter-btn" onclick="setBranchFilter('Kamembe', this)">Kamembe</button>
+        <button class="filter-btn" onclick="setBranchFilter('Karongi', this)">Karongi</button>
+        <button class="filter-btn" onclick="setBranchFilter('Nyanza', this)">Nyanza</button>
+        <button class="filter-btn" onclick="setBranchFilter('Bugesera', this)">Bugesera</button>
+        <button class="filter-btn" onclick="setBranchFilter('Kamonyi', this)">Kamonyi</button>
       </div>
-      <div style="font-size: 13px; color: var(--text-secondary); font-weight: 600;">
-        Auto-updating every <span style="color: var(--accent-cyan); font-weight: 800; font-family: var(--font-mono);">1s</span> ⚡
+      
+      <!-- HDFS Time-Travel Historical Date Selector -->
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="filter-label">📦 HDFS Time Travel:</span>
+        <select id="hdfs-date-select" class="filter-btn" style="padding: 6px 12px;" onchange="loadHDFSHistoricalDate(this.value)">
+          <option value="">Loading HDFS Dates...</option>
+        </select>
       </div>
     </div>
 
     <!-- Summary Metrics Cards -->
     <div class="metrics-grid">
       <div class="metric-card">
-        <div class="metric-title">Fleet Washers</div>
-        <div class="metric-value" id="metric-total">--</div>
-        <div class="metric-sub">Monitored units nationwide</div>
+        <div class="metric-title">Nationwide Fleet</div>
+        <div class="metric-value" id="metric-total">1,000</div>
+        <div class="metric-sub">Active washers across 13 branches</div>
       </div>
       <div class="metric-card">
         <div class="metric-title">Heat Alerts (>70°C)</div>
@@ -97,45 +110,45 @@
       <div class="metric-card">
         <div class="metric-title">PySpark ML Predictions</div>
         <div class="metric-value" id="metric-predictions" style="color: var(--accent-purple);">--</div>
-        <div class="metric-sub">Read directly from HDFS store</div>
+        <div class="metric-sub">Stored in HDFS Analytical Store</div>
       </div>
     </div>
 
-    <!-- Interactive Real-Time Visual Charts Grid -->
-    <div class="charts-grid">
+    <!-- Multi-Source Visual Charts Grid -->
+    <div class="charts-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 24px;">
       
-      <!-- Chart 1: Real-Time Machine Heat Stream Line Chart -->
+      <!-- Chart 1: Python Consumer Kafka Stream Live Event Line Plot -->
       <div class="chart-card">
         <div class="panel-header">
-          <h3 class="panel-title">Real-Time Heat Stream Trend (°C)</h3>
-          <span class="source-badge mysql">1s Live Telemetry</span>
+          <h3 class="panel-title">📡 Python Consumer Kafka Event Stream</h3>
+          <span class="source-badge mysql">1s Kafka Stream</span>
         </div>
         <div class="chart-container">
-          <canvas id="tempLineChart"></canvas>
+          <canvas id="consumerStreamChart"></canvas>
         </div>
       </div>
 
-      <!-- Chart 2: PySpark Branch Average Heat Bar Chart -->
+      <!-- Chart 2: MySQL Operational Thermal Distribution -->
       <div class="chart-card">
         <div class="panel-header">
-          <h3 class="panel-title">HDFS Branch Thermal Distribution</h3>
-          <span class="source-badge hdfs">PySpark HDFS Insights</span>
+          <h3 class="panel-title">⚡ MySQL Operational Heat by Branch</h3>
+          <span class="source-badge mysql">MySQL Storage</span>
         </div>
         <div class="chart-container">
-          <canvas id="branchBarChart"></canvas>
+          <canvas id="mysqlBranchChart"></canvas>
         </div>
       </div>
 
     </div>
 
-    <!-- Dashboard Content Grid -->
+    <!-- HDFS Historical Archive & Dashboard Grid -->
     <div class="dashboard-grid">
       
       <!-- Panel 1: Live Telemetry Machine Status Table -->
       <section class="panel-card">
         <div class="panel-header">
-          <h2 class="panel-title">Washing Machine Real-Time Heat Telemetry</h2>
-          <span class="source-badge mysql" id="table-source-tag">MySQL Operational View</span>
+          <h2 class="panel-title">Washing Machine Live Telemetry Stream</h2>
+          <span class="source-badge mysql" id="table-source-tag">MySQL & Consumer Stream</span>
         </div>
         
         <div class="table-container">
@@ -161,25 +174,28 @@
         </div>
       </section>
 
-      <!-- Panel 2: PySpark Analytics & HDFS Store -->
+      <!-- Panel 2: HDFS Historical Archive & PySpark Insights -->
       <section class="panel-card">
         <div class="panel-header">
-          <h2 class="panel-title">HDFS PySpark Analytics</h2>
+          <h2 class="panel-title">📦 HDFS Historical Time-Travel</h2>
           <span class="source-badge hdfs">Stored in HDFS</span>
         </div>
 
-        <div style="margin-bottom: 24px;">
-          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; font-weight: 700;">HDFS Branch Heat Averages</h4>
-          <div id="pyspark-branch-avg">
-            <div style="font-size: 13px; color: var(--text-muted);">Loading HDFS PySpark insights...</div>
+        <div style="margin-bottom: 20px;">
+          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 700;">
+            Viewing HDFS Historical Partition: <span id="current-hdfs-date" style="color: var(--accent-purple);">dt=2026-09-17</span>
+          </h4>
+          <div id="hdfs-history-sample" style="font-size: 12px; font-family: var(--font-mono); color: var(--text-muted); max-height: 180px; overflow-y: auto;">
+            Loading HDFS historical records...
           </div>
         </div>
 
         <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
 
         <div>
-          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; font-weight: 700;">Top Overheating Washers (Alert Cycles)</h4>
-          <div id="pyspark-alert-machines">
+          <h4 style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; font-weight: 700;">HDFS PySpark Heat Averages</h4>
+          <div id="pyspark-branch-avg">
+            <div style="font-size: 13px; color: var(--text-muted);">Loading HDFS insights...</div>
           </div>
         </div>
       </section>
@@ -193,10 +209,8 @@
     let rawMachinesData = [];
     let predictionsMap = {};
 
-    // Real-Time Chart Instances
-    let tempLineChart = null;
-    let branchBarChart = null;
-    let lineChartHistory = { labels: [], datasets: {} };
+    let consumerStreamChart = null;
+    let mysqlBranchChart = null;
 
     // Theme Toggle Functionality
     function toggleTheme() {
@@ -209,10 +223,9 @@
       document.getElementById('theme-text').innerText = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
       localStorage.setItem('spinwatch-theme', newTheme);
 
-      if (tempLineChart) initCharts();
+      if (consumerStreamChart) initCharts();
     }
 
-    // Load saved theme preference
     const savedTheme = localStorage.getItem('spinwatch-theme');
     if (savedTheme) {
       document.documentElement.setAttribute('data-theme', savedTheme);
@@ -240,11 +253,14 @@
       btnElement.classList.add('active');
       
       const sourceTag = document.getElementById('table-source-tag');
-      if (mode === 'MYSQL') {
+      if (mode === 'CONSUMER') {
+        sourceTag.innerText = 'Python Consumer Kafka Stream';
+        sourceTag.className = 'source-badge mysql';
+      } else if (mode === 'MYSQL') {
         sourceTag.innerText = 'MySQL Operational Storage';
         sourceTag.className = 'source-badge mysql';
       } else if (mode === 'HDFS') {
-        sourceTag.innerText = 'HDFS Historical Parquet Store';
+        sourceTag.innerText = 'HDFS Historical Parquet Archive';
         sourceTag.className = 'source-badge hdfs';
       } else if (mode === 'ML') {
         sourceTag.innerText = 'PySpark MLlib Predictions';
@@ -262,49 +278,46 @@
       renderTable(true);
     }
 
-    // Initialize Chart.js Charts
+    // Initialize Multi-Source Charts
     function initCharts() {
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
       const textColor = isDark ? '#94a3b8' : '#334155';
       const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
 
-      // 1. Line Chart for Live Temperature Trends
-      const ctxLine = document.getElementById('tempLineChart').getContext('2d');
-      if (tempLineChart) tempLineChart.destroy();
-      tempLineChart = new Chart(ctxLine, {
+      // Chart 1: Consumer Stream Line Chart
+      const ctx1 = document.getElementById('consumerStreamChart').getContext('2d');
+      if (consumerStreamChart) consumerStreamChart.destroy();
+      consumerStreamChart = new Chart(ctx1, {
         type: 'line',
         data: {
           labels: [],
           datasets: [
-            { label: 'WM_0001 (Kigali)', data: [], borderColor: '#06b6d4', tension: 0.3, fill: false, borderWidth: 2 },
-            { label: 'WM_0004 (Kigali)', data: [], borderColor: '#ef4444', tension: 0.3, fill: false, borderWidth: 2 },
-            { label: 'WM_0006 (Rusizi)', data: [], borderColor: '#f97316', tension: 0.3, fill: false, borderWidth: 2 },
-            { label: 'WM_0012 (Huye)', data: [], borderColor: '#8b5cf6', tension: 0.3, fill: false, borderWidth: 2 }
+            { label: 'Live Heat Stream (°C)', data: [], borderColor: '#06b6d4', backgroundColor: 'rgba(6, 182, 212, 0.1)', tension: 0.3, fill: true, borderWidth: 2 }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          animation: { duration: 300 },
+          animation: { duration: 200 },
           plugins: { legend: { labels: { color: textColor, font: { family: 'Outfit' } } } },
           scales: {
             x: { ticks: { color: textColor }, grid: { color: gridColor } },
-            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 90 }
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 110 }
           }
         }
       });
 
-      // 2. Bar Chart for Branch Thermal Averages
-      const ctxBar = document.getElementById('branchBarChart').getContext('2d');
-      if (branchBarChart) branchBarChart.destroy();
-      branchBarChart = new Chart(ctxBar, {
+      // Chart 2: MySQL Branch Temperature Bar Chart
+      const ctx2 = document.getElementById('mysqlBranchChart').getContext('2d');
+      if (mysqlBranchChart) mysqlBranchChart.destroy();
+      mysqlBranchChart = new Chart(ctx2, {
         type: 'bar',
         data: {
-          labels: ['Kigali', 'Rubavu', 'Musanze', 'Rusizi', 'Huye', 'Nyagatare'],
+          labels: ['Kigali', 'Musanze', 'Huye', 'Rubavu', 'Rusizi', 'Nyagatare', 'Rwamagana', 'Gicumbi'],
           datasets: [{
             label: 'Avg Heat (°C)',
-            data: [66.5, 61.1, 58.2, 54.8, 52.4, 49.3],
-            backgroundColor: ['#06b6d4', '#f97316', '#3b82f6', '#8b5cf6', '#10b981', '#ec4899'],
+            data: [68.5, 62.1, 58.4, 65.2, 59.8, 51.3, 64.0, 56.5],
+            backgroundColor: ['#06b6d4', '#f97316', '#3b82f6', '#8b5cf6', '#10b981', '#ec4899', '#eab308', '#06b6d4'],
             borderRadius: 8
           }]
         },
@@ -314,10 +327,46 @@
           plugins: { legend: { display: false } },
           scales: {
             x: { ticks: { color: textColor }, grid: { color: gridColor } },
-            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 80 }
+            y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 30, max: 90 }
           }
         }
       });
+    }
+
+    async function loadHDFSDates() {
+      try {
+        const res = await fetch('/api/hdfs/dates');
+        if (res.ok) {
+          const dates = await res.json();
+          const select = document.getElementById('hdfs-date-select');
+          select.innerHTML = dates.map(d => `<option value="${d}">dt=${d}</option>`).join('');
+          if (dates.length > 0) loadHDFSHistoricalDate(dates[0]);
+        }
+      } catch (e) {
+        console.warn('HDFS dates fetch error:', e);
+      }
+    }
+
+    async function loadHDFSHistoricalDate(dt) {
+      document.getElementById('current-hdfs-date').innerText = 'dt=' + dt;
+      try {
+        const res = await fetch('/api/hdfs/history?dt=' + dt);
+        if (res.ok) {
+          const data = await res.json();
+          const sampleDiv = document.getElementById('hdfs-history-sample');
+          if (data.records && data.records.length > 0) {
+            sampleDiv.innerHTML = data.records.slice(0, 5).map(r => `
+              <div style="margin-bottom: 6px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">
+                <strong>${r.machine_id}</strong> (${r.branch}) | Heat: <span style="color: ${r.cycle_temperature > 70 ? '#ef4444' : '#06b6d4'}">${r.cycle_temperature}°C</span> | ${r.status}
+              </div>
+            `).join('');
+          } else {
+            sampleDiv.innerHTML = '<div>No records found for this HDFS date partition.</div>';
+          }
+        }
+      } catch (e) {
+        console.warn('HDFS history fetch error:', e);
+      }
     }
 
     async function fetchPredictions() {
@@ -350,28 +399,38 @@
               </div>
             `).join('');
 
-            // Update Bar Chart
-            if (branchBarChart) {
-              branchBarChart.data.labels = data.avg_by_branch.map(b => b.branch);
-              branchBarChart.data.datasets[0].data = data.avg_by_branch.map(b => b.avg_temperature);
-              branchBarChart.update('none');
+            if (mysqlBranchChart) {
+              mysqlBranchChart.data.labels = data.avg_by_branch.map(b => b.branch);
+              mysqlBranchChart.data.datasets[0].data = data.avg_by_branch.map(b => b.avg_temperature);
+              mysqlBranchChart.update('none');
             }
-          }
-
-          const alertContainer = document.getElementById('pyspark-alert-machines');
-          if (data.time_in_alert && data.time_in_alert.length > 0) {
-            alertContainer.innerHTML = data.time_in_alert.slice(0, 5).map(m => `
-              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
-                <span><strong>${m.machine_id}</strong> (${m.branch})</span>
-                <span style="font-family: var(--font-mono); color: #ef4444; font-weight: 800;">
-                  ${m.alert_count} alert cycles
-                </span>
-              </div>
-            `).join('');
           }
         }
       } catch (e) {
         console.warn('Insights fetch error:', e);
+      }
+    }
+
+    async function fetchConsumerLiveStream() {
+      try {
+        const res = await fetch('/api/consumer/live');
+        if (res.ok) {
+          const events = await res.json();
+          if (events && events.length > 0 && consumerStreamChart) {
+            const nowStr = new Date().toTimeString().split(' ')[0];
+            const latestTemp = events[events.length - 1].cycle_temperature;
+            
+            if (consumerStreamChart.data.labels.length > 15) {
+              consumerStreamChart.data.labels.shift();
+              consumerStreamChart.data.datasets[0].data.shift();
+            }
+            consumerStreamChart.data.labels.push(nowStr);
+            consumerStreamChart.data.datasets[0].data.push(latestTemp);
+            consumerStreamChart.update('none');
+          }
+        }
+      } catch (e) {
+        console.warn('Consumer live stream fetch error:', e);
       }
     }
 
@@ -381,37 +440,10 @@
         if (res.ok) {
           rawMachinesData = await res.json();
           renderTable();
-          updateLineChart();
         }
       } catch (e) {
         console.error('Status fetch error:', e);
       }
-    }
-
-    function updateLineChart() {
-      if (!tempLineChart) return;
-      const nowStr = new Date().toTimeString().split(' ')[0];
-      
-      const targetIDs = ['WM_0001', 'WM_0004', 'WM_0006', 'WM_0012'];
-      const currentTemps = {};
-      rawMachinesData.forEach(m => {
-        if (targetIDs.includes(m.machine_id)) {
-          currentTemps[m.machine_id] = m.cycle_temperature;
-        }
-      });
-
-      if (tempLineChart.data.labels.length > 10) {
-        tempLineChart.data.labels.shift();
-        tempLineChart.data.datasets.forEach(ds => ds.data.shift());
-      }
-
-      tempLineChart.data.labels.push(nowStr);
-      tempLineChart.data.datasets[0].data.push(currentTemps['WM_0001'] || 55);
-      tempLineChart.data.datasets[1].data.push(currentTemps['WM_0004'] || 74);
-      tempLineChart.data.datasets[2].data.push(currentTemps['WM_0006'] || 68);
-      tempLineChart.data.datasets[3].data.push(currentTemps['WM_0012'] || 71);
-
-      tempLineChart.update('none');
     }
 
     function renderTable(riskOnly = false) {
@@ -432,7 +464,7 @@
         return b.cycle_temperature - a.cycle_temperature;
       });
 
-      document.getElementById('metric-total').innerText = rawMachinesData.length;
+      document.getElementById('metric-total').innerText = rawMachinesData.length || '1,000';
       
       const alertCount = rawMachinesData.filter(m => m.status === 'ALERT').length;
       document.getElementById('metric-alerts').innerText = alertCount;
@@ -458,10 +490,10 @@
         return;
       }
 
-      tbody.innerHTML = filtered.map(m => {
+      tbody.innerHTML = filtered.slice(0, 100).map(m => {
         const isAlert = m.status === 'ALERT';
         const isRisk = predictionsMap[m.machine_id] === 1;
-        const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 55) * 100));
+        const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 75) * 100));
         const barColor = m.cycle_temperature > 70 ? '#ef4444' : (m.cycle_temperature > 55 ? '#f97316' : '#06b6d4');
 
         return `
@@ -494,11 +526,13 @@
       }).join('');
     }
 
-    // Initialize Real-Time 1-Second Update Loop
+    // Initialize 1-Second Auto-Update Loops
     initCharts();
-    setInterval(fetchStatus, 1000);       // 1-second auto update loop
-    setInterval(fetchPredictions, 2000);  // 2-second predictions loop
-    setInterval(fetchPySparkInsights, 5000); // 5-second insights loop
+    loadHDFSDates();
+    setInterval(fetchStatus, 1000);
+    setInterval(fetchConsumerLiveStream, 1000);
+    setInterval(fetchPredictions, 2000);
+    setInterval(fetchPySparkInsights, 5000);
 
     fetchPredictions();
     fetchStatus();
