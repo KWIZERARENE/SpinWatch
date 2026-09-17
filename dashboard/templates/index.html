@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SpinWatch | Real-Time Fleet & HDFS Machine Monitor</title>
+  <title>SpinWatch | Interactive Fleet & Machine Monitor</title>
   <link rel="stylesheet" href="/static/css/style.css">
   <!-- Chart.js CDN for Visual Data Plots -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -13,17 +13,17 @@
   <!-- Top Navigation Bar -->
   <header class="top-bar">
     <div class="brand">
-      <div class="brand-icon">⚡</div>
+      <div class="brand-icon">🎴</div>
       <div>
         <div class="brand-title">SpinWatch</div>
-        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">1,000 Washers | Real-Time MySQL & HDFS Pipeline</div>
+        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">1,000 Washers | Interactive Real-Time Pipeline</div>
       </div>
       <span class="brand-tag">NATIONWIDE FLEET (1,000 UNITS)</span>
     </div>
     
-    <div style="display: flex; align-items: center; gap: 14px;">
+    <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
       <!-- Source Filter Pill Toggles -->
-      <div style="display: flex; gap: 6px;">
+      <div style="display: flex; gap: 6px; flex-wrap: wrap;">
         <button class="filter-btn active" onclick="setSourceMode('ALL', this)">🌐 All 1,000 Washers</button>
         <button class="filter-btn" onclick="setSourceMode('GOOD', this)">✅ Good Condition</button>
         <button class="filter-btn" onclick="setSourceMode('ALERT', this)">⚠️ Heat Alerts</button>
@@ -51,16 +51,18 @@
         </div>
       </div>
     </div>
-    <button onclick="setSourceMode('ML', document.querySelectorAll('.filter-btn')[4])" class="filter-btn" style="background: var(--accent-red); color: white; border: none;">Inspect At-Risk Washers</button>
+    <button onclick="setSourceMode('ML', document.querySelectorAll('.filter-btn')[3])" class="filter-btn" style="background: var(--accent-red); color: white; border: none;">Inspect At-Risk Washers</button>
   </div>
 
   <main class="main-container">
     
-    <!-- Controls Header across 13 Branches & Search Input -->
+    <!-- Interactive Controls Bar: Branch Filter, Machine Select Dropdown, Search Input & View Switcher -->
     <div class="controls-bar">
+      
+      <!-- Branch Selector Buttons -->
       <div class="filter-group">
         <span class="filter-label">Filter Branch (13 Cities):</span>
-        <button class="filter-btn active" onclick="setBranchFilter('ALL', this)">All (1,000 Units)</button>
+        <button class="filter-btn active" onclick="setBranchFilter('ALL', this)">All Branches</button>
         <button class="filter-btn" onclick="setBranchFilter('Kigali', this)">Kigali</button>
         <button class="filter-btn" onclick="setBranchFilter('Musanze', this)">Musanze</button>
         <button class="filter-btn" onclick="setBranchFilter('Huye', this)">Huye</button>
@@ -75,17 +77,31 @@
         <button class="filter-btn" onclick="setBranchFilter('Bugesera', this)">Bugesera</button>
         <button class="filter-btn" onclick="setBranchFilter('Kamonyi', this)">Kamonyi</button>
       </div>
-      
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <!-- Machine Search Input -->
-        <input type="text" id="machine-search-input" class="search-input" placeholder="🔍 Search Washer ID or Branch..." oninput="renderTable()">
 
-        <!-- HDFS Time-Travel Historical Date Selector -->
-        <div style="display: flex; align-items: center; gap: 6px;">
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <!-- Machine Dropdown Selector -->
+        <div style="display: flex; align-items: center; gap: 4px;">
+          <span class="filter-label">Target Washer:</span>
+          <select id="machine-dropdown-select" class="select-btn" onchange="onMachineSelect(this.value)">
+            <option value="ALL">All 1,000 Machines...</option>
+          </select>
+        </div>
+
+        <!-- Search Input -->
+        <input type="text" id="machine-search-input" class="search-input" placeholder="🔍 Search Washer ID or Branch..." oninput="renderViews()">
+
+        <!-- HDFS Date Selector -->
+        <div style="display: flex; align-items: center; gap: 4px;">
           <span class="filter-label">📦 HDFS Date:</span>
-          <select id="hdfs-date-select" class="filter-btn" style="padding: 6px 12px;" onchange="loadHDFSHistoricalDate(this.value)">
+          <select id="hdfs-date-select" class="select-btn" onchange="loadHDFSHistoricalDate(this.value)">
             <option value="">Loading HDFS Dates...</option>
           </select>
+        </div>
+
+        <!-- View Mode Switcher Pills -->
+        <div style="display: flex; gap: 4px;">
+          <button id="btn-view-cards" class="view-mode-pill active" onclick="setViewDisplayMode('CARDS')">🎴 Cards Grid</button>
+          <button id="btn-view-table" class="view-mode-pill" onclick="setViewDisplayMode('TABLE')">📋 Data Table</button>
         </div>
       </div>
     </div>
@@ -119,28 +135,28 @@
       </div>
     </div>
 
-    <!-- Multi-Source Visual Charts Grid -->
+    <!-- Interactive Live Data Charts Grid -->
     <div class="charts-grid">
       
-      <!-- Chart 1: HDFS Ingested Data Stream Line Plot -->
+      <!-- Chart 1: Live Interactive Telemetry Line Plot (Filtered by User Choice) -->
       <div class="chart-card">
         <div class="panel-header">
-          <h3 class="panel-title">📦 HDFS Ingested Thermal Telemetry (Parquet Line Plot)</h3>
-          <span class="source-badge hdfs">HDFS Storage</span>
+          <h3 class="panel-title" id="live-chart-title">📡 Live Machine Heat Telemetry Plot</h3>
+          <span class="source-badge mysql" id="live-chart-badge">Live Filter View</span>
         </div>
         <div class="chart-container">
-          <canvas id="hdfsStreamChart"></canvas>
+          <canvas id="liveStreamChart"></canvas>
         </div>
       </div>
 
-      <!-- Chart 2: MySQL Operational Thermal Distribution -->
+      <!-- Chart 2: Branch Heat Distribution Bar Plot -->
       <div class="chart-card">
         <div class="panel-header">
-          <h3 class="panel-title">⚡ MySQL Operational Heat by Branch</h3>
-          <span class="source-badge mysql">MySQL Storage</span>
+          <h3 class="panel-title">⚡ Operational Thermal Distribution by Branch</h3>
+          <span class="source-badge mysql">MySQL & PySpark Store</span>
         </div>
         <div class="chart-container">
-          <canvas id="mysqlBranchChart"></canvas>
+          <canvas id="branchDistributionChart"></canvas>
         </div>
       </div>
 
@@ -149,17 +165,25 @@
     <!-- Dashboard Main View Grid -->
     <div class="dashboard-grid">
       
-      <!-- Panel 1: Real-Time Telemetry Data Table for All 1,000 Machines -->
+      <!-- Panel 1: Interactive Machine Display (Cards Grid or Table View) -->
       <section class="panel-card">
         <div class="panel-header">
           <div>
-            <h2 class="panel-title">⚡ Real-Time Fleet Telemetry Stream (All 1,000 Washers)</h2>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;" id="table-record-count">Showing 1,000 active washing machines</div>
+            <h2 class="panel-title" id="display-title">🎴 Washing Machine Fleet Cards</h2>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;" id="display-record-count">Showing 1,000 active washing machines</div>
           </div>
-          <span class="source-badge mysql" id="table-source-tag">MySQL & Kafka Stream</span>
+          <span class="source-badge mysql" id="display-source-tag">Interactive Real-Time Stream</span>
         </div>
         
-        <div class="table-container">
+        <!-- View 1: Cards Grid Display -->
+        <div id="view-cards-container" class="machine-cards-grid">
+          <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px;">
+            Loading machine fleet cards...
+          </div>
+        </div>
+
+        <!-- View 2: Data Table Display -->
+        <div id="view-table-container" class="table-container" style="display: none;">
           <table>
             <thead>
               <tr>
@@ -174,7 +198,7 @@
             <tbody id="machine-table-body">
               <tr>
                 <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">
-                  Loading real-time telemetry stream for 1,000 washing machines...
+                  Loading data stream...
                 </td>
               </tr>
             </tbody>
@@ -214,11 +238,14 @@
   <script>
     let activeBranchFilter = 'ALL';
     let activeSourceMode = 'ALL';
+    let selectedMachineId = 'ALL';
+    let currentDisplayMode = 'CARDS'; // 'CARDS' or 'TABLE'
+    
     let rawMachinesData = [];
     let predictionsMap = {};
 
-    let hdfsStreamChart = null;
-    let mysqlBranchChart = null;
+    let liveStreamChart = null;
+    let branchDistributionChart = null;
 
     // Live Clock Update
     function updateClock() {
@@ -228,39 +255,51 @@
     setInterval(updateClock, 1000);
     updateClock();
 
+    // Populate Machine Dropdown Select Options (WM_0001 to WM_1000)
+    function populateMachineDropdown() {
+      const select = document.getElementById('machine-dropdown-select');
+      if (!select || select.children.length > 5) return;
+      
+      let options = `<option value="ALL">All 1,000 Machines...</option>`;
+      for (let i = 1; i <= 1000; i++) {
+        const mid = `WM_${String(i).padStart(4, '0')}`;
+        options += `<option value="${mid}">${mid}</option>`;
+      }
+      select.innerHTML = options;
+    }
+
     function setBranchFilter(branch, btnElement) {
       activeBranchFilter = branch;
       btnElement.parentElement.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
       btnElement.classList.add('active');
-      renderTable();
+      renderViews();
+      updateLineChart();
     }
 
     function setSourceMode(mode, btnElement) {
       activeSourceMode = mode;
       btnElement.parentElement.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
       btnElement.classList.add('active');
+      renderViews();
+      updateLineChart();
+    }
+
+    function onMachineSelect(mid) {
+      selectedMachineId = mid;
+      renderViews();
+      updateLineChart();
+    }
+
+    function setViewDisplayMode(mode) {
+      currentDisplayMode = mode;
+      document.getElementById('btn-view-cards').classList.toggle('active', mode === 'CARDS');
+      document.getElementById('btn-view-table').classList.toggle('active', mode === 'TABLE');
       
-      const sourceTag = document.getElementById('table-source-tag');
-      if (mode === 'HDFS') {
-        sourceTag.innerText = 'HDFS Historical Parquet Archive';
-        sourceTag.className = 'source-badge hdfs';
-      } else if (mode === 'MYSQL') {
-        sourceTag.innerText = 'MySQL Operational Storage';
-        sourceTag.className = 'source-badge mysql';
-      } else if (mode === 'ALERT') {
-        sourceTag.innerText = 'Heat Alerts (>70°C)';
-        sourceTag.className = 'source-badge alert';
-      } else if (mode === 'ML') {
-        sourceTag.innerText = 'PySpark MLlib Predictions';
-        sourceTag.className = 'source-badge pyspark';
-      } else if (mode === 'GOOD') {
-        sourceTag.innerText = 'Good Condition Washers (30°C - 70°C)';
-        sourceTag.className = 'source-badge mysql';
-      } else {
-        sourceTag.innerText = 'Unified Multi-Source Real-Time Stream';
-        sourceTag.className = 'source-badge mysql';
-      }
-      renderTable();
+      document.getElementById('view-cards-container').style.display = mode === 'CARDS' ? 'grid' : 'none';
+      document.getElementById('view-table-container').style.display = mode === 'TABLE' ? 'block' : 'none';
+      
+      document.getElementById('display-title').innerText = mode === 'CARDS' ? '🎴 Washing Machine Fleet Cards' : '📋 Live Telemetry Stream Table';
+      renderViews();
     }
 
     // Initialize Chart.js Plots
@@ -268,29 +307,27 @@
       const textColor = '#334155';
       const gridColor = 'rgba(0,0,0,0.06)';
 
-      // Chart 1: HDFS Stream Line Chart (Purple Accent)
-      const ctx1 = document.getElementById('hdfsStreamChart').getContext('2d');
-      if (hdfsStreamChart) hdfsStreamChart.destroy();
-      hdfsStreamChart = new Chart(ctx1, {
+      // Chart 1: Interactive Live Telemetry Line Chart
+      const ctx1 = document.getElementById('liveStreamChart').getContext('2d');
+      if (liveStreamChart) liveStreamChart.destroy();
+      liveStreamChart = new Chart(ctx1, {
         type: 'line',
         data: {
-          labels: ['WM_0001', 'WM_0002', 'WM_0003', 'WM_0004', 'WM_0005', 'WM_0006', 'WM_0007', 'WM_0008', 'WM_0009', 'WM_0010'],
-          datasets: [
-            { 
-              label: 'HDFS Ingested Heat (°C)', 
-              data: [42.5, 38.1, 84.2, 51.0, 47.8, 62.3, 78.5, 39.0, 44.2, 53.6], 
-              borderColor: '#7c3aed', 
-              backgroundColor: 'rgba(124, 58, 237, 0.08)', 
-              tension: 0.3, 
-              fill: true, 
-              borderWidth: 2 
-            }
-          ]
+          labels: [],
+          datasets: [{
+            label: 'Heat (°C)',
+            data: [],
+            borderColor: '#7c3aed',
+            backgroundColor: 'rgba(124, 58, 237, 0.08)',
+            tension: 0.3,
+            fill: true,
+            borderWidth: 2
+          }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          animation: { duration: 300 },
+          animation: { duration: 200 },
           plugins: { legend: { labels: { color: textColor, font: { family: 'Outfit' } } } },
           scales: {
             x: { ticks: { color: textColor }, grid: { color: gridColor } },
@@ -299,10 +336,10 @@
         }
       });
 
-      // Chart 2: MySQL Branch Temperature Bar Chart
-      const ctx2 = document.getElementById('mysqlBranchChart').getContext('2d');
-      if (mysqlBranchChart) mysqlBranchChart.destroy();
-      mysqlBranchChart = new Chart(ctx2, {
+      // Chart 2: Branch Heat Distribution Bar Plot
+      const ctx2 = document.getElementById('branchDistributionChart').getContext('2d');
+      if (branchDistributionChart) branchDistributionChart.destroy();
+      branchDistributionChart = new Chart(ctx2, {
         type: 'bar',
         data: {
           labels: ['Kigali', 'Musanze', 'Huye', 'Rubavu', 'Rusizi', 'Nyagatare', 'Rwamagana', 'Gicumbi'],
@@ -323,6 +360,45 @@
           }
         }
       });
+    }
+
+    function updateLineChart() {
+      if (!liveStreamChart) return;
+
+      const filtered = getFilteredData();
+      const titleElem = document.getElementById('live-chart-title');
+      const badgeElem = document.getElementById('live-chart-badge');
+
+      if (selectedMachineId !== 'ALL') {
+        titleElem.innerText = `📡 Live Stream for ${selectedMachineId}`;
+        badgeElem.innerText = `Selected Machine: ${selectedMachineId}`;
+        badgeElem.className = 'source-badge mysql';
+
+        const machineReadings = filtered.slice(0, 15);
+        liveStreamChart.data.labels = machineReadings.map((r, idx) => r.last_updated ? r.last_updated.substring(11, 19) : `T-${idx}`);
+        liveStreamChart.data.datasets[0].data = machineReadings.map(r => r.cycle_temperature);
+        liveStreamChart.data.datasets[0].borderColor = '#0284c7';
+      } else if (activeBranchFilter !== 'ALL') {
+        titleElem.innerText = `📡 Thermal Telemetry for ${activeBranchFilter} Branch`;
+        badgeElem.innerText = `Branch: ${activeBranchFilter}`;
+        badgeElem.className = 'source-badge hdfs';
+
+        const branchReadings = filtered.slice(0, 20);
+        liveStreamChart.data.labels = branchReadings.map(r => r.machine_id);
+        liveStreamChart.data.datasets[0].data = branchReadings.map(r => r.cycle_temperature);
+        liveStreamChart.data.datasets[0].borderColor = '#7c3aed';
+      } else {
+        titleElem.innerText = `📡 Nationwide Heat Telemetry Stream (1,000 Washers)`;
+        badgeElem.innerText = `All 1,000 Washers`;
+        badgeElem.className = 'source-badge hdfs';
+
+        const sample = filtered.slice(0, 20);
+        liveStreamChart.data.labels = sample.map(r => r.machine_id);
+        liveStreamChart.data.datasets[0].data = sample.map(r => r.cycle_temperature);
+        liveStreamChart.data.datasets[0].borderColor = '#7c3aed';
+      }
+
+      liveStreamChart.update('none');
     }
 
     async function loadHDFSDates() {
@@ -355,14 +431,6 @@
                 <strong>${r.machine_id}</strong> (${r.branch}) | Heat: <span style="color: ${r.cycle_temperature > 70 ? '#dc2626' : '#7c3aed'}">${r.cycle_temperature}°C</span> | ${r.status}
               </div>
             `).join('');
-
-            // Dynamically Plot HDFS Telemetry Records on the Line Chart
-            if (hdfsStreamChart) {
-              const hdfsSample = data.records.slice(0, 20);
-              hdfsStreamChart.data.labels = hdfsSample.map(r => r.machine_id);
-              hdfsStreamChart.data.datasets[0].data = hdfsSample.map(r => r.cycle_temperature);
-              hdfsStreamChart.update('none');
-            }
           } else {
             sampleDiv.innerHTML = '<div>No records found for this HDFS date partition.</div>';
           }
@@ -402,10 +470,10 @@
               </div>
             `).join('');
 
-            if (mysqlBranchChart) {
-              mysqlBranchChart.data.labels = data.avg_by_branch.map(b => b.branch);
-              mysqlBranchChart.data.datasets[0].data = data.avg_by_branch.map(b => b.avg_temperature);
-              mysqlBranchChart.update('none');
+            if (branchDistributionChart) {
+              branchDistributionChart.data.labels = data.avg_by_branch.map(b => b.branch);
+              branchDistributionChart.data.datasets[0].data = data.avg_by_branch.map(b => b.avg_temperature);
+              branchDistributionChart.update('none');
             }
           }
         }
@@ -419,24 +487,26 @@
         const res = await fetch('/api/status');
         if (res.ok) {
           rawMachinesData = await res.json();
-          renderTable();
+          renderViews();
+          updateLineChart();
         }
       } catch (e) {
         console.error('Status fetch error:', e);
       }
     }
 
-    function renderTable() {
-      const tbody = document.getElementById('machine-table-body');
+    function getFilteredData() {
       const searchVal = (document.getElementById('machine-search-input')?.value || '').toLowerCase().trim();
       let filtered = rawMachinesData;
 
-      // 1. Branch Filter
+      if (selectedMachineId !== 'ALL') {
+        filtered = filtered.filter(m => m.machine_id === selectedMachineId);
+      }
+
       if (activeBranchFilter !== 'ALL') {
         filtered = filtered.filter(m => m.branch === activeBranchFilter);
       }
 
-      // 2. View Mode Filter
       if (activeSourceMode === 'ML') {
         filtered = filtered.filter(m => m.status === 'ALERT' || predictionsMap[m.machine_id] === 1);
       } else if (activeSourceMode === 'GOOD') {
@@ -445,7 +515,6 @@
         filtered = filtered.filter(m => m.status === 'ALERT' || m.cycle_temperature > 70.0);
       }
 
-      // 3. Search Query Filter (Machine ID or Branch)
       if (searchVal) {
         filtered = filtered.filter(m => 
           m.machine_id.toLowerCase().includes(searchVal) || 
@@ -453,9 +522,14 @@
         );
       }
 
-      // Default Display: Show ALL 1,000 machines ordered by machine_id
+      return filtered;
+    }
+
+    function renderViews() {
+      const filtered = getFilteredData();
+
+      // Metric Counter Updates
       document.getElementById('metric-total').innerText = rawMachinesData.length || '1,000';
-      
       const alertCount = rawMachinesData.filter(m => m.status === 'ALERT' || m.cycle_temperature > 70.0).length;
       document.getElementById('metric-alerts').innerText = alertCount;
 
@@ -475,53 +549,83 @@
         banner.style.display = 'none';
       }
 
-      const recCountElem = document.getElementById('table-record-count');
+      const recCountElem = document.getElementById('display-record-count');
       if (recCountElem) {
-        recCountElem.innerText = `Showing ${filtered.length} of ${rawMachinesData.length || 1000} washing machines in real-time view`;
+        recCountElem.innerText = `Showing ${filtered.length} of ${rawMachinesData.length || 1000} washing machines`;
       }
 
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No telemetry records matching search/filter options.</td></tr>`;
-        return;
-      }
+      // Render View 1: Machine Cards Grid
+      const cardsGrid = document.getElementById('view-cards-container');
+      if (cardsGrid && currentDisplayMode === 'CARDS') {
+        if (filtered.length === 0) {
+          cardsGrid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px;">No washing machines match the selected filter.</div>`;
+        } else {
+          cardsGrid.innerHTML = filtered.map(m => {
+            const isAlert = m.status === 'ALERT' || m.cycle_temperature > 70.0;
+            const isRisk = predictionsMap[m.machine_id] === 1 || m.cycle_temperature > 70.0;
+            const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 70) * 100));
+            const tempColor = m.cycle_temperature > 70.0 ? '#dc2626' : (m.cycle_temperature > 55.0 ? '#ea580c' : '#059669');
+            const isSelected = selectedMachineId === m.machine_id;
 
-      tbody.innerHTML = filtered.map(m => {
-        const isAlert = m.status === 'ALERT' || m.cycle_temperature > 70.0;
-        const isRisk = predictionsMap[m.machine_id] === 1 || m.cycle_temperature > 70.0;
-        const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 70) * 100));
-        const barColor = m.cycle_temperature > 70.0 ? '#dc2626' : (m.cycle_temperature > 55.0 ? '#ea580c' : '#059669');
-
-        return `
-          <tr>
-            <td><strong style="font-family: var(--font-mono);">${m.machine_id}</strong></td>
-            <td>${m.branch}</td>
-            <td>
-              <div class="temp-gauge">
-                <span>${m.cycle_temperature}°C</span>
-                <div class="temp-bar-bg">
-                  <div class="temp-bar-fill" style="width: ${tempPct}%; background: ${barColor};"></div>
+            return `
+              <div class="machine-card-item ${isSelected ? 'selected' : ''}" onclick="onMachineSelect('${m.machine_id}')">
+                <div class="machine-card-header">
+                  <span class="machine-card-id">${m.machine_id}</span>
+                  <span class="branch-pill">${m.branch}</span>
+                </div>
+                <div class="machine-card-temp">
+                  <span style="color: ${tempColor};">${m.cycle_temperature}°C</span>
+                  <span style="font-size: 14px;">${isAlert ? '🔥' : '💧'}</span>
+                </div>
+                <div class="temp-bar-bg" style="width: 100%; height: 6px;">
+                  <div class="temp-bar-fill" style="width: ${tempPct}%; background: ${tempColor};"></div>
+                </div>
+                <div class="machine-card-footer">
+                  <span class="status-badge ${isAlert ? 'alert' : 'normal'}">${isAlert ? 'ALERT' : 'NORMAL'}</span>
+                  <span class="prediction-badge ${isRisk ? 'at-risk' : 'good'}">${isRisk ? '⚠️ AT-RISK' : '✅ HEALTHY'}</span>
                 </div>
               </div>
-            </td>
-            <td>
-              <span class="status-badge ${isAlert ? 'alert' : 'normal'}">
-                ${isAlert ? 'ALERT' : 'NORMAL'}
-              </span>
-            </td>
-            <td>
-              <span class="prediction-badge ${isRisk ? 'at-risk' : 'good'}">
-                ${isRisk ? '⚠️ BREAKDOWN RISK' : '✅ GOOD CONDITION'}
-              </span>
-            </td>
-            <td style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">
-              ${m.last_updated ? m.last_updated.replace('T', ' ').substring(0, 19) : '--'}
-            </td>
-          </tr>
-        `;
-      }).join('');
+            `;
+          }).join('');
+        }
+      }
+
+      // Render View 2: Data Table View
+      const tbody = document.getElementById('machine-table-body');
+      if (tbody && currentDisplayMode === 'TABLE') {
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No telemetry records matching filter.</td></tr>`;
+        } else {
+          tbody.innerHTML = filtered.map(m => {
+            const isAlert = m.status === 'ALERT' || m.cycle_temperature > 70.0;
+            const isRisk = predictionsMap[m.machine_id] === 1 || m.cycle_temperature > 70.0;
+            const tempPct = Math.min(100, Math.max(0, ((m.cycle_temperature - 30) / 70) * 100));
+            const barColor = m.cycle_temperature > 70.0 ? '#dc2626' : (m.cycle_temperature > 55.0 ? '#ea580c' : '#059669');
+
+            return `
+              <tr onclick="onMachineSelect('${m.machine_id}')" style="cursor: pointer;">
+                <td><strong style="font-family: var(--font-mono);">${m.machine_id}</strong></td>
+                <td>${m.branch}</td>
+                <td>
+                  <div class="temp-gauge">
+                    <span>${m.cycle_temperature}°C</span>
+                    <div class="temp-bar-bg">
+                      <div class="temp-bar-fill" style="width: ${tempPct}%; background: ${barColor};"></div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${isAlert ? 'ALERT' : 'NORMAL'}</span></td>
+                <td><span class="prediction-badge ${isRisk ? 'at-risk' : 'good'}">${isRisk ? '⚠️ BREAKDOWN RISK' : '✅ GOOD CONDITION'}</span></td>
+                <td style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">${m.last_updated ? m.last_updated.replace('T', ' ').substring(0, 19) : '--'}</td>
+              </tr>
+            `;
+          }).join('');
+        }
+      }
     }
 
-    // Initialize Auto-Update Loops
+    // Initialize Auto-Update Loops & Dropdown
+    populateMachineDropdown();
     initCharts();
     loadHDFSDates();
     setInterval(fetchStatus, 1000);
