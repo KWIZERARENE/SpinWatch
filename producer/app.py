@@ -1,15 +1,16 @@
 """
 SpinWatch - Unified REST API Ingress & Pipeline Inspection Server
-Exposes REST endpoints to test, query, and verify data at every stage of the Big Data Pipeline:
-- Point 1: POST /api/readings/ (Generator Ingress) & GET /api/generator/status
-- Point 2: GET /api/kafka/status (Kafka Topic & Partition Inspector)
-- Point 3a: GET /api/hdfs/raw (HDFS Historical Raw Data Inspector)
-            GET /api/hdfs/dates (HDFS Available Partition Dates List)
-            GET /api/hdfs/history?dt=YYYY-MM-DD (HDFS Historical Time-Travel Query)
-- Point 3b: GET /api/sql/readings (MySQL Operational Storage Inspector)
-- Point 4a: GET /api/predictions (PySpark MLlib Breakdown Failure Predictions from HDFS)
-- Point 4b: GET /api/insights (PySpark Analytics & Heat Insights from HDFS)
-- Point 5: GET /api/consumer/live (Python Consumer Application Live Stream Broadcast)
+Exposes REST endpoints supporting BOTH GET and POST requests for Postman, Browser, and Generator testing:
+- POST & GET /api/readings/ (Telemetry Stream Ingress & Recent Stream Inspector)
+- GET /api/generator/status (Generator Ingress Status)
+- GET /api/kafka/status (Kafka Topic & Partition Inspector)
+- GET /api/hdfs/raw (HDFS Historical Raw Data Inspector)
+- GET /api/hdfs/dates (HDFS Available Partition Dates List)
+- GET /api/hdfs/history?dt=YYYY-MM-DD (HDFS Historical Time-Travel Query)
+- GET /api/sql/readings (MySQL Operational Storage Inspector)
+- GET /api/predictions (PySpark MLlib Breakdown Failure Predictions from HDFS)
+- GET /api/insights (PySpark Analytics & Heat Insights from HDFS)
+- GET /api/consumer/live (Python Consumer Application Live Stream Broadcast)
 """
 
 import os
@@ -36,6 +37,9 @@ MYSQL_CONFIG = {
     "database": "laundry_ops"
 }
 
+# Buffer of recent POST readings received at /api/readings/
+RECENT_INGRESS_READINGS = []
+
 def query_mysql(sql, params=None):
     if not MYSQL_AVAILABLE:
         return None
@@ -52,9 +56,20 @@ def query_mysql(sql, params=None):
         return None
 
 class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
+    def do_OPTIONS(self):
+        # Support CORS Pre-flight requests from Postman / Browsers
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.end_headers()
+
     def do_POST(self):
+        global RECENT_INGRESS_READINGS
         parsed = urllib.parse.urlparse(self.path)
+        
         if parsed.path in ["/api/readings/", "/api/readings"]:
+            # Point 1: Generator Ingress Payload
             content_length = int(self.headers.get("Content-Length", 0))
             post_data = self.rfile.read(content_length)
             
@@ -67,6 +82,10 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                 
                 success = producer.send_reading(reading)
                 
+                RECENT_INGRESS_READINGS.append(reading)
+                if len(RECENT_INGRESS_READINGS) > 50:
+                    RECENT_INGRESS_READINGS = RECENT_INGRESS_READINGS[-50:]
+
                 self.send_json({
                     "stage": "Point 1: Generator Ingress -> Kafka Producer",
                     "status": "success",
@@ -83,8 +102,20 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
         path = parsed.path
         query_params = urllib.parse.parse_qs(parsed.query)
 
-        # 1. Generator Ingress Check
-        if path in ["/api/generator/status", "/api/stage1"]:
+        # 1. Telemetry Ingress Endpoint (GET Support for Browsers / Postman)
+        if path in ["/api/readings/", "/api/readings"]:
+            self.send_json({
+                "stage": "Point 1: Telemetry Stream Ingress REST API",
+                "status": "ONLINE & RECEIVING STREAM",
+                "method_support": ["GET", "POST"],
+                "post_ingress_url": "http://localhost:8000/api/readings/",
+                "total_recent_readings": len(RECENT_INGRESS_READINGS),
+                "recent_ingress_samples": RECENT_INGRESS_READINGS[-10:],
+                "instructions": "Send HTTP POST requests with JSON payload to this endpoint to push new washer heat telemetry into the Kafka pipeline."
+            })
+
+        # 1b. Generator Status Check
+        elif path in ["/api/generator/status", "/api/stage1"]:
             self.send_json({
                 "stage": "Point 1: Telemetry Stream Generator",
                 "status": "ACTIVE",
@@ -155,7 +186,6 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                     except Exception:
                         pass
                 
-                # If Parquet file exists, try pandas/pyarrow read
                 parquet_files = glob.glob(os.path.join(dt_dir, "*.parquet"))
                 if parquet_files and not records:
                     try:
@@ -192,7 +222,7 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                 "latest_landed_readings": readings or []
             })
 
-        # 4a. PySpark MLlib Predictive Model Scoring Check (Read from HDFS)
+        # 4a. PySpark MLlib Predictive Model Scoring Check
         elif path in ["/api/predictions", "/api/stage4/predictions"]:
             pred_json_path = os.path.join(os.getcwd(), "data", "machines", "predictions", "latest_predictions.json")
             preds = []
@@ -212,7 +242,7 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                 "predictions": preds
             })
 
-        # 4b. PySpark Analytical Heat Insights Check (Read from HDFS)
+        # 4b. PySpark Analytical Heat Insights Check
         elif path in ["/api/insights", "/api/stage4/insights"]:
             insights_json_path = os.path.join(os.getcwd(), "data", "machines", "insights", "latest_insights.json")
             insights_data = {"avg_by_branch": [], "time_in_alert": []}
@@ -247,6 +277,8 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(content)))
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.end_headers()
         self.wfile.write(content)
 
