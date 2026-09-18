@@ -490,7 +490,52 @@
         return;
       }
 
-      tbody.innerHTML = filtered.slice(0, 100).map(r => {
+    let hdfsHistoricalMap = [];
+    let kafkaEventsMap = [];
+    let mysqlRecordsMap = [];
+    let hdfsLiveMap = [];
+
+    function inspectKafkaRecord(idx) {
+      const rec = kafkaEventsMap[idx];
+      if (rec) inspectRawPayload(rec, `Kafka Stream Payload: ${rec.machine_id || ''}`);
+    }
+
+    function inspectMySQLRecord(idx) {
+      const rec = mysqlRecordsMap[idx];
+      if (rec) inspectRawPayload(rec, `MySQL Log Payload: ${rec.machine_id || ''}`);
+    }
+
+    function inspectHDFSRecord(idx) {
+      const rec = hdfsLiveMap[idx];
+      if (rec) inspectRawPayload(rec, `HDFS Live Payload: ${rec.machine_id || ''}`);
+    }
+
+    function inspectHDFSHistoricalRecord(idx) {
+      const rec = hdfsHistoricalMap[idx];
+      if (rec) inspectRawPayload(rec, `HDFS Historical Record: ${rec.machine_id || ''}`);
+    }
+
+    function renderHDFSTable() {
+      const search = (document.getElementById('hdfs-search-input')?.value || '').toLowerCase().trim();
+      let filtered = [...hdfsRawRecords];
+
+      if (search) {
+        filtered = filtered.filter(r => 
+          (r.machine_id && r.machine_id.toLowerCase().includes(search)) ||
+          (r.branch && r.branch.toLowerCase().includes(search)) ||
+          (r.reading_id && r.reading_id.toLowerCase().includes(search)) ||
+          (r.status && r.status.toLowerCase().includes(search))
+        );
+      }
+
+      const tbody = document.getElementById('hdfs-records-tbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: var(--text-muted); padding: 20px;">No matching HDFS raw records found in partition.</td></tr>`;
+        return;
+      }
+
+      hdfsHistoricalMap = filtered.slice(0, 100);
+      tbody.innerHTML = hdfsHistoricalMap.map((r, idx) => {
         const temp = parseFloat(r.cycle_temperature || 0).toFixed(1);
         const isAlert = r.status === 'ALERT' || temp > 70;
         const color = temp > 70 ? '#dc2626' : (temp > 55 ? '#ea580c' : '#059669');
@@ -509,7 +554,7 @@
             <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${r.timestamp || '--'}</td>
             <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${r.status || 'NORMAL'}</span></td>
             <td style="font-family: var(--font-mono); font-weight: 700; color: ${r.breakdown_soon === 1 ? '#dc2626' : 'var(--text-muted)'};">${breakdownFlag}</td>
-            <td><button class="pill-btn" style="padding: 3px 8px; font-size: 11px;" onclick='inspectRawPayload(${JSON.stringify(r).replace(/'/g, "&apos;")}, "HDFS Record: ${r.machine_id}")'>Payload</button></td>
+            <td><button class="pill-btn" style="padding: 3px 8px; font-size: 11px;" onclick="inspectHDFSHistoricalRecord(${idx})">Payload</button></td>
           </tr>
         `;
       }).join('');
@@ -566,7 +611,9 @@
     function renderMySQLLiveTable(rows) {
       const tbody = document.getElementById('mysql-live-tbody');
       if (!rows || rows.length === 0) return;
-      tbody.innerHTML = rows.slice(0, 15).map(r => {
+      mysqlRecordsMap = rows.slice(0, 20);
+
+      tbody.innerHTML = mysqlRecordsMap.map((r, idx) => {
         const temp = parseFloat(r.cycle_temperature || 0).toFixed(1);
         const isAlert = r.status === 'ALERT' || temp > 70;
         const color = temp > 70 ? '#dc2626' : (temp > 55 ? '#ea580c' : '#059669');
@@ -580,7 +627,7 @@
             <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${r.txn_timestamp || '--'}</td>
             <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${r.status}</span></td>
             <td style="font-family: var(--font-mono); font-weight: 700; color: ${r.breakdown_soon === 1 ? '#dc2626' : 'var(--text-muted)'};">${r.breakdown_soon === 1 ? '⚠️ 1 (Risk)' : '0 (Normal)'}</td>
-            <td><button class="pill-btn" style="padding: 2px 7px; font-size: 10px;" onclick='inspectRawPayload(${JSON.stringify(r).replace(/'/g, "&apos;")}, "MySQL Record: ${r.machine_id}")'>Payload</button></td>
+            <td><button class="pill-btn" style="padding: 2px 7px; font-size: 10px;" onclick="inspectMySQLRecord(${idx})">Payload</button></td>
           </tr>
         `;
       }).join('');
@@ -599,7 +646,9 @@
     function renderHDFSLiveTable(rows) {
       const tbody = document.getElementById('hdfs-live-tbody');
       if (!rows || rows.length === 0) return;
-      tbody.innerHTML = [...rows].reverse().slice(0, 15).map(r => {
+      hdfsLiveMap = [...rows].reverse().slice(0, 20);
+
+      tbody.innerHTML = hdfsLiveMap.map((r, idx) => {
         const temp = parseFloat(r.cycle_temperature || 0).toFixed(1);
         const isAlert = r.status === 'ALERT' || temp > 70;
         const color = temp > 70 ? '#dc2626' : (temp > 55 ? '#ea580c' : '#059669');
@@ -613,7 +662,7 @@
             <td style="font-family: var(--font-mono);">${r.water_pressure_bar ? r.water_pressure_bar + ' bar' : '--'}</td>
             <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${r.timestamp || '--'}</td>
             <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${r.status || 'NORMAL'}</span></td>
-            <td><button class="pill-btn" style="padding: 2px 7px; font-size: 10px;" onclick='inspectRawPayload(${JSON.stringify(r).replace(/'/g, "&apos;")}, "HDFS Live Record: ${r.machine_id}")'>Payload</button></td>
+            <td><button class="pill-btn" style="padding: 2px 7px; font-size: 10px;" onclick="inspectHDFSRecord(${idx})">Payload</button></td>
           </tr>
         `;
       }).join('');
@@ -653,8 +702,9 @@
     function renderKafkaLiveTable(events) {
       const tbody = document.getElementById('kafka-live-tbody');
       if (!events || events.length === 0) return;
+      kafkaEventsMap = [...events].reverse().slice(0, 20);
 
-      tbody.innerHTML = [...events].reverse().slice(0, 15).map(e => {
+      tbody.innerHTML = kafkaEventsMap.map((e, idx) => {
         const temp = parseFloat(e.cycle_temperature || 0).toFixed(1);
         const isAlert = e.status === 'ALERT' || temp > 70;
         const color = temp > 70 ? '#dc2626' : (temp > 55 ? '#ea580c' : '#059669');
@@ -671,7 +721,7 @@
             <td style="font-family: var(--font-mono); font-size: 11px;">${errCode}</td>
             <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${e.timestamp ? e.timestamp.replace('T', ' ').substring(0, 19) : '--'}</td>
             <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${e.status || 'NORMAL'}</span></td>
-            <td><button class="pill-btn" style="padding: 2px 7px; font-size: 10px;" onclick='inspectRawPayload(${JSON.stringify(e).replace(/'/g, "&apos;")}, "Kafka Event: ${e.machine_id}")'>Payload</button></td>
+            <td><button class="pill-btn" style="padding: 2px 7px; font-size: 10px;" onclick="inspectKafkaRecord(${idx})">Payload</button></td>
           </tr>
         `;
       }).join('');
