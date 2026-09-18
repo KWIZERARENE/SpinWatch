@@ -67,9 +67,11 @@ def generate_telemetry():
         }
 
         try:
-            resp = requests.post(args.target_url, json=reading, timeout=2.0)
+            resp = requests.post(args.target_url, json=reading, timeout=(3.0, 5.0))
             if resp.status_code not in (200, 201, 202):
                 print(f"[!] REST Ingress API HTTP {resp.status_code}: {resp.text}")
+        except requests.exceptions.ConnectionError:
+            print(f"[!] REST API unreachable at {args.target_url} — is producer/app.py running?")
         except Exception as e:
             print(f"[!] Telemetry delivery warning: {e}")
 

@@ -432,9 +432,23 @@
       if (branchChart) branchChart.destroy();
       branchChart = new Chart(ctx2, {
         type: 'bar',
-        data: { labels: ['Kigali', 'Musanze', 'Huye', 'Rubavu', 'Rusizi'], datasets: [{ label: 'Avg Heat (°C)', data: [68, 62, 58, 65, 60], backgroundColor: '#0284c7', borderRadius: 6 }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: textColor }, grid: { color: gridColor } }, y: { ticks: { color: textColor }, grid: { color: gridColor } } } }
+        data: { labels: [], datasets: [{ label: 'Avg Heat (°C)', data: [], backgroundColor: '#0284c7', borderRadius: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: textColor }, grid: { color: gridColor } }, y: { ticks: { color: textColor }, grid: { color: gridColor }, min: 0, max: 100 } } }
       });
+    }
+
+    async function fetchInsights() {
+      try {
+        const res = await fetch('/api/insights');
+        if (!res.ok) return;
+        const data = await res.json();
+        const branches = data.avg_by_branch || [];
+        if (branchChart && branches.length > 0) {
+          branchChart.data.labels = branches.map(b => b.branch);
+          branchChart.data.datasets[0].data = branches.map(b => parseFloat(b.avg_temperature).toFixed(1));
+          branchChart.update('none');
+        }
+      } catch (e) { }
     }
 
     async function loadHDFSDates() {
@@ -471,25 +485,7 @@
       if (sel && sel.value) loadHDFSDetails(sel.value);
     }
 
-    function renderHDFSTable() {
-      const search = (document.getElementById('hdfs-search-input')?.value || '').toLowerCase().trim();
-      let filtered = [...hdfsRawRecords];
-
-      if (search) {
-        filtered = filtered.filter(r => 
-          (r.machine_id && r.machine_id.toLowerCase().includes(search)) ||
-          (r.branch && r.branch.toLowerCase().includes(search)) ||
-          (r.reading_id && r.reading_id.toLowerCase().includes(search)) ||
-          (r.status && r.status.toLowerCase().includes(search))
-        );
-      }
-
-      const tbody = document.getElementById('hdfs-records-tbody');
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: var(--text-muted); padding: 20px;">No matching HDFS raw records found in partition.</td></tr>`;
-        return;
-      }
-
+    // Module-level maps used by inspector functions
     let hdfsHistoricalMap = [];
     let kafkaEventsMap = [];
     let mysqlRecordsMap = [];
@@ -516,9 +512,7 @@
     }
 
     function loadHDFSDate(dtStr) {
-      if (dtStr) {
-        loadHDFSDetails(dtStr);
-      }
+      if (dtStr) loadHDFSDetails(dtStr);
     }
 
     function renderHDFSTable() {
@@ -526,7 +520,7 @@
       let filtered = [...hdfsRawRecords];
 
       if (search) {
-        filtered = filtered.filter(r => 
+        filtered = filtered.filter(r =>
           (r.machine_id && r.machine_id.toLowerCase().includes(search)) ||
           (r.branch && r.branch.toLowerCase().includes(search)) ||
           (r.reading_id && r.reading_id.toLowerCase().includes(search)) ||
@@ -536,34 +530,32 @@
 
       const tbody = document.getElementById('hdfs-records-tbody');
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: var(--text-muted); padding: 20px;">No matching HDFS raw records found in partition.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;color:var(--text-muted);padding:20px;">No matching HDFS raw records found in partition.</td></tr>`;
         return;
       }
 
       hdfsHistoricalMap = filtered.slice(0, 100);
       tbody.innerHTML = hdfsHistoricalMap.map((r, idx) => {
         const temp = parseFloat(r.cycle_temperature || 0).toFixed(1);
-        const isAlert = r.status === 'ALERT' || temp > 70;
-        const color = temp > 70 ? '#dc2626' : (temp > 55 ? '#ea580c' : '#059669');
+        const isAlert = r.status === 'ALERT' || parseFloat(temp) > 70;
+        const color = parseFloat(temp) > 70 ? '#dc2626' : (parseFloat(temp) > 55 ? '#ea580c' : '#059669');
         const shortId = r.reading_id ? r.reading_id.substring(0, 8) + '...' : '--';
         const breakdownFlag = r.breakdown_soon === 1 ? '⚠️ 1 (Risk)' : '0 (Normal)';
         const timestampVal = r.timestamp || r.txn_timestamp || '--';
-
         return `
           <tr>
-            <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${shortId}</td>
-            <td style="font-family: var(--font-mono); font-weight: 700;">${r.machine_id || '--'}</td>
+            <td style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">${shortId}</td>
+            <td style="font-family:var(--font-mono);font-weight:700;">${r.machine_id || '--'}</td>
             <td>${r.branch || '--'}</td>
-            <td style="font-family: var(--font-mono); font-weight: 700; color: ${color};">${temp}°C</td>
-            <td style="font-family: var(--font-mono);">${r.vibration_hz ? r.vibration_hz + ' Hz' : '--'}</td>
-            <td style="font-family: var(--font-mono);">${r.power_kw ? r.power_kw + ' kW' : '--'}</td>
-            <td style="font-family: var(--font-mono);">${r.water_pressure_bar ? r.water_pressure_bar + ' bar' : '--'}</td>
-            <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${timestampVal}</td>
+            <td style="font-family:var(--font-mono);font-weight:700;color:${color};">${temp}°C</td>
+            <td style="font-family:var(--font-mono);">${r.vibration_hz ? r.vibration_hz + ' Hz' : '--'}</td>
+            <td style="font-family:var(--font-mono);">${r.power_kw ? r.power_kw + ' kW' : '--'}</td>
+            <td style="font-family:var(--font-mono);">${r.water_pressure_bar ? r.water_pressure_bar + ' bar' : '--'}</td>
+            <td style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">${timestampVal}</td>
             <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${r.status || 'NORMAL'}</span></td>
-            <td style="font-family: var(--font-mono); font-weight: 700; color: ${r.breakdown_soon === 1 ? '#dc2626' : 'var(--text-muted)'};">${breakdownFlag}</td>
-            <td><button class="pill-btn" style="padding: 3px 8px; font-size: 11px;" onclick="inspectHDFSHistoricalRecord(${idx})">Payload</button></td>
-          </tr>
-        `;
+            <td style="font-family:var(--font-mono);font-weight:700;color:${r.breakdown_soon === 1 ? '#dc2626' : 'var(--text-muted)'};">${breakdownFlag}</td>
+            <td><button class="pill-btn" style="padding:3px 8px;font-size:11px;" onclick="inspectHDFSHistoricalRecord(${idx})">Payload</button></td>
+          </tr>`;
       }).join('');
     }
 
@@ -828,8 +820,10 @@
     setInterval(fetchMySQLLiveLog, 1500);
     setInterval(fetchHDFSLiveLog, 1500);
     setInterval(fetchPredictions, 3000);
+    setInterval(fetchInsights, 5000);
 
     fetchPredictions();
+    fetchInsights();
     fetchStatus();
     fetchMySQLLiveLog();
     fetchHDFSLiveLog();
