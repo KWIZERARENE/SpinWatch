@@ -515,6 +515,12 @@
       if (rec) inspectRawPayload(rec, `HDFS Historical Record: ${rec.machine_id || ''}`);
     }
 
+    function loadHDFSDate(dtStr) {
+      if (dtStr) {
+        loadHDFSDetails(dtStr);
+      }
+    }
+
     function renderHDFSTable() {
       const search = (document.getElementById('hdfs-search-input')?.value || '').toLowerCase().trim();
       let filtered = [...hdfsRawRecords];
@@ -541,6 +547,7 @@
         const color = temp > 70 ? '#dc2626' : (temp > 55 ? '#ea580c' : '#059669');
         const shortId = r.reading_id ? r.reading_id.substring(0, 8) + '...' : '--';
         const breakdownFlag = r.breakdown_soon === 1 ? '⚠️ 1 (Risk)' : '0 (Normal)';
+        const timestampVal = r.timestamp || r.txn_timestamp || '--';
 
         return `
           <tr>
@@ -551,7 +558,7 @@
             <td style="font-family: var(--font-mono);">${r.vibration_hz ? r.vibration_hz + ' Hz' : '--'}</td>
             <td style="font-family: var(--font-mono);">${r.power_kw ? r.power_kw + ' kW' : '--'}</td>
             <td style="font-family: var(--font-mono);">${r.water_pressure_bar ? r.water_pressure_bar + ' bar' : '--'}</td>
-            <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${r.timestamp || '--'}</td>
+            <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${timestampVal}</td>
             <td><span class="status-badge ${isAlert ? 'alert' : 'normal'}">${r.status || 'NORMAL'}</span></td>
             <td style="font-family: var(--font-mono); font-weight: 700; color: ${r.breakdown_soon === 1 ? '#dc2626' : 'var(--text-muted)'};">${breakdownFlag}</td>
             <td><button class="pill-btn" style="padding: 3px 8px; font-size: 11px;" onclick="inspectHDFSHistoricalRecord(${idx})">Payload</button></td>
