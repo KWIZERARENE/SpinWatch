@@ -1,5 +1,12 @@
 # SpinWatch - Project Dependencies
-requests>=2.28.0
-kafka-python>=2.0.2
-mysql-connector-python>=8.0.30
-pyspark>=3.3.0
+
+# ── Core Pipeline ───────────────────────────────────────────────────────────
+requests>=2.28.0                  # Generator HTTP POST delivery to REST Ingress API
+kafka-python>=2.0.2               # Kafka Producer (producer/producer.py) & Consumer (consumer/consumer.py)
+mysql-connector-python>=8.0.30    # MySQL 'laundry_ops' operational database connectivity
+pyspark>=3.3.0                    # Batch analytics (spark/insights.py) & MLlib model training (spark/train_model.py)
+
+# ── Django REST Framework API Browser (Port 8001) ────────────────────────────
+django>=4.2.0                     # Web framework for DRF API Browser server
+djangorestframework>=3.14.0       # Browsable HTML API, serializers, APIView classes
+django-cors-headers>=4.0.0        # CORS headers — allows dashboard (Port 8050) to query DRF API

@@ -47,7 +47,7 @@ MYSQL_CONFIG = {
     "database": "laundry_ops"
 }
 
-RECENT_INGRESS_READINGS = []
+RECENT_INGRESS_READINGS = []  # Rolling buffer — 100 most recent ingress readings (newest appended last)
 
 def query_mysql(sql, params=None):
     if not MYSQL_AVAILABLE:
@@ -90,8 +90,8 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                 success = producer.send_reading(reading)
                 
                 RECENT_INGRESS_READINGS.append(reading)
-                if len(RECENT_INGRESS_READINGS) > 50:
-                    RECENT_INGRESS_READINGS = RECENT_INGRESS_READINGS[-50:]
+                if len(RECENT_INGRESS_READINGS) > 100:
+                    RECENT_INGRESS_READINGS = RECENT_INGRESS_READINGS[-100:]
 
                 # Automatically process generator stream into Consumer Live Buffer & HDFS Raw Store
                 try:
@@ -155,7 +155,7 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                 "method_support": ["GET", "POST"],
                 "post_ingress_url": "http://localhost:8000/api/readings/",
                 "total_recent_readings": len(RECENT_INGRESS_READINGS),
-                "recent_ingress_samples": RECENT_INGRESS_READINGS[-10:],
+                "recent_ingress_samples": RECENT_INGRESS_READINGS[-20:],
                 "instructions": "Send HTTP POST requests with JSON payload to this endpoint to push new washer heat telemetry into the Kafka pipeline."
             })
 
@@ -272,8 +272,16 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
 
         # 3b. MySQL Operational Storage Check
         elif path in ["/api/sql/readings", "/api/stage3/sql"]:
-            readings = query_mysql("SELECT reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon FROM readings_log ORDER BY txn_timestamp DESC LIMIT 15")
-            status_summary = query_mysql("SELECT status, count(*) as count FROM machine_status GROUP BY status")
+            # ORDER BY txn_timestamp DESC — newest readings returned first
+            readings = query_mysql(
+                "SELECT reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon "
+                "FROM readings_log ORDER BY txn_timestamp DESC LIMIT 50"
+            )
+            # ORDER BY last_updated DESC — most recently active machines first
+            status_summary = query_mysql(
+                "SELECT machine_id, branch, status, cycle_temperature, last_updated "
+                "FROM machine_status ORDER BY last_updated DESC"
+            )
             
             if readings:
                 for r in readings:

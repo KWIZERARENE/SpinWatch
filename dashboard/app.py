@@ -159,7 +159,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.send_error(404, "Static file missing")
 
     def handle_api_status(self):
-        rows = query_mysql("SELECT machine_id, branch, cycle_temperature, status, last_updated FROM machine_status ORDER BY machine_id ASC LIMIT 1000")
+        rows = query_mysql("SELECT machine_id, reading_id, branch, cycle_temperature, status, breakdown_soon, last_updated FROM machine_status ORDER BY last_updated DESC LIMIT 1000")
         if not rows:
             # Fallback: Read 1,000 washer statuses from latest HDFS raw partition
             rows = []
@@ -307,7 +307,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.send_json([])
 
     def handle_api_sql_readings(self):
-        rows = query_mysql("SELECT reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon FROM readings_log ORDER BY txn_timestamp DESC LIMIT 25")
+        rows = query_mysql("SELECT reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon FROM readings_log ORDER BY txn_timestamp DESC LIMIT 50")
         if rows:
             for r in rows:
                 if "txn_timestamp" in r and r["txn_timestamp"]:

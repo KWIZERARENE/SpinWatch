@@ -116,10 +116,10 @@ def process_messages(bootstrap_servers="localhost:9092", topic="machine-readings
 
                     upsert_status_sql = """
                         REPLACE INTO machine_status 
-                        (machine_id, branch, cycle_temperature, status, last_updated)
-                        VALUES (%s, %s, %s, %s, %s)
+                        (machine_id, reading_id, branch, cycle_temperature, status, breakdown_soon, last_updated)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)
                     """
-                    cursor.execute(upsert_status_sql, (mid, branch, temp, status, now_str))
+                    cursor.execute(upsert_status_sql, (mid, reading_id, branch, temp, status, breakdown_soon, now_str))
 
                     insert_log_sql = """
                         INSERT INTO readings_log

@@ -78,7 +78,7 @@
     <div class="metrics-grid">
       <div class="metric-card">
         <div class="metric-title">Nationwide Fleet</div>
-        <div class="metric-value" id="metric-total">1,000</div>
+        <div class="metric-value" id="metric-total">3,000</div>
         <div style="font-size: 11px; color: var(--text-muted);">Active washers (13 branches)</div>
       </div>
       <div class="metric-card">
@@ -110,10 +110,12 @@
         <thead>
           <tr
             style="border-bottom: 1px solid var(--border-card); font-size: 11px; color: var(--text-muted); text-transform: uppercase;">
+            <th style="padding: 12px 16px;">Reading ID</th>
             <th style="padding: 12px 16px;">Washer ID</th>
             <th style="padding: 12px 16px;">Branch</th>
             <th style="padding: 12px 16px;">Reading Temperature (MySQL)</th>
             <th style="padding: 12px 16px;">Operational Status</th>
+            <th style="padding: 12px 16px;">Breakdown</th>
             <th style="padding: 12px 16px;">Last Updated</th>
             <th style="padding: 12px 16px;">Actions</th>
           </tr>
@@ -144,7 +146,9 @@
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
           <div>
             <h3 style="font-size:15px;font-weight:800;">🐬 MySQL Real-Time Temperature Feed</h3>
-            <div style="font-size:11px;color:var(--text-muted);font-weight:600;">Table: <code style="font-family:var(--font-mono);color:#059669;">laundry_ops.readings_log</code> — live landed readings</div>
+            <div style="font-size:11px;color:var(--text-muted);font-weight:600;">Table: <code
+                style="font-family:var(--font-mono);color:#059669;">laundry_ops.readings_log</code> — live landed
+              readings</div>
           </div>
           <span id="mysql-chart-badge" style="font-size:11px;font-weight:700;color:var(--text-muted);">— records</span>
         </div>
@@ -161,17 +165,22 @@
           <span class="live-pulse"></span>
           <h3 style="font-size: 16px; font-weight: 800;">⚡ Real-Time Stream & Storage Flow Inspector</h3>
         </div>
-        <div style="display: flex; gap: 6px; background: rgba(0,0,0,0.04); padding: 4px; border-radius: 12px; border: 1px solid var(--border-card);">
-          <button id="tab-btn-kafka" class="pill-btn active" onclick="switchStreamTab('KAFKA')">📡 Kafka Topic Stream</button>
+        <div
+          style="display: flex; gap: 6px; background: rgba(0,0,0,0.04); padding: 4px; border-radius: 12px; border: 1px solid var(--border-card);">
+          <button id="tab-btn-kafka" class="pill-btn active" onclick="switchStreamTab('KAFKA')">📡 Kafka Topic
+            Stream</button>
           <button id="tab-btn-mysql" class="pill-btn" onclick="switchStreamTab('MYSQL')">🐬 MySQL Real-Time Log</button>
-          <button id="tab-btn-hdfs" class="pill-btn" onclick="switchStreamTab('HDFS')">📦 HDFS Raw Landed Stream</button>
+          <button id="tab-btn-hdfs" class="pill-btn" onclick="switchStreamTab('HDFS')">📦 HDFS Raw Landed
+            Stream</button>
         </div>
       </div>
 
       <!-- KAFKA STREAM VIEW -->
       <div id="stream-view-kafka">
         <div style="margin-bottom: 10px; font-size: 11px; color: var(--text-muted); font-weight: 700;">
-          Kafka Ingress Stream | Topic: <span style="font-family: var(--font-mono); color: var(--accent-cyan);">machine-readings</span> (Group: maintenance-tracker)
+          Kafka Ingress Stream | Topic: <span
+            style="font-family: var(--font-mono); color: var(--accent-cyan);">machine-readings</span> (Group:
+          maintenance-tracker)
         </div>
         <div class="inspector-table-wrapper">
           <table class="inspector-table">
@@ -190,7 +199,10 @@
               </tr>
             </thead>
             <tbody id="kafka-live-tbody">
-              <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 20px;">Waiting for incoming Kafka stream events...</td></tr>
+              <tr>
+                <td colspan="10" style="text-align: center; color: var(--text-muted); padding: 20px;">Waiting for
+                  incoming Kafka stream events...</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -199,7 +211,9 @@
       <!-- MYSQL REAL-TIME LOG VIEW -->
       <div id="stream-view-mysql" style="display: none;">
         <div style="margin-bottom: 10px; font-size: 11px; color: var(--text-muted); font-weight: 700;">
-          MySQL Operational DB | Table: <span style="font-family: var(--font-mono); color: var(--accent-cyan);">laundry_ops.readings_log</span> (Real-Time Landed)
+          MySQL Operational DB | Table: <span
+            style="font-family: var(--font-mono); color: var(--accent-cyan);">laundry_ops.readings_log</span> (Real-Time
+          Landed)
         </div>
         <div class="inspector-table-wrapper">
           <table class="inspector-table">
@@ -216,7 +230,10 @@
               </tr>
             </thead>
             <tbody id="mysql-live-tbody">
-              <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading live MySQL landed records...</td></tr>
+              <tr>
+                <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading live MySQL
+                  landed records...</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -225,7 +242,9 @@
       <!-- HDFS REAL-TIME STREAM VIEW -->
       <div id="stream-view-hdfs" style="display: none;">
         <div style="margin-bottom: 10px; font-size: 11px; color: var(--text-muted); font-weight: 700;">
-          HDFS Analytical Store | Partition: <span style="font-family: var(--font-mono); color: var(--accent-purple);">/data/machines/raw/dt=TODAY/stream_history.json</span> (Real-Time Appended)
+          HDFS Analytical Store | Partition: <span
+            style="font-family: var(--font-mono); color: var(--accent-purple);">/data/machines/raw/dt=TODAY/stream_history.json</span>
+          (Real-Time Appended)
         </div>
         <div class="inspector-table-wrapper">
           <table class="inspector-table">
@@ -243,7 +262,10 @@
               </tr>
             </thead>
             <tbody id="hdfs-live-tbody">
-              <tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading live HDFS appended records...</td></tr>
+              <tr>
+                <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading live HDFS
+                  appended records...</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -258,17 +280,22 @@
           <span style="font-size: 20px;">📦</span>
           <div>
             <h3 style="font-size: 16px; font-weight: 800;">HDFS Raw Data Detailed Inspector</h3>
-            <div style="font-size: 11px; color: var(--text-muted);">HDFS Analytical Directory: <code style="font-family: var(--font-mono); color: var(--accent-purple);">/data/machines/raw/</code> (Record-by-Record Details)</div>
+            <div style="font-size: 11px; color: var(--text-muted);">HDFS Analytical Directory: <code
+                style="font-family: var(--font-mono); color: var(--accent-purple);">/data/machines/raw/</code>
+              (Record-by-Record Details)</div>
           </div>
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
-          <select id="hdfs-inspector-date-select" class="pill-btn" style="padding: 6px 12px;" onchange="loadHDFSDetails(this.value)"></select>
+          <select id="hdfs-inspector-date-select" class="pill-btn" style="padding: 6px 12px;"
+            onchange="loadHDFSDetails(this.value)"></select>
           <button class="pill-btn active" onclick="refreshHDFSDetails()">↻ Refresh HDFS</button>
         </div>
       </div>
-      <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted);">
+      <div
+        style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted);">
         <span id="hdfs-record-count-badge">Loaded 0 HDFS historical records</span>
-        <input type="text" id="hdfs-search-input" class="search-input" placeholder="🔍 Search HDFS records..." oninput="renderHDFSTable()">
+        <input type="text" id="hdfs-search-input" class="search-input" placeholder="🔍 Search HDFS records..."
+          oninput="renderHDFSTable()">
       </div>
       <div class="inspector-table-wrapper">
         <table class="inspector-table">
@@ -288,7 +315,10 @@
             </tr>
           </thead>
           <tbody id="hdfs-records-tbody">
-            <tr><td colspan="11" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading HDFS landed records...</td></tr>
+            <tr>
+              <td colspan="11" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading HDFS landed
+                records...</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -449,14 +479,14 @@
         // Build chart data: show last readings ordered oldest→newest for timeline feel
         const ordered = [...rows].reverse();
         const labels = ordered.map(r => r.machine_id || '--');
-        const temps  = ordered.map(r => parseFloat(r.cycle_temperature || 0).toFixed(1));
+        const temps = ordered.map(r => parseFloat(r.cycle_temperature || 0).toFixed(1));
         const colors = ordered.map(r =>
           (r.status === 'ALERT' || parseFloat(r.cycle_temperature) > 70) ? '#dc2626' : '#0284c7'
         );
 
         if (branchChart) {
           branchChart.data.labels = labels;
-          branchChart.data.datasets[0].data  = temps;
+          branchChart.data.datasets[0].data = temps;
           branchChart.data.datasets[0].backgroundColor = colors;
           branchChart.update('none');
         }
@@ -625,7 +655,12 @@
     function renderMySQLLiveTable(rows) {
       const tbody = document.getElementById('mysql-live-tbody');
       if (!rows || rows.length === 0) return;
-      mysqlRecordsMap = rows.slice(0, 20);
+      const sorted = [...rows].sort((a, b) => {
+        const dateA = a.txn_timestamp ? new Date(a.txn_timestamp).getTime() : 0;
+        const dateB = b.txn_timestamp ? new Date(b.txn_timestamp).getTime() : 0;
+        return dateB - dateA;
+      });
+      mysqlRecordsMap = sorted.slice(0, 20);
 
       tbody.innerHTML = mysqlRecordsMap.map((r, idx) => {
         const temp = parseFloat(r.cycle_temperature || 0).toFixed(1);
@@ -690,7 +725,7 @@
           const events = Array.isArray(data) ? data : (data.recent_consumer_events || []);
           if (events && events.length > 0) {
             liveEventsBuffer = events;
-            
+
             // Update chart
             if (consumerChart) {
               const latest = events[events.length - 1];
@@ -706,8 +741,30 @@
               consumerChart.update('none');
             }
 
-            // Update Live Stream Feed Table
+            // Update Live Stream Feed Table (newest first)
             renderKafkaLiveTable(events);
+
+            // Real-time fleet update: update machine state in fleetData so newly active machines float to top immediately
+            events.forEach(evt => {
+              const mid = evt.machine_id;
+              if (!mid) return;
+              const idx = fleetData.findIndex(m => m.machine_id === mid);
+              const updatedItem = {
+                machine_id: mid,
+                reading_id: evt.reading_id || (idx >= 0 ? fleetData[idx].reading_id : '--'),
+                branch: evt.branch || (idx >= 0 ? fleetData[idx].branch : 'Kigali'),
+                cycle_temperature: parseFloat(evt.cycle_temperature || 0),
+                status: evt.status || (evt.cycle_temperature > 70 ? 'ALERT' : 'NORMAL'),
+                breakdown_soon: evt.breakdown_soon !== undefined ? evt.breakdown_soon : (evt.cycle_temperature > 68 ? 1 : 0),
+                last_updated: (evt.timestamp ? evt.timestamp.replace('T', ' ').substring(0, 19) : new Date().toISOString().replace('T', ' ').substring(0, 19))
+              };
+              if (idx >= 0) {
+                fleetData[idx] = updatedItem;
+              } else {
+                fleetData.unshift(updatedItem);
+              }
+            });
+            renderFleet();
           }
         }
       } catch (e) { }
@@ -757,7 +814,14 @@
         filtered = filtered.filter(m => m.machine_id.toLowerCase().includes(search) || m.branch.toLowerCase().includes(search));
       }
 
-      const total = fleetData.length || 1000;
+      // Explicitly sort newest first by last_updated so newer activity is always presented first
+      filtered.sort((a, b) => {
+        const dateA = a.last_updated ? new Date(a.last_updated).getTime() : 0;
+        const dateB = b.last_updated ? new Date(b.last_updated).getTime() : 0;
+        return dateB - dateA;
+      });
+
+      const total = fleetData.length || 3000;
       const alerts = fleetData.filter(m => m.status === 'ALERT' || m.cycle_temperature > 70).length;
       const good = fleetData.filter(m => m.status === 'NORMAL' && m.cycle_temperature <= 70).length;
       const avg = fleetData.length > 0 ? (fleetData.reduce((acc, m) => acc + parseFloat(m.cycle_temperature), 0) / fleetData.length).toFixed(1) : '--';
@@ -815,12 +879,18 @@
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = pageItems.map(m => {
         const lastUpdated = m.last_updated || 'Live Stream';
+        const readingId = m.reading_id || '--';
+        const shortRid = readingId.length > 12 ? readingId.substring(0, 12) + '...' : readingId;
+        const breakdownVal = m.breakdown_soon === 1 ? '⚠️ 1 (Risk)' : '0 (Normal)';
+        const bdColor = m.breakdown_soon === 1 ? '#dc2626' : 'var(--text-muted)';
         return `
           <tr style="border-bottom: 1px solid var(--border-card);">
+            <td style="padding: 12px 16px; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);" title="${readingId}">${shortRid}</td>
             <td style="padding: 12px 16px; font-family: var(--font-mono); font-weight: 700;">${m.machine_id}</td>
             <td style="padding: 12px 16px;">${m.branch}</td>
             <td style="padding: 12px 16px; font-family: var(--font-mono); font-weight: 700; color: ${m.cycle_temperature > 70 ? '#dc2626' : '#0284c7'};">${m.cycle_temperature}°C</td>
             <td style="padding: 12px 16px;"><span class="status-badge ${m.status === 'ALERT' ? 'alert' : 'normal'}">${m.status}</span></td>
+            <td style="padding: 12px 16px; font-family: var(--font-mono); font-weight: 700; color: ${bdColor};">${breakdownVal}</td>
             <td style="padding: 12px 16px; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">${lastUpdated}</td>
             <td style="padding: 12px 16px;"><button class="pill-btn" onclick="inspectMachine('${m.machine_id}')">Inspect</button></td>
           </tr>
@@ -833,7 +903,7 @@
     setInterval(fetchStatus, 1000);
     setInterval(fetchLiveStream, 1000);
     setInterval(fetchMySQLLiveLog, 1500);
-    setInterval(fetchMySQLChart,  2000);
+    setInterval(fetchMySQLChart, 2000);
     setInterval(fetchHDFSLiveLog, 1500);
     setInterval(fetchPredictions, 3000);
 

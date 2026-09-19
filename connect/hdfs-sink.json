@@ -5,13 +5,18 @@
     "tasks.max": "1",
     "topics": "machine-readings",
     "hdfs.url": "hdfs://localhost:9000",
-    "flush.size": "10",
+    "storage.class": "io.confluent.connect.hdfs.storage.HdfsStorage",
+    "format.class": "io.confluent.connect.hdfs.parquet.ParquetFormat",
     "topics.dir": "/data/machines/raw",
     "partitioner.class": "io.confluent.connect.storage.partitioner.TimeBasedPartitioner",
     "partition.duration.ms": "3600000",
     "path.format": "'dt'=YYYY-MM-dd",
     "locale": "en-US",
     "timezone": "UTC",
-    "format.class": "io.confluent.connect.hdfs.parquet.ParquetFormat"
+    "flush.size": "10",
+    "rotate.interval.ms": "3600000",
+    "schema.compatibility": "BACKWARD",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true"
   }
 }

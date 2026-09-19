@@ -17,14 +17,14 @@ BRANCHES = [
     "Rwamagana", "Gicumbi", "Kamembe", "Karongi", "Nyanza", "Bugesera", "Kamonyi"
 ]
 
-ERROR_CODES = ["NONE", "NONE", "NONE", "NONE", "E01_OVERHEAT", "E02_VIBRATION", "E03_PRESSURE_DROP", "E04_POWER_SURGE"]
+ERROR_CODES = ["DEMAGED ", "UNKNOWN", "NO WATER ", "LEAKAGE", "E01_OVERHEAT", "E02_VIBRATION", "E03_PRESSURE_DROP", "E04_POWER_SURGE"]
 
 MACHINES = [
     {
         "machine_id": f"WM_{i:04d}",
         "branch": random.choice(BRANCHES)
     }
-    for i in range(1, 1001)
+    for i in range(1, 3001)
 ]
 
 def generate_telemetry():
@@ -46,7 +46,7 @@ def generate_telemetry():
         vibration_hz = round(random.uniform(12.0, 115.0), 1)
         power_kw = round(random.uniform(1.2, 7.8), 2)
         water_pressure_bar = round(random.uniform(1.0, 4.8), 2)
-        error_code = random.choice(ERROR_CODES) if current_temp > 70.0 else "NONE"
+        error_code = random.choice(ERROR_CODES) if current_temp > 70.0 else "NORMAL"
 
         status = "ALERT" if (current_temp > 70.0 or vibration_hz > 90.0) else "NORMAL"
         breakdown_soon = 1 if (current_temp > 70.0 or vibration_hz > 90.0) else 0

@@ -29,7 +29,7 @@ BRANCHES = [
     "Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare",
     "Rwamagana", "Gicumbi", "Kamembe", "Karongi", "Nyanza", "Bugesera", "Kamonyi"
 ]
-MACHINES = [f"WM_{i:04d}" for i in range(1, 1001)]
+MACHINES = [f"WM_{i:04d}" for i in range(1, 3001)]
 
 MYSQL_CONFIG = {
     "host": "127.0.0.1",
