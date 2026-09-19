@@ -247,31 +247,25 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         if os.path.exists(raw_base):
             parquet_files = glob.glob(os.path.join(raw_base, "*.parquet"))
             for pf in parquet_files:
-                if len(records) >= 200:
-                    break
                 try:
                     import pandas as pd
                     df = pd.read_parquet(pf)
-                    for rec in df.head(200 - len(records)).to_dict(orient="records"):
+                    for rec in df.to_dict(orient="records"):
                         records.append(rec)
                 except Exception as e:
                     print(f"[!] HDFS parquet read warning: {e}")
 
-            if len(records) < 200:
-                json_files = glob.glob(os.path.join(raw_base, "*.json"))
-                for jf in json_files:
-                    if len(records) >= 200:
-                        break
-                    try:
-                        with open(jf, "r") as f:
-                            for line in f:
-                                if len(records) >= 200:
-                                    break
-                                line_str = line.strip()
-                                if line_str:
-                                    records.append(json.loads(line_str))
-                    except Exception as e:
-                        print(f"[!] HDFS json read warning: {e}")
+            json_files = glob.glob(os.path.join(raw_base, "*.json"))
+            for jf in json_files:
+                try:
+                    with open(jf, "r") as f:
+                        for line in f:
+                            line_str = line.strip()
+                            if line_str:
+                                records.append(json.loads(line_str))
+                except Exception as e:
+                    print(f"[!] HDFS json read warning: {e}")
+
 
         clean_records = []
         for r in records:

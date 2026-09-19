@@ -141,10 +141,12 @@
       </div>
 
       <div class="chart-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <h3 style="font-size: 15px; font-weight: 800;">📦 HDFS Time Travel & Branch Heat</h3>
-          <select id="hdfs-date-select" class="pill-btn" style="padding: 4px 10px;"
-            onchange="loadHDFSDate(this.value); loadHDFSDetails(this.value);"></select>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div>
+            <h3 style="font-size:15px;font-weight:800;">🐬 MySQL Real-Time Temperature Feed</h3>
+            <div style="font-size:11px;color:var(--text-muted);font-weight:600;">Table: <code style="font-family:var(--font-mono);color:#059669;">laundry_ops.readings_log</code> — live landed readings</div>
+          </div>
+          <span id="mysql-chart-badge" style="font-size:11px;font-weight:700;color:var(--text-muted);">— records</span>
         </div>
         <div class="chart-container">
           <canvas id="branchChart"></canvas>
@@ -437,19 +439,32 @@
       });
     }
 
-    async function fetchInsights() {
+    async function fetchMySQLChart() {
       try {
-        const res = await fetch('/api/insights');
+        const res = await fetch('/api/sql/readings');
         if (!res.ok) return;
-        const data = await res.json();
-        const branches = data.avg_by_branch || [];
-        if (branchChart && branches.length > 0) {
-          branchChart.data.labels = branches.map(b => b.branch);
-          branchChart.data.datasets[0].data = branches.map(b => parseFloat(b.avg_temperature).toFixed(1));
+        const rows = await res.json();
+        if (!rows || rows.length === 0) return;
+
+        // Build chart data: show last readings ordered oldest→newest for timeline feel
+        const ordered = [...rows].reverse();
+        const labels = ordered.map(r => r.machine_id || '--');
+        const temps  = ordered.map(r => parseFloat(r.cycle_temperature || 0).toFixed(1));
+        const colors = ordered.map(r =>
+          (r.status === 'ALERT' || parseFloat(r.cycle_temperature) > 70) ? '#dc2626' : '#0284c7'
+        );
+
+        if (branchChart) {
+          branchChart.data.labels = labels;
+          branchChart.data.datasets[0].data  = temps;
+          branchChart.data.datasets[0].backgroundColor = colors;
           branchChart.update('none');
         }
+        const badge = document.getElementById('mysql-chart-badge');
+        if (badge) badge.innerText = `${rows.length} live records`;
       } catch (e) { }
     }
+
 
     async function loadHDFSDates() {
       try {
@@ -458,8 +473,8 @@
           const dates = await res.json();
           const dlist = Array.isArray(dates) ? dates : (dates.dates || []);
           const optionsHtml = dlist.map(d => `<option value="${d}">dt=${d}</option>`).join('');
-          document.getElementById('hdfs-date-select').innerHTML = optionsHtml;
-          document.getElementById('hdfs-inspector-date-select').innerHTML = optionsHtml;
+          const inspSel = document.getElementById('hdfs-inspector-date-select');
+          if (inspSel) inspSel.innerHTML = optionsHtml;
           if (dlist.length > 0) {
             loadHDFSDetails(dlist[0]);
           }
@@ -474,7 +489,7 @@
         if (res.ok) {
           const data = await res.json();
           hdfsRawRecords = data.records || [];
-          document.getElementById('hdfs-record-count-badge').innerText = `Partition dt=${dtStr} | Landed Records: ${data.count || hdfsRawRecords.length}`;
+          document.getElementById('hdfs-record-count-badge').innerText = `HDFS Partition: dt=${dtStr} | ${hdfsRawRecords.length.toLocaleString()} records`;
           renderHDFSTable();
         }
       } catch (e) { }
@@ -818,12 +833,12 @@
     setInterval(fetchStatus, 1000);
     setInterval(fetchLiveStream, 1000);
     setInterval(fetchMySQLLiveLog, 1500);
+    setInterval(fetchMySQLChart,  2000);
     setInterval(fetchHDFSLiveLog, 1500);
     setInterval(fetchPredictions, 3000);
-    setInterval(fetchInsights, 5000);
 
     fetchPredictions();
-    fetchInsights();
+    fetchMySQLChart();
     fetchStatus();
     fetchMySQLLiveLog();
     fetchHDFSLiveLog();
