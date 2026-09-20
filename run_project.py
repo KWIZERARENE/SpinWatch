@@ -28,7 +28,7 @@ def main():
     # 1. Seed & Sync Data
     print("\n[Step 1/4] Seeding initial HDFS & MySQL database data...")
     subprocess.run([sys.executable, "scripts/seed_hdfs_data.py"])
-    subprocess.run([sys.executable, "scripts/upload_to_hdfs.py"])
+    subprocess.Popen([sys.executable, "scripts/upload_to_hdfs.py"])
 
     # 2. Launch Ingress API Server
     print("\n[Step 2/5] Starting Ingress REST API Server on http://localhost:8000/...")
@@ -42,7 +42,7 @@ def main():
 
     # 4. Launch Stream Generator
     print("\n[Step 4/5] Starting Continuous Telemetry Generator at 3 TPS...")
-    generator_proc = subprocess.Popen([sys.executable, "generator/generator.py", "--tps", "3"])
+    generator_proc = subprocess.Popen([sys.executable, "generator/generator.py", "--tps", "3", "--target-url", "http://127.0.0.1:8000/api/readings/"])
     time.sleep(1.5)
 
     # 5. Launch Web Dashboard

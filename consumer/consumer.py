@@ -74,7 +74,7 @@ def process_messages(bootstrap_servers="localhost:9092", topic="machine-readings
             logger.info("Connected successfully to MySQL operational database 'laundry_ops'")
         except Exception as e:
             logger.warning(f"MySQL connection warning: {e}")
-
+# >>> READ: pulls the next message from Kafka
     try:
         for msg in consumer:
             reading = msg.value
@@ -112,7 +112,7 @@ def process_messages(bootstrap_servers="localhost:9092", topic="machine-readings
             if db_conn and db_conn.is_connected():
                 try:
                     cursor = db_conn.cursor()
-                    now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+                    now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                     upsert_status_sql = """
                         REPLACE INTO machine_status 

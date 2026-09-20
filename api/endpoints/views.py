@@ -24,7 +24,6 @@ import json
 import glob
 import uuid
 import datetime
-import sqlite3
 
 # Ensure the project root is importable (so consumer, producer modules work)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -42,7 +41,7 @@ try:
 except ImportError:
     PANDAS_AVAILABLE = False
 
-# ── MySQL connector (optional — degrades gracefully to SQLite mirror) ────────
+# MySQL is the single live operational database.
 try:
     import mysql.connector
     MYSQL_AVAILABLE = True
@@ -56,8 +55,6 @@ MYSQL_CONFIG = {
     "password": "",
     "database": "laundry_ops",
 }
-
-SQLITE_DB_PATH = os.path.join(PROJECT_ROOT, "data", "laundry_ops.sqlite3")
 
 # ── Lazy Kafka Producer (with fast socket probe to prevent hanging) ──────────
 _producer_instance = None
@@ -80,46 +77,11 @@ def get_producer():
 RECENT_INGRESS_READINGS = []
 
 
-# ── Database Query Helper (MySQL with automatic SQLite Fallback) ─────────────
-
-def _ensure_sqlite_schema():
-    """Ensure SQLite mirror database and tables exist."""
-    os.makedirs(os.path.dirname(SQLITE_DB_PATH), exist_ok=True)
-    with sqlite3.connect(SQLITE_DB_PATH) as conn:
-        cur = conn.cursor()
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS machine_status (
-                machine_id TEXT PRIMARY KEY,
-                reading_id TEXT,
-                branch TEXT,
-                cycle_temperature REAL,
-                status TEXT,
-                breakdown_soon INTEGER DEFAULT 0,
-                last_updated TEXT
-            )
-        """)
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS readings_log (
-                reading_id TEXT PRIMARY KEY,
-                machine_id TEXT,
-                branch TEXT,
-                cycle_temperature REAL,
-                txn_timestamp TEXT,
-                status TEXT,
-                breakdown_soon INTEGER DEFAULT 0
-            )
-        """)
-        conn.commit()
-
+# ── Database Query Helper (MySQL only) ─────────────────────────────────────
 
 def query_database(sql_mysql, sql_sqlite=None, params=None):
-    """
-    Execute query against MySQL if available.
-    If MySQL is unavailable or errors, transparently fall back to SQLite mirror.
-    Returns (rows: list of dicts, source: str).
-    """
+    """Execute query against the live MySQL operational database only."""
     params = params or ()
-    # 1. Try MySQL
     if MYSQL_AVAILABLE:
         try:
             conn = mysql.connector.connect(**MYSQL_CONFIG)
@@ -128,39 +90,21 @@ def query_database(sql_mysql, sql_sqlite=None, params=None):
             rows = cursor.fetchall()
             cursor.close()
             conn.close()
-            # Normalize dates & decimals
             for row in rows:
                 for k, v in row.items():
                     if hasattr(v, "isoformat"):
                         row[k] = str(v)
                     elif hasattr(v, "__float__") and type(v).__name__ == "Decimal":
                         row[k] = float(v)
-            if rows is not None and isinstance(rows, list) and len(rows) > 0:
-                return rows, "MySQL (laundry_ops DB on Port 3306)"
+            if rows is not None and isinstance(rows, list):
+                return rows[:1000], "MySQL (laundry_ops DB on Port 3306)"
         except Exception:
             pass
-
-    # 2. Fall back to SQLite mirror
-    _ensure_sqlite_schema()
-    try:
-        sql = sql_sqlite or sql_mysql
-        with sqlite3.connect(SQLITE_DB_PATH) as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-            cursor.execute(sql, params)
-            rows = [dict(r) for r in cursor.fetchall()]
-            for r in rows:
-                if "cycle_temperature" in r and r["cycle_temperature"] is not None:
-                    r["cycle_temperature"] = float(r["cycle_temperature"])
-                if "breakdown_soon" in r and r["breakdown_soon"] is not None:
-                    r["breakdown_soon"] = int(r["breakdown_soon"])
-            return rows, "SQLite Fallback Mirror (data/laundry_ops.sqlite3)"
-    except Exception as e:
-        return [], f"Database Error: {e}"
+    return [], "MySQL unavailable"
 
 
 def write_reading_to_database(reading):
-    """Persist reading to both MySQL (if available) and SQLite mirror."""
+    """Persist reading to the live MySQL operational database only."""
     mid = reading.get("machine_id")
     rid = reading.get("reading_id") or str(uuid.uuid4())
     branch = reading.get("branch", "Kigali")
@@ -169,33 +113,12 @@ def write_reading_to_database(reading):
     bdown = int(reading.get("breakdown_soon", 1 if temp > 70.0 else 0))
     ts = reading.get("timestamp") or datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # Format timestamp for SQL DATETIME
     clean_ts = str(ts).replace("T", " ").split(".")[0].split("+")[0].strip()
     if len(clean_ts) == 10:
         clean_ts += " 00:00:00"
 
     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # 1. Write to SQLite mirror
-    try:
-        _ensure_sqlite_schema()
-        with sqlite3.connect(SQLITE_DB_PATH) as conn:
-            cur = conn.cursor()
-            cur.execute("""
-                INSERT OR REPLACE INTO machine_status 
-                (machine_id, reading_id, branch, cycle_temperature, status, breakdown_soon, last_updated)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (mid, rid, branch, temp, stat, bdown, now_str))
-            cur.execute("""
-                INSERT OR IGNORE INTO readings_log
-                (reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (rid, mid, branch, temp, clean_ts, stat, bdown))
-            conn.commit()
-    except Exception:
-        pass
-
-    # 2. Write to MySQL if available
     if MYSQL_AVAILABLE:
         try:
             conn = mysql.connector.connect(**MYSQL_CONFIG)
@@ -377,10 +300,10 @@ class APIRootView(APIView):
                 "Nyagatare", "Rwamagana", "Gicumbi", "Kamembe",
                 "Karongi", "Nyanza", "Bugesera", "Kamonyi"
             ],
-            "fleet_size": 3000,
+            "fleet_size": 1000,
             "kafka_topic": "machine-readings",
             "storage_separation": {
-                "operational_storage": "MySQL laundry_ops DB (machine_status, readings_log) + SQLite fallback",
+                "operational_storage": "MySQL laundry_ops DB (machine_status, readings_log) only",
                 "analytical_storage": "Apache HDFS /data/machines/raw/ (Parquet / JSON Lines)",
                 "pyspark_analytics_store": "Apache HDFS /data/machines/insights/ & predictions/",
             },
@@ -569,7 +492,7 @@ class ReadingsView(APIView):
         except Exception:
             pass
 
-        # 5. Persist to Operational Database (MySQL & SQLite)
+        # 5. Persist to the live MySQL operational database only
         write_reading_to_database(reading)
 
         return Response(
@@ -595,7 +518,7 @@ class GeneratorStatusView(APIView):
     # Point 1b — Telemetry Stream Generator Fleet Status
     =====================================================
     Returns metadata about the active telemetry stream generator:
-    - **Fleet Size**: 3,000 commercial washing machines (`WM_0001` → `WM_3000`)
+    - **Fleet Size**: 1,000 commercial washing machines (`WM_0001` → `WM_1000`)
     - **Branches**: 13 Rwandan branches
     - **Sensor Metrics**: Temperature, Vibration, Power, Water Pressure, Error Codes
     """
@@ -604,8 +527,8 @@ class GeneratorStatusView(APIView):
         return Response({
             "stage": "Point 1b: Telemetry Stream Generator Fleet",
             "status": "ACTIVE",
-            "fleet_size": 3000,
-            "machine_id_range": "WM_0001 → WM_3000",
+            "fleet_size": 1000,
+            "machine_id_range": "WM_0001 → WM_1000",
             "branches_count": 13,
             "branches": [
                 "Kigali", "Musanze", "Huye", "Rubavu", "Rusizi",
@@ -1106,7 +1029,7 @@ class InsightsView(APIView):
             "source_data": "HDFS /data/machines/raw/ (Parquet / JSON) — historical telemetry",
             "recompute_command": "python spark/insights.py",
             "fleet_health_summary": {
-                "total_machines": data.get("total_machines", 3000),
+                "total_machines": data.get("total_machines", 1000),
                 "good_condition_count": data.get("good_condition_count", 1752),
                 "normal_temp_count": data.get("normal_temp_count", 1752),
             },

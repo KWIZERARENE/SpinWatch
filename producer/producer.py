@@ -53,6 +53,7 @@ class MachineTelemetryProducer:
         if self.producer:
             try:
                 # Keying by machine_id ensures strict per-machine partition ordering
+                
                 future = self.producer.send(self.topic, key=mid, value=reading)
                 future.get(timeout=2.0)
                 logger.debug(f"Published reading for {mid} to Kafka topic {self.topic}")

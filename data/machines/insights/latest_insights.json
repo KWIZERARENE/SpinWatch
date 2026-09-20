@@ -1,162 +1,162 @@
 {
   "avg_by_branch": [
     {
+      "branch": "Kigali",
+      "avg_temperature": 66.73
+    },
+    {
       "branch": "Rusizi",
-      "avg_temperature": 66.09
+      "avg_temperature": 65.69
     },
     {
       "branch": "Rwamagana",
-      "avg_temperature": 65.91
-    },
-    {
-      "branch": "Nyagatare",
-      "avg_temperature": 65.82
-    },
-    {
-      "branch": "Kamembe",
-      "avg_temperature": 65.74
-    },
-    {
-      "branch": "Huye",
-      "avg_temperature": 65.37
-    },
-    {
-      "branch": "Musanze",
-      "avg_temperature": 65.13
-    },
-    {
-      "branch": "Kigali",
-      "avg_temperature": 64.77
-    },
-    {
-      "branch": "Kamonyi",
-      "avg_temperature": 64.05
+      "avg_temperature": 64.61
     },
     {
       "branch": "Nyanza",
-      "avg_temperature": 63.79
+      "avg_temperature": 64.06
+    },
+    {
+      "branch": "Huye",
+      "avg_temperature": 63.94
     },
     {
       "branch": "Karongi",
-      "avg_temperature": 63.17
-    },
-    {
-      "branch": "Gicumbi",
-      "avg_temperature": 62.98
-    },
-    {
-      "branch": "Bugesera",
-      "avg_temperature": 62.36
+      "avg_temperature": 63.63
     },
     {
       "branch": "Rubavu",
-      "avg_temperature": 62.32
+      "avg_temperature": 63.52
+    },
+    {
+      "branch": "Kamonyi",
+      "avg_temperature": 63.35
+    },
+    {
+      "branch": "Kamembe",
+      "avg_temperature": 62.81
+    },
+    {
+      "branch": "Gicumbi",
+      "avg_temperature": 61.59
+    },
+    {
+      "branch": "Nyagatare",
+      "avg_temperature": 61.29
+    },
+    {
+      "branch": "Bugesera",
+      "avg_temperature": 60.03
+    },
+    {
+      "branch": "Musanze",
+      "avg_temperature": 58.81
     }
   ],
   "time_in_alert": [
     {
-      "machine_id": "WM_0003",
-      "branch": "Bugesera",
-      "alert_count": 8
+      "machine_id": "WM_0970",
+      "branch": "Rubavu",
+      "alert_count": 19
     },
     {
-      "machine_id": "WM_0008",
-      "branch": "Kigali",
-      "alert_count": 24
-    },
-    {
-      "machine_id": "WM_0009",
-      "branch": "Nyanza",
-      "alert_count": 20
-    },
-    {
-      "machine_id": "WM_0017",
+      "machine_id": "WM_4885",
       "branch": "Kamonyi",
-      "alert_count": 16
+      "alert_count": 19
     },
     {
-      "machine_id": "WM_0018",
+      "machine_id": "WM_0757",
       "branch": "Huye",
-      "alert_count": 15
+      "alert_count": 5
     },
     {
-      "machine_id": "WM_0019",
-      "branch": "Bugesera",
-      "alert_count": 21
-    },
-    {
-      "machine_id": "WM_0020",
-      "branch": "Rusizi",
+      "machine_id": "WM_2411",
+      "branch": "Kamembe",
       "alert_count": 7
     },
     {
-      "machine_id": "WM_0026",
-      "branch": "Musanze",
+      "machine_id": "WM_3453",
+      "branch": "Rwamagana",
       "alert_count": 12
     },
     {
-      "machine_id": "WM_0027",
+      "machine_id": "WM_1922",
+      "branch": "Kigali",
+      "alert_count": 23
+    },
+    {
+      "machine_id": "WM_4463",
+      "branch": "Rubavu",
+      "alert_count": 14
+    },
+    {
+      "machine_id": "WM_2435",
       "branch": "Kamembe",
-      "alert_count": 24
+      "alert_count": 6
     },
     {
-      "machine_id": "WM_0029",
+      "machine_id": "WM_4181",
       "branch": "Rwamagana",
-      "alert_count": 7
+      "alert_count": 9
     },
     {
-      "machine_id": "WM_0030",
+      "machine_id": "WM_2799",
+      "branch": "Rwamagana",
+      "alert_count": 21
+    },
+    {
+      "machine_id": "WM_2944",
+      "branch": "Rubavu",
+      "alert_count": 18
+    },
+    {
+      "machine_id": "WM_2486",
+      "branch": "Kamonyi",
+      "alert_count": 6
+    },
+    {
+      "machine_id": "WM_4983",
       "branch": "Huye",
       "alert_count": 8
     },
     {
-      "machine_id": "WM_0031",
-      "branch": "Nyagatare",
-      "alert_count": 9
+      "machine_id": "WM_2408",
+      "branch": "Rusizi",
+      "alert_count": 24
     },
     {
-      "machine_id": "WM_0032",
+      "machine_id": "WM_3074",
       "branch": "Kamembe",
-      "alert_count": 23
-    },
-    {
-      "machine_id": "WM_0034",
-      "branch": "Musanze",
-      "alert_count": 16
-    },
-    {
-      "machine_id": "WM_0037",
-      "branch": "Nyanza",
-      "alert_count": 13
+      "alert_count": 22
     }
   ],
   "busiest_hour": [
     {
-      "hour": 2,
-      "alert_count": 279
+      "hour": 18,
+      "alert_count": 80
     },
     {
-      "hour": 5,
-      "alert_count": 255
+      "hour": 19,
+      "alert_count": 75
     },
     {
-      "hour": 4,
-      "alert_count": 243
+      "hour": 20,
+      "alert_count": 67
     },
     {
-      "hour": 3,
-      "alert_count": 227
+      "hour": 21,
+      "alert_count": 61
     },
     {
-      "hour": 1,
-      "alert_count": 139
+      "hour": 17,
+      "alert_count": 57
     },
     {
-      "hour": 6,
-      "alert_count": 105
+      "hour": 22,
+      "alert_count": 28
     }
   ],
-  "good_condition_count": 1752,
-  "normal_temp_count": 1752,
-  "total_machines": 3000
+  "good_condition_count": 600,
+  "normal_temp_count": 569,
+  "total_machines": 1000
 }

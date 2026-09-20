@@ -56,7 +56,12 @@ def query_mysql(sql, params=None):
         conn = mysql.connector.connect(**MYSQL_CONFIG)
         cursor = conn.cursor(dictionary=True)
         cursor.execute(sql, params or ())
-        rows = cursor.fetchall()
+        is_write = sql.strip().upper().startswith(("INSERT", "UPDATE", "DELETE", "REPLACE"))
+        if is_write:
+            conn.commit()
+            rows = []
+        else:
+            rows = cursor.fetchall()
         cursor.close()
         conn.close()
         return rows
@@ -76,6 +81,7 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
         global RECENT_INGRESS_READINGS
         parsed = urllib.parse.urlparse(self.path)
         
+        # readings ingestion endpoint
         if parsed.path in ["/api/readings/", "/api/readings"]:
             content_length = int(self.headers.get("Content-Length", 0))
             post_data = self.rfile.read(content_length)
@@ -86,7 +92,7 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                 for f in required_fields:
                     if f not in reading:
                         raise ValueError(f"Missing required field: {f}")
-                
+                #sending to Kafka Producer
                 success = producer.send_reading(reading)
                 
                 RECENT_INGRESS_READINGS.append(reading)
@@ -117,17 +123,24 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
                             if len(clean_ts) == 10:
                                 clean_ts += " 00:00:00"
 
-                        # 1. Update machine_status
+                        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        temp_val = float(reading.get("cycle_temperature", 45.0))
+                        bdown_val = int(reading.get("breakdown_soon", 1 if temp_val > 70.0 else 0))
+                        stat_val = reading.get("status", "ALERT" if temp_val > 70.0 else "NORMAL")
+                        rid_val = reading.get("reading_id") or str(uuid.uuid4())
+
+                        # 1. Update machine_status in MySQL
                         query_mysql(
-                            "REPLACE INTO machine_status (machine_id, branch, cycle_temperature, status, last_updated) VALUES (%s, %s, %s, %s, %s)",
-                            (reading["machine_id"], reading["branch"], reading["cycle_temperature"], reading["status"], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                            "REPLACE INTO machine_status (machine_id, reading_id, branch, cycle_temperature, status, breakdown_soon, last_updated) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                            (reading["machine_id"], rid_val, reading["branch"], temp_val, stat_val, bdown_val, now_str)
                         )
 
-                        # 2. Insert into readings_log
+                        # 2. Insert into readings_log in MySQL
                         query_mysql(
-                            "INSERT INTO readings_log (reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon) VALUES (%s, %s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE cycle_temperature=VALUES(cycle_temperature), status=VALUES(status)",
-                            (reading.get("reading_id"), reading["machine_id"], reading["branch"], reading["cycle_temperature"], clean_ts, reading["status"], reading.get("breakdown_soon", 0))
+                            "INSERT INTO readings_log (reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon) VALUES (%s, %s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE cycle_temperature=VALUES(cycle_temperature), status=VALUES(status), breakdown_soon=VALUES(breakdown_soon)",
+                            (rid_val, reading["machine_id"], reading["branch"], temp_val, clean_ts, stat_val, bdown_val)
                         )
+
                 except Exception as ex:
                     print(f"[!] Generator automatic flow sync warning: {ex}")
 
@@ -336,12 +349,16 @@ class UnifiedPipelineAPIHandler(BaseHTTPRequestHandler):
             })
 
         # 5. Python Consumer Live Broadcast Endpoint
-        elif path == "/api/consumer/live":
+        elif path in ["/api/consumer/live", "/api/consumer/live/"]:
+            buf = []
             try:
                 from consumer.consumer import LIVE_CONSUMER_BUFFER
-                self.send_json(LIVE_CONSUMER_BUFFER[-25:])
+                buf = list(LIVE_CONSUMER_BUFFER[-25:])
             except Exception:
-                self.send_json([])
+                buf = []
+            if not buf:
+                buf = list(reversed(RECENT_INGRESS_READINGS[-25:]))
+            self.send_json(buf)
         else:
             self.send_error(404, "Endpoint not found")
 

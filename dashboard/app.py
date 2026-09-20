@@ -11,6 +11,7 @@ import os
 import sys
 import json
 import glob
+import random
 import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import urllib.parse
@@ -68,7 +69,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             try:
                 import urllib.request
                 req = urllib.request.Request(
-                    "http://localhost:8000/api/readings/",
+                    "http://127.0.0.1:8000/api/readings/",
                     data=post_data,
                     headers={"Content-Type": "application/json"},
                     method="POST"
@@ -160,46 +161,17 @@ class DashboardHandler(SimpleHTTPRequestHandler):
 
     def handle_api_status(self):
         rows = query_mysql("SELECT machine_id, reading_id, branch, cycle_temperature, status, breakdown_soon, last_updated FROM machine_status ORDER BY last_updated DESC LIMIT 1000")
-        if not rows:
-            # Fallback: Read 1,000 washer statuses from latest HDFS raw partition
+        if rows is None:
             rows = []
-            raw_base = os.path.join(PROJECT_ROOT, "data", "machines", "raw")
-            partition_dirs = glob.glob(os.path.join(raw_base, "dt=*"))
-            if partition_dirs:
-                latest_dir = sorted(partition_dirs, reverse=True)[0]
-                parquet_files = glob.glob(os.path.join(latest_dir, "*.parquet"))
-                if parquet_files:
-                    try:
-                        import pandas as pd
-                        df = pd.read_parquet(parquet_files[0])
-                        rows = df.to_dict(orient="records")
-                    except Exception:
-                        pass
-                if not rows:
-                    json_files = glob.glob(os.path.join(latest_dir, "*.json"))
-                    for jf in json_files:
-                        try:
-                            with open(jf, "r") as f:
-                                rows.extend([json.loads(line.strip()) for line in f.readlines()])
-                        except Exception:
-                            pass
-
-            # Fallback 2: Generate 1,000 washers if store empty
-            if not rows:
-                branches = ["Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare", "Rwamagana", "Gicumbi", "Kamembe", "Karongi", "Nyanza", "Bugesera", "Kamonyi"]
-                rows = [{
-                    "machine_id": f"WM_{i:04d}",
-                    "branch": branches[i % len(branches)],
-                    "cycle_temperature": round(35.0 + (i * 7) % 55, 1),
-                    "status": "ALERT" if (35.0 + (i * 7) % 55) > 70 else "NORMAL",
-                    "last_updated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                } for i in range(1, 1001)]
+        rows = rows[:1000]
 
         for r in rows:
             if "last_updated" in r and r["last_updated"]:
                 r["last_updated"] = str(r["last_updated"])
-            if "cycle_temperature" in r:
-                r["cycle_temperature"] = float(r["cycle_temperature"])
+            if "cycle_temperature" in r and r["cycle_temperature"] is not None:
+                r["cycle_temperature"] = round(float(r["cycle_temperature"]), 2)
+            if "breakdown_soon" in r and r["breakdown_soon"] is not None:
+                r["breakdown_soon"] = int(r["breakdown_soon"])
 
         self.send_json(rows)
 
@@ -287,7 +259,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         # 1. Query live stream buffer from Ingress API server (port 8000)
         try:
             import urllib.request
-            req = urllib.request.Request("http://localhost:8000/api/consumer/live")
+            req = urllib.request.Request("http://127.0.0.1:8000/api/consumer/live")
             with urllib.request.urlopen(req, timeout=1.5) as resp:
                 data = resp.read()
                 self.send_response(200)
@@ -320,7 +292,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         # Proxy fallback to API server on 8000
         try:
             import urllib.request
-            req = urllib.request.Request("http://localhost:8000/api/sql/readings")
+            req = urllib.request.Request("http://127.0.0.1:8000/api/sql/readings")
             with urllib.request.urlopen(req, timeout=1.5) as resp:
                 data = resp.read()
                 self.send_response(200)

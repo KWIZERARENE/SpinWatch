@@ -78,7 +78,7 @@
     <div class="metrics-grid">
       <div class="metric-card">
         <div class="metric-title">Nationwide Fleet</div>
-        <div class="metric-value" id="metric-total">3,000</div>
+        <div class="metric-value" id="metric-total">1,000</div>
         <div style="font-size: 11px; color: var(--text-muted);">Active washers (13 branches)</div>
       </div>
       <div class="metric-card">
@@ -616,12 +616,79 @@
       } catch (e) { }
     }
 
+    function parseLocalDate(tsStr) {
+      if (!tsStr) return null;
+      const clean = tsStr.replace(' ', 'T');
+      const d = new Date(clean);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function formatTimeAgo(tsStr) {
+      const d = parseLocalDate(tsStr);
+      if (!d) return 'Live stream';
+      const diffSec = Math.max(0, Math.floor((Date.now() - d.getTime()) / 1000));
+      if (diffSec < 3) return 'Just now';
+      if (diffSec < 60) return `${diffSec}s ago`;
+      const diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return `${diffMin}m ago`;
+      const diffHr = Math.floor(diffMin / 60);
+      if (diffHr < 24) return `${diffHr}h ago`;
+      return d.toLocaleDateString();
+    }
+
+    function updateCardTickTimes() {
+      const tags = document.querySelectorAll('.time-ago-tag');
+      tags.forEach(tag => {
+        const raw = tag.getAttribute('data-raw-time');
+        if (!raw) return;
+        const txtSpan = tag.querySelector('.time-ago-text');
+        if (txtSpan) {
+          txtSpan.innerText = formatTimeAgo(raw);
+        }
+        const d = parseLocalDate(raw);
+        if (d) {
+          const diffSec = Math.max(0, Math.floor((Date.now() - d.getTime()) / 1000));
+          if (diffSec < 30) {
+            tag.classList.add('recent-glow');
+          } else {
+            tag.classList.remove('recent-glow');
+          }
+        }
+      });
+    }
+
     async function fetchStatus() {
       try {
         const res = await fetch('/api/status');
         if (res.ok) {
-          fleetData = await res.json();
-          renderFleet();
+          const incoming = await res.json();
+          if (Array.isArray(incoming) && incoming.length > 0) {
+            if (!fleetData || fleetData.length === 0) {
+              fleetData = incoming;
+            } else {
+              const incomingMap = new Map();
+              incoming.forEach(m => incomingMap.set(m.machine_id, m));
+
+              fleetData = fleetData.map(existing => {
+                const inc = incomingMap.get(existing.machine_id);
+                if (!inc) return existing;
+                incomingMap.delete(existing.machine_id);
+
+                const exTime = parseLocalDate(existing.last_updated)?.getTime() || 0;
+                const incTime = parseLocalDate(inc.last_updated)?.getTime() || 0;
+
+                if (incTime >= exTime) {
+                  return { ...existing, ...inc };
+                }
+                return existing;
+              });
+
+              for (const newUnit of incomingMap.values()) {
+                fleetData.push(newUnit);
+              }
+            }
+            renderFleet();
+          }
         }
       } catch (e) { }
     }
@@ -745,6 +812,7 @@
             renderKafkaLiveTable(events);
 
             // Real-time fleet update: update machine state in fleetData so newly active machines float to top immediately
+            const nowIso = new Date().toISOString().replace('T', ' ').substring(0, 19);
             events.forEach(evt => {
               const mid = evt.machine_id;
               if (!mid) return;
@@ -756,7 +824,8 @@
                 cycle_temperature: parseFloat(evt.cycle_temperature || 0),
                 status: evt.status || (evt.cycle_temperature > 70 ? 'ALERT' : 'NORMAL'),
                 breakdown_soon: evt.breakdown_soon !== undefined ? evt.breakdown_soon : (evt.cycle_temperature > 68 ? 1 : 0),
-                last_updated: (evt.timestamp ? evt.timestamp.replace('T', ' ').substring(0, 19) : new Date().toISOString().replace('T', ' ').substring(0, 19))
+                last_updated: (evt.timestamp ? evt.timestamp.replace('T', ' ').substring(0, 19) : nowIso),
+                _justUpdated: true
               };
               if (idx >= 0) {
                 fleetData[idx] = updatedItem;
@@ -821,7 +890,7 @@
         return dateB - dateA;
       });
 
-      const total = fleetData.length || 3000;
+      const total = fleetData.length || 1000;
       const alerts = fleetData.filter(m => m.status === 'ALERT' || m.cycle_temperature > 70).length;
       const good = fleetData.filter(m => m.status === 'NORMAL' && m.cycle_temperature <= 70).length;
       const avg = fleetData.length > 0 ? (fleetData.reduce((acc, m) => acc + parseFloat(m.cycle_temperature), 0) / fleetData.length).toFixed(1) : '--';
@@ -848,9 +917,13 @@
         const isRisk = pred === 1 || m.cycle_temperature > 70;
         const predictedTemp = (m.cycle_temperature > 70 ? (m.cycle_temperature + 4.5).toFixed(1) : 70.0);
         const color = m.cycle_temperature > 70 ? '#dc2626' : (m.cycle_temperature > 55 ? '#ea580c' : '#059669');
+        const shortRid = m.reading_id ? (m.reading_id.length > 10 ? m.reading_id.substring(0, 8) + '...' : m.reading_id) : '--';
+        const d = parseLocalDate(m.last_updated);
+        const diffSec = d ? Math.max(0, Math.floor((Date.now() - d.getTime()) / 1000)) : 9999;
+        const isRecent = diffSec < 30;
 
         return `
-          <div class="washer-card ${isAlert ? 'alert-border' : ''}">
+          <div class="washer-card ${isAlert ? 'alert-border' : ''} ${m._justUpdated ? 'temp-flash-update' : ''}" id="card-${m.machine_id}">
             <div>
               <div class="washer-header">
                 <span class="washer-id">🧺 ${m.machine_id}</span>
@@ -866,8 +939,19 @@
                   <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 800; color: ${isRisk ? '#dc2626' : '#059669'};">${predictedTemp}°C</div>
                 </div>
               </div>
-              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
                 <span class="status-badge ${isAlert ? 'alert' : 'normal'}">${isAlert ? '🚨 ALERT' : '✅ NORMAL'}</span>
+                <span class="status-badge ${isRisk ? 'alert' : 'normal'}">${isRisk ? '⚠️ HIGH RISK' : '🛡️ NORMAL'}</span>
+              </div>
+
+              <!-- Dynamic Real-Time Timestamp Badge -->
+              <div class="card-time-badge">
+                <span class="time-ago-tag ${isRecent ? 'recent-glow' : ''}" data-raw-time="${m.last_updated || ''}">
+                  🕒 <span class="time-ago-text">${formatTimeAgo(m.last_updated)}</span>
+                </span>
+                <span class="reading-id-tag" title="Reading ID: ${m.reading_id || '--'}">
+                  ${shortRid}
+                </span>
               </div>
             </div>
             <button class="inspect-btn" onclick="inspectMachine('${m.machine_id}')">Inspect Diagnostic</button>
@@ -900,6 +984,7 @@
 
     initCharts();
     loadHDFSDates();
+    setInterval(updateCardTickTimes, 1000);
     setInterval(fetchStatus, 1000);
     setInterval(fetchLiveStream, 1000);
     setInterval(fetchMySQLLiveLog, 1500);

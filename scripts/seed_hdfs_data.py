@@ -29,7 +29,15 @@ BRANCHES = [
     "Kigali", "Musanze", "Huye", "Rubavu", "Rusizi", "Nyagatare",
     "Rwamagana", "Gicumbi", "Kamembe", "Karongi", "Nyanza", "Bugesera", "Kamonyi"
 ]
-MACHINES = [f"WM_{i:04d}" for i in range(1, 3001)]
+
+
+def build_machine_catalog(size=1000):
+    """Generate 1,000 unique random washers instead of an incrementing WM_0001..WM_1000 sequence."""
+    machine_numbers = random.sample(range(1, 5000), size)
+    return [f"WM_{machine_no:04d}" for machine_no in machine_numbers]
+
+
+MACHINES = build_machine_catalog(1000)
 
 MYSQL_CONFIG = {
     "host": "127.0.0.1",
@@ -50,11 +58,14 @@ def seed_data():
     
     for i, mid in enumerate(MACHINES):
         branch = random.choice(BRANCHES)
-        # Cycle temperature randomly generated between 30.0°C and 100.0°C
-        temp = round(random.uniform(30.0, 100.0), 2)
+        # Realistic, wide variation across the 1,000-machine fleet, no sequential numbering.
+        base_temp = random.gauss(58.0, 19.0)
+        if random.random() < 0.28:
+            base_temp += random.uniform(10.0, 30.0)
+        temp = round(max(25.0, min(110.0, base_temp)), 2)
 
         status = "ALERT" if temp > 70.0 else "NORMAL"
-        breakdown_soon = 1 if temp > 70.0 else 0
+        breakdown_soon = 1 if temp > 68.0 else 0
         reading_id = str(uuid.uuid4())
         ts = (datetime.datetime.now() - datetime.timedelta(minutes=random.randint(1, 300))).strftime("%Y-%m-%d %H:%M:%S")
 
@@ -68,7 +79,7 @@ def seed_data():
             "breakdown_soon": breakdown_soon
         }
         records.append(rec)
-        machine_status_rows.append((mid, branch, temp, status, ts))
+        machine_status_rows.append((mid, reading_id, branch, temp, status, breakdown_soon, ts))
 
     # 2. Land Parquet files in HDFS raw target directory (Today & Historical Yesterday)
     for date_tag in [today_str, yesterday_str]:
@@ -204,8 +215,8 @@ def seed_data():
 
             # Seed machine_status
             cursor.executemany("""
-                REPLACE INTO machine_status (machine_id, branch, cycle_temperature, status, last_updated)
-                VALUES (%s, %s, %s, %s, %s)
+                REPLACE INTO machine_status (machine_id, reading_id, branch, cycle_temperature, status, breakdown_soon, last_updated)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
             """, machine_status_rows)
 
             # Seed readings_log
