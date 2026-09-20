@@ -20,16 +20,33 @@ class MachineTelemetryProducer:
         self.topic = topic
         self.producer = None
         if KAFKA_AVAILABLE:
-            try:
-                self.producer = KafkaProducer(
-                    bootstrap_servers=bootstrap_servers.split(","),
-                    key_serializer=lambda k: k.encode("utf-8") if k else None,
-                    value_serializer=lambda v: json.dumps(v).encode("utf-8"),
-                    retries=3
-                )
-                logger.info(f"KafkaProducer connected to {bootstrap_servers}, topic: {topic}")
-            except Exception as e:
-                logger.warning(f"Could not connect KafkaProducer: {e}. Running in standalone fallback mode.")
+            # Fast socket probe so we never block or hang when Kafka is not running
+            import socket
+            broker_online = False
+            for s in bootstrap_servers.split(","):
+                try:
+                    h, p = s.strip().split(":")
+                    with socket.create_connection((h, int(p)), timeout=0.3):
+                        broker_online = True
+                        break
+                except Exception:
+                    pass
+
+            if broker_online:
+                try:
+                    self.producer = KafkaProducer(
+                        bootstrap_servers=bootstrap_servers.split(","),
+                        key_serializer=lambda k: k.encode("utf-8") if k else None,
+                        value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+                        retries=3,
+                        request_timeout_ms=2000,
+                        max_block_ms=2000
+                    )
+                    logger.info(f"KafkaProducer connected to {bootstrap_servers}, topic: {topic}")
+                except Exception as e:
+                    logger.warning(f"Could not connect KafkaProducer: {e}. Running in standalone fallback mode.")
+            else:
+                logger.info(f"Kafka broker at {bootstrap_servers} offline. Running in standalone fallback mode.")
 
     def send_reading(self, reading: dict) -> bool:
         mid = reading.get("machine_id")

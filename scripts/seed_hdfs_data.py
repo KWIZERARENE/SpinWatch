@@ -123,6 +123,19 @@ def seed_data():
     ]
     avg_by_branch.sort(key=lambda x: x["avg_temperature"], reverse=True)
 
+    hour_counts = {}
+    for r in records:
+        if r["status"] == "ALERT":
+            try:
+                hr = int(r["txn_timestamp"].split(" ")[1].split(":")[0])
+                hour_counts[hr] = hour_counts.get(hr, 0) + 1
+            except Exception:
+                pass
+
+    busiest_hour = [
+        {"hour": hr, "alert_count": cnt}
+        for hr, cnt in sorted(hour_counts.items(), key=lambda x: x[1], reverse=True)
+    ]
     time_in_alert = [
         {"machine_id": r["machine_id"], "branch": r["branch"], "alert_count": random.randint(5, 25)}
         for r in records if r["status"] == "ALERT"
@@ -131,6 +144,7 @@ def seed_data():
     sample_insights = {
         "avg_by_branch": avg_by_branch,
         "time_in_alert": time_in_alert,
+        "busiest_hour": busiest_hour,
         "good_condition_count": good_condition_count,
         "normal_temp_count": normal_temp_count,
         "total_machines": len(records)
@@ -139,6 +153,48 @@ def seed_data():
         json.dump(sample_insights, f, indent=2)
 
     print(f"[+] Saved HDFS predictions ({good_condition_count} Good Condition) & PySpark insights to analytical store.")
+
+    # Populate SQLite Fallback Mirror
+    try:
+        import sqlite3
+        sqlite_db = os.path.join(os.getcwd(), "data", "laundry_ops.sqlite3")
+        s_conn = sqlite3.connect(sqlite_db)
+        s_cur = s_conn.cursor()
+        s_cur.execute("""
+            CREATE TABLE IF NOT EXISTS machine_status (
+                machine_id TEXT PRIMARY KEY,
+                reading_id TEXT,
+                branch TEXT,
+                cycle_temperature REAL,
+                status TEXT,
+                breakdown_soon INTEGER DEFAULT 0,
+                last_updated TEXT
+            )
+        """)
+        s_cur.execute("""
+            CREATE TABLE IF NOT EXISTS readings_log (
+                reading_id TEXT PRIMARY KEY,
+                machine_id TEXT,
+                branch TEXT,
+                cycle_temperature REAL,
+                txn_timestamp TEXT,
+                status TEXT,
+                breakdown_soon INTEGER DEFAULT 0
+            )
+        """)
+        s_cur.executemany("""
+            INSERT OR REPLACE INTO machine_status (machine_id, reading_id, branch, cycle_temperature, status, breakdown_soon, last_updated)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, [(r["machine_id"], r["reading_id"], r["branch"], r["cycle_temperature"], r["status"], r["breakdown_soon"], r["txn_timestamp"]) for r in records])
+        s_cur.executemany("""
+            INSERT OR IGNORE INTO readings_log (reading_id, machine_id, branch, cycle_temperature, txn_timestamp, status, breakdown_soon)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, [(r["reading_id"], r["machine_id"], r["branch"], r["cycle_temperature"], r["txn_timestamp"], r["status"], r["breakdown_soon"]) for r in records])
+        s_conn.commit()
+        s_conn.close()
+        print(f"[+] Successfully populated SQLite fallback mirror at {sqlite_db}")
+    except Exception as sqle:
+        print(f"[!] SQLite seed warning: {sqle}")
 
     # 4. Populate MySQL Operational Tables (machine_status, readings_log)
     if MYSQL_AVAILABLE:

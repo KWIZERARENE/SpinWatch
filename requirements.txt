@@ -10,3 +10,8 @@ pyspark>=3.3.0                    # Batch analytics (spark/insights.py) & MLlib 
 django>=4.2.0                     # Web framework for DRF API Browser server
 djangorestframework>=3.14.0       # Browsable HTML API, serializers, APIView classes
 django-cors-headers>=4.0.0        # CORS headers — allows dashboard (Port 8050) to query DRF API
+
+# ── Analytics & Presentation Generation ──────────────────────────────────────
+pandas>=2.0.0                     # Parquet and tabular data processing
+pyarrow>=12.0.0                   # Columnar Arrow and Parquet file reader
+python-pptx>=0.6.21               # Automated PowerPoint presentation deck generation
